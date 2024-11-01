@@ -1,0 +1,11 @@
+.main__background{
+    height: 100vh;
+    background-image: url('./../../../../assets/background/banner_03.png')!important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.main__container{
+    height: 100vh;
+}

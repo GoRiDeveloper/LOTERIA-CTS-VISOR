@@ -1,0 +1,42 @@
+<div *ngIf="isLoading" class="container-spinner">
+  <div class="spinner"></div>
+  <p class="spinner-text">Cargando...</p>
+</div>
+<div class="fondo"></div>
+
+<div class="card_menu-container" *ngIf="!isLoading">
+  <ng-container *ngFor="let card of subDependencies">
+    <div
+      class="card_menu"
+      routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+        card.id
+      }}"
+    >
+      <div class="card_menu-img" [ngSwitch]="card.nombre.toLowerCase()">
+        <img
+          src="../../../../../../assets/home/admin_finance.jpg"
+          *ngSwitchCase="'DIRECCION GENERAL DE ADMINISTRACIÓN Y FINANZAS'"
+          alt="icon"
+        />
+        <img
+          src="../../../../../../assets/home/asuntos_juridicos.jpg"
+          *ngSwitchCase="'SUBDIRECCION GENERAL DE ASUNTOS JURIDICOS'"
+          alt="icon"
+        />
+        <img
+          src="../../../../../../assets/home/mercadotecnia.jpg"
+          *ngSwitchCase="
+            'SUBDIRECCION GENERAL DE NUEVOS NEGOCIOS MERCADOTECNIA Y PUBLICIDAD'
+          "
+          alt="icon"
+        />
+      </div>
+
+      <div class="card_menu-btn">
+        <p class="card_menu-text">
+          {{ card.nombre }}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+</div>

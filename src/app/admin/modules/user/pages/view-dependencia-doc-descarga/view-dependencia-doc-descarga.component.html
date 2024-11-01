@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-between">
+  <h3 class="fs-2">Usuarios</h3>
+</div>
+
+<div class="d-lg-flex align-items-center gap-3 container-search-select">
+  <div class="search-input-container mt-2 mb-2">
+    <div class="icon-container">
+      <img src="./../../../../../../assets/icons/icon-search.png" alt="icon" />
+    </div>
+    <div>
+      <input
+        class="input-search"
+        [(ngModel)]="search"
+        name="search"
+        (keyup.enter)="getDependenciaDocDescarga()"
+      />
+    </div>
+    <div class="col-6 col-lg-2 col-xxl-1 mt-2 mb-2">
+      <select
+        name="select"
+        id="select"
+        class="m-2 form-select select-filters align-items-center"
+        style="min-width: 150px"
+        [(ngModel)]="status"
+        (change)="getDependenciaDocDescarga()"
+      >
+        <option [value]="0">TODOS</option>
+        <option [value]="1">DESCARGA</option>
+        <option [value]="2">VISTO</option>
+        <option [value]="3">DEPENDENCIA CREADA</option>
+        <option [value]="4">DOCUMENTO CREADO</option>
+        <option [value]="5">DOCUMENTO MODIFICADO</option>
+        <option [value]="6">DEPENDENCIA BORRADA</option>
+        <option [value]="7">DOCUMENTO BORRADO</option>
+      </select>
+    </div>
+  </div>
+  <div class="mt-4 mb-4 d-flex justify-content-end stamp-user">
+    <div class="text-title">
+      <h2 class="text-light">Usuarios</h2>
+    </div>
+  </div>
+</div>
+
+<div class="container-spinner" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p class="spinner-text">Cargando...</p>
+</div>
+
+<div class="table-container p-3" *ngIf="!isLoading">
+  <div class="table-responsive">
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th class="fw-normal">Nombre</th>
+          <th class="fw-normal">Fecha</th>
+          <th class="fw-normal">Documento</th>
+          <th class="fw-normal">Archivo</th>
+          <th class="fw-normal">Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let user of dependenciesDocDonwload.results;
+            let index = index
+          "
+        >
+          <td>{{ user.nombre_usuario | uppercase }}</td>
+          <td>{{ user.fecha }}</td>
+          <td>{{ user.documento }}</td>
+          <td>{{ user.archivo_descarga }}</td>
+          <td>{{ user.tipo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  class="d-flex align-items-center mt-4 container-btn-nextPrev"
+  *ngIf="!isLoading"
+>
+  <button
+    class="btn btn-outline-secondary text-light fs-5"
+    [disabled]="pageCurrent <= 1"
+    (click)="handleBeforePage()"
+  >
+    Anterior
+  </button>
+
+  <div class="d-flex align-items-center gap-4">
+    <label class="fs-4 text-light">Página </label>
+    <input
+      #pageCurrentInput
+      [value]="pageCurrent"
+      class="form-control input-paginator fs-4"
+      type="number"
+      min="1"
+      step="0"
+      max="{{ pagemax }}"
+      (keyup.enter)="irPagina(pageCurrentInput.value)"
+    />
+
+    <label class="text-light fs-4 text-nowrap"> de {{ pagemax }} </label>
+  </div>
+  <button
+    class="btn btn-outline-secondary text-light btn-green fs-5"
+    (click)="handleNextPage()"
+    [disabled]="pageCurrent == pagemax"
+  >
+    Siguiente
+  </button>
+</div>

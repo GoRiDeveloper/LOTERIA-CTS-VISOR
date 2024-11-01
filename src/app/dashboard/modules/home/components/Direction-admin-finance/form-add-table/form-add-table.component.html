@@ -1,0 +1,90 @@
+<div class="modal-body text-light" style="background-color: #545454">
+  <form [formGroup]="dependencieForm" (ngSubmit)="onSubmitAddTable()">
+    <div class="mb-3">
+      <div formArrayName="metaData" class="mt-3">
+        <div *ngFor="let meta of metaData.controls; let i = index" class="mb-3">
+          <p-dropdown
+            [options]="headers!"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="48"
+            [lazy]="true"
+            filterBy="nameHeader"
+            optionLabel="nameHeader"
+            [filter]="true"
+            [showClear]="true"
+            placeholder="Seleccione un encabezado o escriba uno nuevo"
+            styleClass="custom-dropdown"
+            [formControlName]="i"
+          ></p-dropdown>
+          <button
+            class="btn btn-danger btn-lg"
+            type="button"
+            (click)="removeMetaData(i)"
+          >
+            <i class="bi bi-trash fs-5"></i>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-info mt-3 me-3"
+          (click)="addMetaData()"
+        >
+          Agregar encabezado
+          <i class="bi bi-plus"></i>
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-info mt-3"
+          (click)="openModal(modalCreateHeader)"
+        >
+          Crear encabezado
+          <i class="bi bi-plus"></i>
+        </button>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="dependencieForm.invalid"
+    >
+      Crear tabla
+    </button>
+  </form>
+</div>
+
+<ng-template #modalCreateHeader let-modal>
+  <div class="modal-header text-light" style="background-color: #222222">
+    <h4 class="modal-title" id="modal-basic-title">Generar encabezado</h4>
+    <button
+      type="button"
+      class="btn-close text-light"
+      style="top: auto; filter: invert(100%)"
+      aria-label="Close"
+      data-bs-theme="dark"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body text-light" style="background-color: #545454">
+    <form [formGroup]="dependencieFormHeader" (ngSubmit)="createHeader()">
+      <label for="header" class="form-label fw-bold">
+        Encabezado
+      </label>
+      <input
+        type="text"
+        id="header"
+        class="form-control bg-transparent text-light"
+        formControlName="header"
+      />
+      <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="dependencieFormHeader.invalid"
+    >
+      Crear encabezado
+    </button>
+    </form>
+  </div>
+</ng-template>

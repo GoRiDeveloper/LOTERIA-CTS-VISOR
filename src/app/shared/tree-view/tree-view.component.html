@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center mb-3 gap-3">
+  <p-button label="Expander todo" (onClick)="expandAll()"></p-button>
+  <p-button label="Contraer todo" (onClick)="collapseAll()"></p-button>
+</div>
+
+<div
+  class="bg-success-subtle overflow-auto"
+  style="max-height: 65vh; min-height: 67vh; min-width: 100%"
+>
+  <p-tree
+    [value]="files"
+    selectionMode="checkbox"
+    class="w-full md:w-30rem tree-view-user"
+    [filter]="true"
+    filterPlaceholder="Buscar..."
+    [(selection)]="selectedDep"
+    (selectionChange)="onSelectionChange()"
+    [metaKeySelection]="true"
+    [loading]="loadingDep"
+  ></p-tree>
+</div>

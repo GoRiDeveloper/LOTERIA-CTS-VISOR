@@ -1,0 +1,114 @@
+<ng-template #content let-offcanvas>
+  <div class="sidebar__container">
+    <div class="sidebar__headerUser-container">
+      <button
+        type="button"
+        id="btnCross"
+        class="btn-close bg-light"
+        aria-label="Close"
+        (click)="offcanvas.dismiss('Cross click')"
+      ></button>
+
+      <div class="sidebar__headerUser-info">
+        <div class="sidebar__headerUser-infoUserImg">
+          <img src="../../../assets/icons/userImg.png" alt="" />
+          <div class="sidebar__headerUser-infoUserImgActive"></div>
+        </div>
+        <div class="sidebar__headerUser-userVerificado">
+          <p class="pb-0 mb-0 fw-bolder">
+            {{ userData.last_name | uppercase }}
+          </p>
+          <p class="pb-0 mb-0 fw-bolder">
+            {{ userData.first_name | uppercase }}
+          </p>
+          <div class="d-flex align-items-center">
+            <img src="../../../assets/icons/verficado.png" alt="" />
+            <p class="pb-0 mb-0 fs-8">
+              {{ userData.rol === 1 ? "Administrador" : "Usuario" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="offcanvas-item-body">
+      <div class="offcanvas-body">
+        <p-tree
+          [value]="treeDependencies"
+          [filter]="false"
+          class="tree-sidebar"
+        >
+          <ng-template let-node pTemplate="url">
+            <a
+              [routerLink]="
+                node.children ? [node.url, node.key] : [node.url, node.key]
+              "
+              rel="noopener noreferrer"
+              class="text-700 hover:text-primary"
+            >
+              {{ node.label }}
+            </a>
+          </ng-template>
+        </p-tree>
+      </div>
+    </div>
+
+    <div class="offcanvas-footer">
+      <div style="width: 100%">
+        <ul id="menu-content" class="menu-content m-2">
+          <li>
+            <div class="card pt-5">
+              <button
+                class="btn fs-8 mt-3 fw-bold sidebar__button-usuarios"
+                routerLink="/user"
+                *ngIf="userData.rol == 1"
+                (click)="offcanvas.dismiss('Cross click')"
+              >
+                Ver usuarios
+              </button>
+              <button
+                class="btn fs-8 mt-3 fw-bold sidebar__button-salir"
+                (click)="open(salir)"
+              >
+                Cerrar sesión
+                <img src="../../../assets/icons/logOutWhite.png" alt="" />
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<button
+  class="btn btn-lg btn-outline-primary mb-2 me-2 btn-home"
+  (click)="openBackdrop(content)"
+>
+  <img src="../../../assets/icons/menu_open.png" alt="" />
+</button>
+
+<ng-template #salir let-modal>
+  <div class="modal-body-exit">
+    <div class="card p-4 mt-4">
+      <h4 class="text-center fw-bold text-dark">
+        ¿Estás seguro que deseas salir?
+      </h4>
+    </div>
+  </div>
+  <div class="modal-footer border-0 d-flex justify-content-around">
+    <button
+      class="btn btn-light fw-bold fs-5 modal-body-exit-btn"
+      (click)="modal.close()"
+    >
+      Cancelar
+    </button>
+    <button
+      class="btn btn-danger fw-bold fs-5 modal-body-exit-btn"
+      (click)="handleLogout()"
+      (click)="modal.close()"
+    >
+      Salir
+    </button>
+  </div>
+</ng-template>

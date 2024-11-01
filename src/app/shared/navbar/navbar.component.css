@@ -1,0 +1,145 @@
+header {
+  width: 100%;
+
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: #471f29;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+nav {
+  display: flex;
+  padding: 5px 50px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  padding: 5px 0;
+  height: 60px;
+  cursor: pointer;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav_items {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-transform: uppercase;
+}
+
+/* EFECTO PARA LINEA DEBAJO DE LINK DE NAVBAR */
+
+.nav_items a {
+  margin-right: 55px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav_items a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 4px;
+  background-color: #bb925b;
+  transform: scaleX(0);
+  transform-origin: left right;
+  transition: transform 0.5s;
+}
+
+.nav_items a:hover::before {
+  transform: scaleX(1);
+  transform-origin: left left;
+}
+
+.active-route {
+  font-weight: 700 !important;
+  border-bottom: 5px #fff solid;
+  border-radius: 0px;
+}
+
+:host ::ng-deep .popover {
+  width: 380px;
+  max-width: 400px !important;
+  transform: translate(-132px, 0px) !important;
+  background-color: transparent;
+}
+
+:host ::ng-deep .popover-arrow {
+  display: none;
+}
+
+:host ::ng-deep .popover-header {
+  background-color: #5d2834;
+  color: #dec9a2;
+  /* border: 2px solid #fff; */
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 0px;
+}
+
+:host ::ng-deep .popover-body {
+  padding: 10px;
+  background-color: #5d2834;
+  color: #dec9a2;
+  /* border: 2px solid #fff; */
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-img {
+  width: 50px;
+  height: 50px;
+}
+
+.user-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  background-color: #62152d;
+}
+
+.user-data p {
+  margin: 0 0 5px 10px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: white;
+}
+
+.nav__btn-salir {
+  background: transparent;
+  color: #fff;
+  transition: 0.5s;
+  /* border: 1px solid #fff; */
+  width: 100%;
+}
+
+.nav__btn-salir:hover {
+  background: rgb(36, 36, 36);
+}

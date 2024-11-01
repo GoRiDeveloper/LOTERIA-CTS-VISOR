@@ -1,0 +1,82 @@
+<div class="mt-4" *ngIf="!screenLoading">
+  <div class="auth__form-content mt-4">
+    <p class="auth__text-content text-light text-justify">
+      Introduce el código de autentificación que se te envió.
+    </p>
+
+    <div class="auth__input-containerImg">
+      <img src="../../..//../assets/icons/iconEmail.png" alt="" />
+    </div>
+
+    <form [formGroup]="codigoForm" (submit)="handleLogin()">
+      <div class="auth__input-containerCode w-100">
+        <div class="d-flex">
+          <div class="form-group m-0 pl-2 pr-2">
+            <input
+              class="form-control auth__input-otp"
+              name="code1"
+              id="code1"
+              type="text"
+              formControlName="codigo1"
+              maxlength="1"
+              minlength="1"
+              OnlyNumbers
+              [(ngModel)]="code[0]"
+              (keyup)="onKey($event, 'code2', null)"
+            />
+            <input
+              class="form-control auth__input-otp"
+              name="code2"
+              id="code2"
+              type="text"
+              formControlName="codigo2"
+              maxlength="1"
+              minlength="1"
+              OnlyNumbers
+              [(ngModel)]="code[1]"
+              (keyup)="onKey($event, 'code3', 'code1')"
+            />
+            <input
+              class="form-control auth__input-otp"
+              name="code3"
+              id="code3"
+              type="text"
+              formControlName="codigo3"
+              maxlength="1"
+              minlength="1"
+              OnlyNumbers
+              [(ngModel)]="code[2]"
+              (keyup)="onKey($event, 'code4', 'code2')"
+            />
+            <input
+              class="form-control auth__input-otp"
+              name="code4"
+              id="code4"
+              type="text"
+              formControlName="codigo4"
+              maxlength="1"
+              minlength="1"
+              OnlyNumbers
+              [(ngModel)]="code[3]"
+              (keyup)="onKey($event, null, 'code3')"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-group form-groupVerify mt-5">
+        <button
+          type="submit"
+          class="btn mt-3 auth__button btn-block w-100 text-uppercase"
+        >
+          <span *ngIf="!isLoading">CONTINUAR</span>
+          <span *ngIf="isLoading" style="margin-right: 20px">VERIFICANDO</span>
+          <div
+            class="spinner-border spinner-border-sm"
+            role="status"
+            *ngIf="isLoading"
+          ></div>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

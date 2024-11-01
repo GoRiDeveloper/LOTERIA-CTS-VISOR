@@ -1,0 +1,256 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  // overflow: hidden;
+}
+
+.main__background {
+  overflow: auto;
+  background-color: #f7f8fa !important;
+  width: 100%;
+  height: 100%;
+}
+
+.main__container {
+  // width: 100%;
+  overflow: auto;
+  height: 100%;
+  padding: 20px;
+}
+
+tbody {
+  --background-color: white !important;
+}
+
+input::placeholder {
+  color: white;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 500;
+  color: $secondary-color;
+}
+.subtitle {
+  font-size: 30px;
+  font-weight: 500;
+  color: $secondary-color;
+}
+.subtitle-primary {
+  font-weight: 500;
+  color: $secondary-color;
+}
+
+.btn {
+  color: white;
+  font-weight: 500;
+  border-radius: 10px;
+  font-size: 14px;
+}
+select {
+  border-radius: 10px !important;
+}
+.btn-detail {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  padding: 7px 15px;
+}
+
+.btn-new {
+  background-color: $blue-color;
+  border-color: $blue-color;
+  // padding: 1px 10px;
+  min-width: 150px;
+}
+.btn-add {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  min-width: 110px;
+}
+.btn-search {
+  background-color: $primary-color;
+  border-color: $primary-color;
+  // padding: 7px 20px;
+  min-width: 150px;
+}
+.btn-search-auto {
+  min-width: auto !important;
+}
+label {
+  font-size: 12px;
+  font-weight: 400;
+  color: $dark-gray-color;
+}
+.form-control {
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 8px;
+}
+
+.list-group-table {
+  text-decoration: none !important;
+  a {
+    text-decoration: none !important;
+    color: $dark-gray-color;
+    padding-left: 5px;
+    &:hover {
+      font-weight: 600;
+    }
+  }
+}
+tbody tr {
+  background-color: white !important;
+}
+
+tr {
+  border-bottom: 1px solid $light-gray-color !important;
+  color: $dark-gray-color;
+  font-weight: 500;
+}
+thead tr {
+  font-weight: 500 !important;
+}
+
+.modal-footer,
+.modal-header {
+  border: none !important;
+}
+ul {
+  list-style: none;
+}
+
+th {
+  font-weight: 400;
+  color: $dark-gray-color !important;
+}
+.card-header {
+  background-color: #fff !important;
+  border-bottom: none;
+}
+.card {
+  border: none;
+}
+.list-group-flush > .list-group-item {
+  border-bottom: none !important   ;
+}
+
+.btn-icon {
+  margin-left: 20px;
+}
+.main__container {
+  margin-top: 70px;
+  margin-left: 270px;
+  height: calc(100vh - 50px);
+}
+@media (max-width: 992px) {
+  .main__container {
+    margin-left: 0px;
+  }
+}
+
+.ng-select.custom {
+  border: 0px;
+  min-height: 0px;
+  border-radius: 10px;
+}
+.ng-select.custom .ng-select-container {
+  min-height: 0px;
+  border-radius: 10px;
+  height: 40px;
+  font-size: 12px;
+  top: 0px;
+}
+.dot-select {
+  // height: 10px;
+  // width: 10px;
+  // margin-top: 20px;
+  // margin-right: 10px;
+  // border-radius: 50px;
+  background-color: red;
+  color: red;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  background-color: $secondary-color;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.small-dot {
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+  background-color: #bdbdbd;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-active {
+  background-color: $secondary-color !important;
+}
+
+.btn-close-light {
+  min-width: 110px;
+}
+.btn-outline {
+  max-height: 40px !important;
+  min-width: 110px !important;
+}
+
+.table-responsive {
+  max-height: calc(100vh - 400px);
+}
+
+.table-not-responsive {
+  max-height: 100% !important;
+}
+
+.submenu__list-group {
+  border: 1px solid #f7f8fa;
+  .active {
+    background-color: rgba(38, 170, 145, 0.1);
+    border: none;
+    color: $primary-color;
+    font-weight: 600;
+    border-radius: 0px;
+  }
+}
+
+.arrow_navbar {
+  transition: 0.5s;
+}
+
+.main__background {
+  overflow: auto;
+  background-color: #fff !important;
+  width: 100%;
+  height: 100%;
+}
+.main__container {
+  overflow: auto;
+  height: 100%;
+  margin-top: 10px;
+  height: calc(100vh - 85px) !important;
+}
+
+@media only screen and (max-width: 620px) and (min-width: 201px) {
+  .main__container {
+    margin-top: 0px;
+  }
+}
+@media (max-width: 992px) {
+  main__container {
+    margin-left: 0px;
+    height: auto;
+  }
+}
+
+.home__container-main {
+  height: calc(100vh - 300px) !important;
+}
+$breadcrumb-divider: quote(">");

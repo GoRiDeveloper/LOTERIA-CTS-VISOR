@@ -1,0 +1,33 @@
+.breadcrumbList {
+  display: flex;
+  background-color: rgba(49, 49, 49, 0.911);
+  width: 100%;
+  margin: 0 auto;
+  height: 60px;
+  overflow: hidden;
+  overflow-x: scroll;
+  padding: 15px;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 15px;
+}
+
+.breadcrumbList-item {
+  flex: 0 0 auto;
+}
+
+.breadcrumbList-item + .breadcrumbList-item::before {
+  content: "/";
+  padding: 0 0.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.breadcrumbList a {
+  color: rgb(233, 233, 233);
+  font-weight: 700;
+}
+
+.breadcrumbList a:hover {
+  color: rgb(255, 255, 255);
+}

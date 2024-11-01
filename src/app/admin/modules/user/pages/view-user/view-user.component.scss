@@ -1,0 +1,204 @@
+.table-container {
+  background-color: rgba(117,117,117,0.85);
+  padding: 20px;
+}
+
+
+.menu__open-container {
+  background-color: rgba(0, 0, 0, 0.493);
+  margin-left: 55px;
+  transition: 0.5s;
+}
+
+.menu__open-container:hover {
+  background-color: rgba(19, 19, 19, 0.74);
+}
+
+.btn-green {
+  background-color: rgba(189, 148, 91);
+  transition: 0.5s;
+}
+
+.btn-green:hover {
+  background-color: #95744b;
+  transition: 0.5s;
+}
+
+.modal-body-users {
+  background-color: rgb(69, 69, 69);
+
+  .form__control-titleModal {
+    text-align: center;
+  }
+  .card {
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 20px;
+  }
+  label {
+    color: white;
+  }
+  select,
+  input {
+    color: white;
+  }
+  input:focus {
+    background-color: transparent;
+    border-bottom: 3px solid white;
+    color : white;
+  }
+  option {
+    // color: #ffffff !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+}
+
+.input-search {
+  border-radius: 40px;
+  background-color: #d9d9d94d;
+  height: 40px;
+  padding-left: 40px;
+  color: white;
+  border: 0px;
+}
+
+.input-paginator {
+  color: white;
+  background-color: transparent;
+  border: 0px;
+  border-bottom: 3px solid white;
+  border-radius: 0px;
+  width: 45px;
+  padding: 2px !important;
+}
+.search-input-container {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 80% !important;
+  input {
+    margin-left: -30px;
+  }
+  .icon-container {
+    width: 55px;
+    height: 55px;
+    background-color: rgba(189, 148, 91);
+    position: relative;
+    border-radius: 50%;
+
+    img {
+      width: 35px;
+      height: 35px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  }
+}
+
+.text-title {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 16% 100%);
+  background-color: rgba(189, 148, 91);
+  width: max-content;
+  padding: 10px 50px;
+}
+
+.container__btn-antsig {
+  width: 80%;
+  margin: auto;
+}
+
+.container__btn-antsig-btn:hover {
+  background-color: rgba(189, 148, 91);
+  transition: 0.5s;
+}
+
+.modal-body-header {
+  text-align: center;
+}
+
+.modal-body-header label {
+  font-size: 2rem;
+}
+
+.modal-body-header small {
+  text-align: left;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .table-container {
+    width: 95%;
+  }
+
+
+
+
+
+
+  .container__btn-antsig{
+    width: 100%;
+  }
+}
+
+
+// Estilos para treeview
+
+
+.tree-view-user .p-tree {
+  background-color: #333; 
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.tree-view-user .p-treenode-content {
+  background-color: #e5e5e5;
+  color: #fff;
+  border-bottom: 1px solid #555;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.tree-view-user .p-treenode-content .p-highlight {
+  background-color: #007bff;
+  color: #0f0f0f;
+}
+
+.tree-view-user .p-treenode-content:hover {
+  background-color: #e5e5e5;
+  color: #fff;
+}
+
+.tree-view-user .p-treenode-content .p-treenode-label {
+  color: #0f52b6;
+}
+
+.tree-view-user .p-treenode-label {
+  color: #fff;
+}
+
+.p-treenode-icon {
+  color: #fff;
+}
+
+.tree-view-user .p-tree-filter-container input {
+  background-color: #555;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+
+.tree-view-user .p-treenode-children {
+  border-left: 1px solid #666;
+  margin-left: 20px;
+}

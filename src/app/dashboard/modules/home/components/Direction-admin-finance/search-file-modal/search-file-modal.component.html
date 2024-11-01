@@ -1,0 +1,106 @@
+<div class="modalFiles__container">
+  <p-table
+    [value]="valuesTable"
+    selectionMode="single"
+    [(selection)]="selectedFile"
+    tableStyleClass="tableModalFiles"
+    [lazy]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="d-flex align-items-center justify-content-between fs-4">
+        Buscar Archivo
+      </div>
+
+      <div class="d-flex flex-column">
+        <span
+          class="p-input-icon-left"
+          [ngClass]="searchFileFromModal ? 'p-input-icon-right' : ''"
+        >
+          <i class="pi pi-search"></i>
+          <i class="pi pi-spin pi-spinner" *ngIf="searchFileFromModal"></i>
+          <input
+            type="text"
+            class="p-inputtext-sm"
+            placeholder="Buscar Archivo..."
+            pInputText
+            (keydown.enter)="searchFile()"
+            [(ngModel)]="queryFile"
+            [disabled]="searchFileFromModal"
+          />
+        </span>
+        <small
+          id="username2-help"
+          class="p-error block mt-2"
+          *ngIf="inputNotValid"
+          >Ingresa mínimo 3 caracteres.</small
+        >
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Descripción</th>
+        <th>Nombre Archivo</th>
+        <th>Nombre Campo</th>
+        <th>Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-dependency style="height: 80vh">
+      <tr [pSelectableRow]="dependency">
+        <td>{{ dependency.descripcion }}</td>
+        <td>{{ dependency.nombre_archivo }}</td>
+        <td>{{ dependency.nombre_campo }}</td>
+        <td>
+          <div class="dropdown">
+            <button
+              class="btn btn-primary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="true"
+            ></button>
+            <ul class="dropdown-menu">
+              <li>
+                <div class="dropdown-item" (click)="openModalPdf(dependency)">
+                  <i class="bi bi-file-earmark-pdf-fill"></i>
+                  Ver PDF
+                </div>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  [routerLink]="[
+                    '/dashboard/home/documentos/',
+                    dependency.dependencia_id
+                  ]"
+                  (click)="closeModal()"
+                >
+                  <i class="bi bi-link-45deg"></i>
+
+                  Ir a ruta</a
+                >
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Mostrar mensaje en caso de que no haya resultados -->
+    <ng-template pTemplate="emptymessage">
+      <tr *ngIf="notValues">
+        <td colspan="4">
+          No se encontraron resultados que coincidan con
+          <small class="text-success fw-bold text-decoration-underline fs-5"
+            >{{ queryFile }}.</small
+          >
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<ng-template #ViewPdf let-modal>
+  <app-view-file-pdf
+    [documentData]="documentData"
+    [closeModal]="modal.close.bind(modal)"
+  ></app-view-file-pdf>
+</ng-template>

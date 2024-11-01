@@ -1,0 +1,259 @@
+
+  
+.item 
+    color: #2e2e2e    
+  
+  
+.texto-nav 
+    font-size: 1rem
+    font-weight: 600
+    color: #fff
+    cursor: pointer
+    padding: 10px
+    width: 100%
+    text-transform: uppercase
+
+// .texto-nav:hover 
+//     background-color: rgba(255, 255, 255, 0.205)
+//     transition: .3s
+//     border-radius: 10px
+  
+  
+.nav-side-menu 
+    overflow: auto
+    overflow: none
+    font-size: 12px
+    font-weight: 200
+    background-color: white
+    height: calc( 100vh - 0px ) 
+    max-height: calc(100vh - 0px)
+    color: dark
+    border-right: solid #ECECEE 3px
+  
+.nav__side-menu 
+    font-size: 12px
+    font-weight: 200
+    background-color: white
+    padding: 10px
+
+    color: dark
+    li  
+        padding: 20px
+        cursor: pointer
+  
+    
+    
+  
+  
+
+.nav-side-menu .toggle-btn 
+    display: none
+  
+  
+.nav-side-menu ul,
+.nav-side-menu li 
+    list-style: none
+    padding: 0px
+    padding-top: 8px
+    padding-bottom: 8px
+    margin: 0px
+    line-height: 35px
+    cursor: pointer
+  
+
+  
+
+
+
+  
+.nav-side-menu ul .sub-menu li:hover,
+.nav-side-menu li .sub-menu li:hover 
+    background-color: #020203
+  
+  
+.nav-side-menu ul .sub-menu li:before,
+.nav-side-menu li .sub-menu li:before 
+    font-family: Fontawesome
+    content: "\f105"
+    display: inline-block
+
+    padding-right: 10px
+    vertical-align: middle
+  
+
+  
+  
+.nav-side-menu li a 
+    text-decoration: none
+    color: #232323
+    span 
+      font-weight: 500
+    
+  
+.nav__side-menu li a 
+    text-decoration: none
+    color: #232323
+    span 
+      font-weight: 500
+    
+  
+  
+.nav-side-menu li a i 
+    // padding-left: 10px
+    width: 20px
+    padding-right: 20px
+    font-weight: 500
+  
+  
+.nav-side-menu li:hover 
+    a 
+      span 
+        -webkit-transition: all 1s ease
+        -moz-transition: all 1s ease
+        -o-transition: all 1s ease
+        -ms-transition: all 1s ease
+        transition: all 1s ease
+      
+    
+  
+  
+
+.active
+    background-color: #802c3c !important
+    border-radius: 10px
+    a 
+      // padding: 10%
+        font-weight: 700
+      span 
+        color: #dec9a2 !important
+        font-weight: 700!important
+      
+
+  
+@media (max-width: 992px) 
+    .nav-side-menu 
+      margin-left: -450px
+      width: 100%
+      margin-bottom: 10px
+      margin-top: 180px
+      width: 0px!important
+  
+.nav-side-menu .toggle-btn 
+      display: block
+      cursor: pointer
+      position: absolute
+      right: 10px
+      top: 10px
+      z-index: 10 !important
+      padding: 3px
+      background-color: #ffffff
+      color: #000
+      width: 40px
+      text-align: center
+      .nav-side-menu
+        height: auto
+    
+  
+  
+@media (min-width: 992px) 
+    .nav-side-menu .menu-list .menu-content 
+      display: block
+    
+    .menu-list 
+      margin-top: 0px
+    
+  
+.menu-list
+  margin-top: 10px
+  // display: fixed
+  
+
+
+
+  
+  .sub-menu li a i 
+    // padding-left: 10px
+    width: 20px
+    padding-right: 20px
+  
+
+  @media (max-width: 992px) 
+    .nav-side-menu .sub-menu 
+      position: relative
+      width: 100%
+      margin-bottom: 10px
+    
+  
+    .nav-side-menu .sub-menu .toggle-btn 
+      display: block
+      cursor: pointer
+      position: absolute
+      right: 10px
+      top: 10px
+      // z-index: 10 !important
+      padding: 3px
+      background-color: #ffffff
+      color: #000
+      width: 40px
+      text-align: center
+    
+  
+   
+  
+    @media (max-width: 992px) 
+      .sub-line 
+        position: relative
+        width: 100%
+        margin-bottom: 10px
+      
+  
+      .sub-line .toggle-btn 
+        display: block
+        cursor: pointer
+        position: absolute
+        right: 10px
+        top: 10px
+        // z-index: 10 !important
+        padding: 3px
+        background-color: #ffffff
+        color: #000
+        width: 40px
+        text-align: center
+      
+      .nav-side-menu 
+        
+        top: 0px
+        
+      
+    
+    .navbar-brand 
+      // width: 100px
+    
+  
+
+
+  .sidebar__btn-logout 
+    position: absolute
+    left: 0
+    bottom: 0
+    padding: 10px
+    background-color: #ffffff
+    color: #000
+    width: 40px
+    text-align: center
+
+.fw-semibold
+    font-weight: 500!important
+    
+
+
+@media (max-width: 1300px) 
+    * 
+      font-size: 0.9rem
+
+.nav-side-menu::-webkit-scrollbar
+  -webkit-appearance: none
+
+
+.nav-side-menu::-webkit-scrollbar:vertical
+  width:8px

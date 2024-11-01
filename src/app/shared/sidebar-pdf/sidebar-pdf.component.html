@@ -1,0 +1,17 @@
+<button
+  class="btn btn-lg btn-outline-primary mb-2 me-2 btn-home"
+  (click)="openBackdrop(content)"
+>
+  <img src="../../../assets/img/menu_open.png" alt="" />
+</button>
+
+<ng-template #content let-offcanvas>
+  <div class="modal-pdf-mobile">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="offcanvas.close()"
+    ></button>
+  </div>
+</ng-template>

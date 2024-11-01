@@ -1,0 +1,132 @@
+<ng-template #content let-offcanvas>
+  <!-- <div class="offcanvas-item">
+    <div class="logo" routerLink="/dashboard/home/menu">
+      <img src="../../../assets/SEP/Logos/logo_sep.png" alt="" />
+    </div>
+  </div> -->
+
+  <div class="sidebar__container">
+    <div class="sidebar__headerUser-container">
+      <button
+        type="button"
+        id="btnCross"
+        class="btn-close bg-light"
+        aria-label="Close"
+        (click)="offcanvas.dismiss('Cross click')"
+      ></button>
+
+      <div class="sidebar__headerUser-info">
+        <div class="sidebar__headerUser-infoUserImg">
+          <img src="../../../assets/icons/userWhite.png" alt="" />
+          <div class="sidebar__headerUser-infoUserImgActive"></div>
+        </div>
+        <div class="sidebar__headerUser-userVerificado">
+          <p class="pb-0 mb-0 fw-bolder">
+            {{ userData.last_name | uppercase }}
+          </p>
+          <p class="pb-0 mb-0 fw-bolder">
+            {{ userData.first_name | uppercase }}
+          </p>
+          <div class="d-flex align-items-center">
+            <img src="../../../assets/icons/verficado.png" alt="" />
+            <p class="pb-0 mb-0 fs-8 text-light" *ngIf="userData.rol == 1">
+              Administrador
+            </p>
+            <p class="pb-0 mb-0 fs-8 text-light" *ngIf="userData.rol == 2">Usuario</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="offcanvas-body">
+      <div class="menu-list mb-auto p-0">
+        <ul id="menu-content" class="menu-content">
+          <li
+            routerLinkActive="active"
+            class="mt-4 mb-2 p-2"
+            style="cursor: pointer"
+            [routerLink]="['/user/ver-usuarios']"
+          >
+            <a class="pt-2 pb-2">
+              <span class="texto-nav pt-2 pb-2">Usuarios</span>
+            </a>
+          </li>
+
+          <li
+            routerLinkActive="active"
+            class="mt-4 mb-2 p-2"
+            style="cursor: pointer"
+            [routerLink]="['/user/ver-dependencia-documento-descarga']"
+          >
+            <a class="pt-2 pb-2">
+              <span class="texto-nav pt-2 pb-2">Historial</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="menu-content" class="menu-content m-2">
+          <li>
+              <div class="card">
+                <!-- <div>
+                  <p class="pb-0 mb-0">
+                    {{ userData.first_name | uppercase }}
+                    {{ userData.last_name | uppercase }}
+                  </p>
+                  <small class="text-light d-block fs-6 fw-light">{{
+                    userData.email
+                  }}</small>
+                </div> -->
+                <button
+                  class="btn fs-8 mt-3 fw-bold sidebarUsers__dashboard-button"
+                  routerLink="/dashboard"
+                  (click)="offcanvas.close()"
+                >
+                  Dashboard
+                </button>
+                <button
+                  class="btn fs-8 mt-3 fw-bold sidebarUsers__salir-button"
+                  (click)="open(salir)"
+                >
+                  Cerrar sesión
+                  <img src="../../../assets/icons/logOutWhite.png" alt="" />
+                </button>
+              </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<button
+  class="btn btn-lg btn-outline-primary mb-2 me-2 btn-home"
+  (click)="openBackdrop(content)"
+>
+  <img src="../../../assets/icons/menu_open.png" alt="" />
+</button>
+
+<ng-template #salir let-modal>
+  <div class="modal-body-exit">
+    <div class="card p-4 mt-4">
+      <h4 class="text-center fw-bold text-dark">
+        ¿Estás seguro que deseas salir?
+      </h4>
+    </div>
+  </div>
+  <div class="modal-footer border-0 d-flex justify-content-around">
+    <button
+      class="btn btn-light fw-bold fs-5 modal-body-exit-btn"
+      (click)="modal.close()"
+    >
+      Cancelar
+    </button>
+    <button
+      class="btn btn-danger fw-bold fs-5 modal-body-exit-btn"
+      (click)="handleLogout()"
+    >
+      Salir
+    </button>
+  </div>
+</ng-template>

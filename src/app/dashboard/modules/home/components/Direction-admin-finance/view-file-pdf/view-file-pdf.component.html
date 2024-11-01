@@ -1,0 +1,36 @@
+<div
+  class="container-spinner"
+  style="height: 100vh; z-index: 9000000"
+  *ngIf="isLoadingPdf"
+>
+  <div class="spinner"></div>
+  <p class="spinner-text">Estamos cargando tu pdf...</p>
+  <p class="spinner-text">
+    Esta descarga puede demorar. <br />
+    Por favor, ten paciencia.<br />
+  </p>
+</div>
+
+<div class="container__modal" *ngIf="!isLoadingPdf">
+  <div class="container__modal-div" style="width: 100%">
+    <ngx-extended-pdf-viewer
+      *ngIf="pdfinfo.ext == 'pdf'"
+      [src]="pdfSrc"
+      height="100vh"
+      [(page)]="page"
+      [showBorders]="true"
+      [showPresentationModeButton]="true"
+      [showFindButton]="true"
+      [showPrintButton]="false"
+      [showOpenFileButton]="false"
+      [showHandToolButton]="true"
+      [showDownloadButton]="false"
+      [showSinglePageModeButton]="true"
+      [replaceBrowserPrint]="false"
+      [textLayer]="true"
+      [showInfiniteScrollButton]="true"
+      [handTool]="false"
+    >
+    </ngx-extended-pdf-viewer>
+  </div>
+</div>

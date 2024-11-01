@@ -1,0 +1,29 @@
+<header>
+  <nav>
+    <div class="logo" routerLink="/dashboard/home/menu">
+      <img src="../../../assets/Loteria/logo_ln.png" alt="" />
+    </div>
+
+    <!-- <div class="nav_items">
+      <a routerLink="/user/ver-usuarios" routerLinkActive="active-route"
+        >Usuarios</a
+      >
+      <a
+        routerLink="/user/ver-dependencia-documento-descarga"
+        routerLinkActive="active-route"
+      >
+        Historial SEP</a
+      >
+    </div> -->
+
+    <div class="user">
+      <div class="user-data">
+        <p style="text-align: center">
+          {{ userData.first_name | uppercase }}
+          {{ userData.last_name | uppercase }}
+        </p>
+        <p>{{ userData.email }}</p>
+      </div>
+    </div>
+  </nav>
+</header>

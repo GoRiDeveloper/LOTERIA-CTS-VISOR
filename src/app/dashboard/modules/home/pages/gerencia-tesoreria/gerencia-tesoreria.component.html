@@ -1,0 +1,552 @@
+<div class="fondo"></div>
+
+<div class="container-spinner" style="height: 100vh" *ngIf="isLoadingData">
+  <div class="spinner"></div>
+  <p class="spinner-text">Cargando...</p>
+</div>
+<div
+  class="container-spinner"
+  style="height: 100vh; z-index: 9000000"
+  *ngIf="isLoadingPdf"
+>
+  <div class="spinner"></div>
+  <p class="spinner-text">Estamos cargando tu pdf...</p>
+  <p class="spinner-text">
+    Esta descarga puede demorar. <br />
+    Por favor, ten paciencia.<br />
+  </p>
+</div>
+
+<div class="container-fluid container-table" *ngIf="!isLoadingPdf">
+  <div class="row" style="margin-top: 100px">
+    <app-breadcrumb [rutasData]="rutasBreadcrumb"></app-breadcrumb>
+    <div class="table-container" *ngIf="!isLoadingData">
+      <div class="titleTable">
+        <h1>{{ titleTable }}</h1>
+      </div>
+      <div class="d-lg-flex gap-3 search-input-container container-inputs">
+        <div class="search-input-container">
+          <div
+            class="icon-container"
+            (click)="getDocumentsByType()"
+            style="cursor: pointer"
+          >
+            <img
+              src="./../../../../../../assets/icons/icon-search.png"
+              alt="icon"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              class="input-search"
+              height="100%"
+              placeholder="Buscar"
+              name="search"
+              id="search"
+              [(ngModel)]="searchInput"
+              (keyup.enter)="getDocumentsByType()"
+            />
+          </div>
+        </div>
+
+        <div class="search-input-container m-1 ocr">
+          <div class="icon-container">
+            <img
+              src="./../../../../../../assets/icons/icon-search.png"
+              alt="icon"
+            />
+          </div>
+          <div class="">
+            <input
+              type="text"
+              class="input-search"
+              height="100%"
+              placeholder="Buscar ocr"
+              name="ocr"
+              id="ocr"
+              [(ngModel)]="ocr"
+              (keyup.enter)="getDocumentsByType()"
+            />
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <select
+            class="m-2 form-select select-filters align-items-center"
+            [(ngModel)]="headerSearch"
+          >
+            <option value="0">TODOS</option>
+            <option *ngFor="let header of headers" [value]="header.id">
+              {{ header.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="d-flex" *ngIf="user_role === '1'">
+          <div class="m-1 p-2">
+            <span class="switch switch-sm d-inline">
+              <input
+                type="checkbox"
+                class="switch"
+                name="vinculados"
+                id="vinculados"
+                [(ngModel)]="vinculados"
+                (change)="buscarvinculados()"
+              />
+              <label for="vinculados" class="fs-4 text-light">Vinculados</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-2 col-xxl-1">
+          <div class="d-flex btn-excel-container">
+            <ng-container *ngIf="user_role === '1'">
+              <button
+                class="btn btn-active btn-excel"
+                (click)="openModal(addFile)"
+              >
+                Cargar Archivo
+                <div
+                  *ngIf="isLoading; else loading"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <ng-template #loading>
+                  <i
+                    class="bi bi-file-earmark-arrow-up-fill"
+                    style="font-size: 1.5rem"
+                  ></i>
+                </ng-template>
+              </button>
+            </ng-container>
+          </div>
+          <!-- <select
+            name="select"
+            id="select"
+            class="m-2 form-select select-filters align-items-center"
+            (change)="getDocumentsByType()"
+          >
+            <option [value]="0">TODOS</option>
+            <option [value]="1">DESCARGA</option>
+            <option [value]="2">VISTO</option>
+          </select> -->
+          <!-- <div class="d-flex btn-excel-container">
+            <button class="btn btn-active btn-excel" (click)="downloadExcel()">
+              Descargar Excel
+              <div
+                class="spinner-border spinner-border-sm"
+                role="status"
+                *ngIf="isLoading"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
+          </div> -->
+          <!-- <select name="select" id="select" class=" m-2  form-select select-filters align-items-center"  (change)="getDocumentsByType()">
+                              <option [value]="0">TODOS</option>
+                              <option [value]="1">DESCARGA</option>
+                              <option [value]="2">VISTO</option>
+                            </select> -->
+        </div>
+      </div>
+
+      <div class="container_slider mt-3 mb-2">
+        <button
+          class="button_slider"
+          [class.btn-active]="typeDoc.id == idType"
+          *ngFor="let typeDoc of typeDocument"
+          (click)="handleChangeType(typeDoc)"
+        >
+          {{ typeDoc.nombre }}
+        </button>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6" *ngFor="let extra of documents?.data_extra">
+          <div class="d-flex justify-content-center">
+            <span style="color: #fff !important">{{ extra.head }}:</span
+            ><span style="color: #fff !important; font-weight: bold">{{
+              extra.campo
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row d-block d-md-none">
+        <div class="col-md-12 mt-2">
+          <div
+            class="d-flex justify-content-between align-items-center align-self-center"
+          >
+            <button
+              class="btn btn-green align-self-center fs-6"
+              [disabled]="pageCurrent == 1"
+              (click)="handleBeforePage()"
+            >
+              Anterior
+            </button>
+            <p class="align-self-center mt-2 text-light fs-6">
+              Página
+              <input
+                #pageCurrentInput
+                class="input-paginator"
+                readonly
+                [(ngModel)]="pageCurrent"
+                disabled
+                type="number"
+                min="1"
+                step="0"
+                max="{{ documents?.paginas }}"
+                (keyup.enter)="irPagina(pageCurrentInput.value)"
+              />
+              de {{ documents?.paginas }}
+            </p>
+            <button
+              #leftButton
+              class="btn btn-green align-self-center fs-6"
+              [disabled]="pageCurrent == documents?.paginas"
+              (click)="handleNextPage()"
+            >
+              Siguiente
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive mt-4">
+        <table class="table table-borderless table-hover">
+          <thead>
+            <tr>
+              <!-- Encabezado para editar -->
+              <ng-container *ngIf="editablesExist && user_role === '1'">
+                <th>
+                  <div class="select-container text-center">OPCIONES</div>
+                </th>
+              </ng-container>
+              <!-- Encabezado para editar -->
+              <ng-container *ngFor="let header of filterData; let i = index">
+                <th
+                  class="fw-normal text-nowrap"
+                  (click)="handleSetOrder(header.id)"
+                >
+                  <div class="select-container text-center">
+                    {{ header.nombre | uppercase }}
+                    <img
+                      src="./../../../../../../assets/icons/{{
+                        order == header.id
+                          ? 'icon-up-select.png'
+                          : order == header.id * -1
+                          ? 'icon-down-select.png'
+                          : 'icon-select.png'
+                      }}  "
+                      alt=""
+                    />
+                  </div>
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Renderizar en caso de no haber documentos -->
+            <ng-container *ngIf="documents.data.length === 0; else RenderDocs">
+              <td style="font-size: larger; text-align: center !important">
+                No hay documentos para mostrar
+              </td>
+            </ng-container>
+            <!-- Renderizar en caso de no haber documentos -->
+
+            <ng-template #RenderDocs>
+              <tr *ngFor="let data of documents?.data">
+                <!-- Editar archivo -->
+
+                <ng-container
+                  *ngIf="
+                    data.editable === 'True' && user_role == '1';
+                    else noEditable
+                  "
+                >
+                  <td class="text-center text-table">
+                    <div
+                      class="dropdown"
+                      style="display: flex; justify-content: center"
+                    >
+                      <button
+                        class="btn btn-primary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="true"
+                      ></button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <div
+                            class="dropdown-item"
+                            (click)="openModal(addFile, data, undefined, true)"
+                          >
+                            <i class="bi bi-pencil-fill"></i>
+                            Editar
+                          </div>
+                        </li>
+                        <li>
+                          <div
+                            class="dropdown-item"
+                            (click)="openModal(deleteFileModal, data, 'lg')"
+                          >
+                            <i class="bi bi-trash"></i>
+                            Borrar
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Rellenar campo en caso de existir campo para editar -->
+                <ng-template #noEditable>
+                  <td
+                    [ngStyle]="{
+                      display:
+                        user_role == '1' && data.editable && editablesExist
+                          ? 'table-cell'
+                          : 'none'
+                    }"
+                  ></td>
+                </ng-template>
+                <!-- Rellenar campo en caso de existir campo para editar -->
+
+                <!-- Editar archivo -->
+
+                <ng-container *ngFor="let headers of filterData; let i = index">
+                  <td
+                    class="text-center text_table"
+                    [ngClass]="
+                      filesViewed.includes(data.documento_id)
+                        ? 'fileViewed'
+                        : ''
+                    "
+                    (click)="
+                      openArchivoDocumento(
+                        data.documento_id,
+                        data['NOMBRE DEL ARCHIVO'],
+                        previsualizerDocument
+                      )
+                    "
+                  >
+                    {{ data[headers.nombre] }}
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div
+          class="col-md-4 col-5 col-lg-4 col-xl-2 mt-2 align-self-center"
+          style="min-width: 80px"
+        >
+          <div class="d-flex">
+            <span class="m-2 text-light">Mostrar</span>
+            <select
+              name=""
+              class="form-select"
+              style="min-width: 80px"
+              [(ngModel)]="limitPage"
+              (change)="handleSetLimitPage()"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-8 col-xl-7 mt-2 d-none d-md-block">
+          <div
+            class="d-flex justify-content-around align-items-center align-self-center"
+          >
+            <button
+              class="btn btn-green align-self-center"
+              [disabled]="pageCurrent == 1"
+              (click)="handleBeforePage()"
+            >
+              Anterior
+            </button>
+            <p class="align-self-center mt-2 text-light fs-4">
+              Página
+              <input
+                #pageCurrentInput
+                class="input-paginator"
+                [(ngModel)]="pageCurrent"
+                type="number"
+                min="1"
+                step="0"
+                max="{{ documents?.paginas }}"
+                (keyup.enter)="irPagina(pageCurrentInput.value)"
+              />
+              de {{ documents?.paginas }}
+            </p>
+            <button
+              class="btn btn-green align-self-center text-light"
+              [disabled]="pageCurrent == documents?.paginas"
+              (click)="handleNextPage()"
+            >
+              Siguiente
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para agregar documento -->
+  <ng-template #addFile let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isCreate }} documento</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        style="top: auto"
+        (click)="modal.close()"
+      ></button>
+    </div>
+
+    <add-file-modal
+      [headers]="headers"
+      [dependenciaIndice]="dependenciaIndice"
+      [dependenciaId]="dependenciaId"
+      [currentTag]="currentTag"
+      [ruta]="rutasData"
+      [documentSelected]="documentSelected"
+      (executeGetDependency)="getTypeDocument()"
+    ></add-file-modal>
+  </ng-template>
+  <!-- Modal para agregar documento -->
+
+  <!-- Modal para eliminar documento -->
+  <ng-template #deleteFileModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">
+        ¿Está seguro de eliminar el documento
+        {{ documentSelected["Nombre del Archivo"] }}?
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        style="top: auto"
+        (click)="modal.close()"
+      ></button>
+    </div>
+
+    <!-- <div class="modal-body"></div> -->
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-danger" (click)="deleteFile()">
+        Eliminar
+      </button>
+    </div>
+  </ng-template>
+  <!-- Modal para eliminar documento -->
+
+  <ng-template #previsualizerDocument let-modal>
+    <div class="modal-body">
+      <ng-container *ngIf="!isNotPdf">
+        <div class="row" class="modal__pdf-left">
+          <div class="d-flex justify-content-center">
+            <h4>{{ nameFile }}</h4>
+          </div>
+
+          <div class="container__btn-download">
+            <button
+              *ngIf="documents?.descargas"
+              (click)="descargar()"
+              class="btn btn-primary fs-5"
+            >
+              Descargar
+              <img src="/assets/icons/download-success.png" alt="" srcset="" />
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <!-- <app-sidebar-pdf></app-sidebar-pdf> -->
+
+      <ng-container *ngIf="!isNotPdf; else notPdf">
+        <div class="modal__pdf-right">
+          <div class="container__closeInfo">
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            ></button>
+          </div>
+
+          <ngx-extended-pdf-viewer
+            *ngIf="pdfinfo.ext == 'pdf'"
+            [src]="pdfSrc"
+            height="100vh"
+            [(page)]="page"
+            [showBorders]="true"
+            [showPresentationModeButton]="true"
+            [showFindButton]="true"
+            [showPrintButton]="false"
+            [showOpenFileButton]="false"
+            [showHandToolButton]="true"
+            [showDownloadButton]="false"
+            [showSinglePageModeButton]="true"
+            [replaceBrowserPrint]="false"
+            [textLayer]="true"
+            (pdfLoaded)="onPdfLoaded($event)"
+            (pageRendered)="onPageRendered($event)"
+            [showInfiniteScrollButton]="true"
+            [handTool]="false"
+          >
+          </ngx-extended-pdf-viewer>
+        </div>
+      </ng-container>
+
+      <ng-template #notPdf>
+        <div class="modal__pdf-right">
+          <div
+            class="d-flex justify-content-center align-items-center"
+            style="height: 100vh"
+          >
+            <div class="d-flex flex-column">
+              <h3>{{ pdfinfo.nombre }}</h3>
+              <button
+                type="button"
+                class="btn-close mt-3"
+                aria-label="Close"
+                (click)="modal.dismiss('Cross click')"
+              ></button>
+              <button
+                *ngIf="documents?.descargas"
+                (click)="descargar()"
+                class="btn btn-primary fs-5"
+              >
+                Descargar
+                <img
+                  src="/assets/icons/download-success.png"
+                  alt=""
+                  srcset=""
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

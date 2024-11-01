@@ -1,0 +1,32 @@
+.custom-dropdown input {
+  width: 300px;
+  background-color: transparent;
+}
+
+.p-dropdown-label .p-inputtext {
+  color: white !important;
+}
+.custom-dropdown .p-dropdown-panel {
+  border-radius: 8px;
+}
+
+.custom-dropdown .p-dropdown-item {
+  font-size: 14px;
+  padding: 8px;
+}
+
+.custom-dropdown .p-dropdown-panel .p-dropdown-header {
+  background-color: #7c6d6d00;
+  font-weight: bold;
+}
+
+:host ::ng-deep .p-dropdown {
+  width: 30rem;
+  background-color: transparent;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label{
+  width: 30rem;
+  background-color: transparent;
+  color: white;
+}

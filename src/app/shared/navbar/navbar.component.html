@@ -1,0 +1,68 @@
+<header>
+  <nav>
+    <div class="logo" routerLink="/dashboard/home/menu">
+      <img src="../../../assets/Loteria/logo_ln.png" alt="" />
+    </div>
+
+    <div class="user">
+      <div class="home__navbar-logoUser">
+        <button
+          type="button"
+          class="btn me-2"
+          placement="left"
+          [ngbPopover]="popoverContent"
+          popoverTitle="Datos de usuario"
+        >
+          <img
+            src="../../../assets/icons/userWhite.png"
+            alt=""
+            style="height: 40px"
+          />
+        </button>
+      </div>
+      <ng-template #popoverContent class="user-data">
+        <p style="text-align: center; font-size: 20px; font-weight: 600">
+          {{ userData.first_name | uppercase }}
+          {{ userData.last_name | uppercase }}
+        </p>
+        <p style="text-align: center; font-size: 15px; font-weight: 400">
+          {{ userData.email }}
+        </p>
+        <button
+          class="btn fs-8 mt-3 text-white fw-bold nav__btn-salir"
+          (click)="open(salir)"
+        >
+          Cerrar sesión
+          <img
+            src="../../../assets/icons/logOutWhite.png"
+            alt=""
+            style="width: 28px; height: 28px; margin-left: 10px"
+          />
+        </button>
+      </ng-template>
+    </div>
+  </nav>
+</header>
+<ng-template #salir let-modal>
+  <div class="modal-body-exit">
+    <div class="card p-4 mt-4">
+      <h4 class="text-center fw-bold text-dark">
+        ¿Estás seguro que deseas salir?
+      </h4>
+    </div>
+  </div>
+  <div class="modal-footer border-0 d-flex justify-content-around">
+    <button
+      class="btn btn-light fw-bold fs-5 modal-body-cancel-btn"
+      (click)="modal.close()"
+    >
+      Cancelar
+    </button>
+    <button
+      class="btn btn-danger fw-bold fs-5 modal-body-exit-btn"
+      (click)="handleLogout()"
+    >
+      Salir
+    </button>
+  </div>
+</ng-template>

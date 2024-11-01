@@ -1,0 +1,15 @@
+<nav aria-label="breadcrumbList" style="margin: auto; width: 80%">
+  <div class="breadcrumbList">
+    <div class="breadcrumbList-item">
+      <a class="bi bi-house-fill fs-4" routerLink="/dashboard/home/menu"></a>
+    </div>
+    <div *ngFor="let ruta of rutasData" class="breadcrumbList-item">
+      <a
+        routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+          ruta.id
+        }}"
+        >{{ ruta.nombre }}</a
+      >
+    </div>
+  </div>
+</nav>

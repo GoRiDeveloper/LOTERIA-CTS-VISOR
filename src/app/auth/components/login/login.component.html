@@ -1,0 +1,94 @@
+<div class="mt-2 w-100">
+  <div class="auth__form-content w-100">
+    <div class="auth__form-title auth__text-content">
+      <p style="font-size: 50px">¡Bienvenido!</p>
+    </div>
+    <p class="auth__text-content text-light text-justify">
+      Introduce tu correo electrónico y contraseña, se te enviará un código para
+      ingresar.
+    </p>
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+      <div class="auth__input-container w-100">
+        <div
+          class="auth__form-group m-0 pl-2 pr-2"
+          [class.auth__input-error-container]="inputIsValid('email')"
+        >
+          <input
+            class="form-control w-100 p-1"
+            name="email"
+            id="email"
+            type="email"
+            formControlName="email"
+          />
+          <label for="">Usuario</label>
+        </div>
+      </div>
+      <span
+        for="email"
+        class="text-small text-danger"
+        placeholder="Correo electrónico"
+        *ngIf="inputIsValid('email') && !loginForm.get('email')?.errors?.['pattern']"
+        >Campo requerido</span
+      >
+      <span
+        *ngIf="loginForm.get('email')?.errors?.['pattern']"
+        class="text-small text-danger"
+      >
+        El correo electrónico es inválido.
+      </span>
+
+      <div class="auth__input-container w-100">
+        <div class="row auth__form-containerPass">
+          <div class="">
+            <div
+              class="auth__form-group m-0 pl-2 pr-2"
+              [class.auth__input-error-container]="inputIsValid('password')"
+            >
+              <input
+                class="form-control w-100"
+                name="password"
+                id="password"
+                placeholder="Contraseña"
+                [type]="isShowPassword ? 'text' : 'password'"
+                formControlName="password"
+              />
+            </div>
+          </div>
+          <div class="col-2 col-md-2 align-self-center auth__form-passwordEye">
+            <img
+              src="./../../../../../assets/icons/{{
+                !isShowPassword ? 'eye-white' : 'eye-close-white'
+              }}.png"
+              alt="eye icon"
+              class="img-fluid"
+              (click)="isShowPassword = !isShowPassword"
+            />
+          </div>
+        </div>
+      </div>
+      <span
+        for="password"
+        class="text-small text-danger p-2"
+        *ngIf="inputIsValid('password')"
+      >
+        Campo requerido
+      </span>
+
+      <div class="auth__form-group mt-5">
+        <button
+          type="submit"
+          class="btn mt-3 auth__button btn-block w-100 text-uppercase"
+        >
+          ENVIAR CÓDIGO
+          <div
+            class="spinner-border spinner-border-sm"
+            role="status"
+            *ngIf="isLoading"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

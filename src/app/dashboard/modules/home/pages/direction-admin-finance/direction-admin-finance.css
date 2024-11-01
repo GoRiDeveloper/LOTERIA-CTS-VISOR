@@ -1,0 +1,151 @@
+/* fondo */
+
+.fondo {
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  background-image: url("../../../../../../assets/background/banner_03.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  z-index: 1;
+}
+
+.fondo_color {
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  background: #243f44bf;
+  z-index: 10;
+}
+
+.card_item-container {
+  position: fixed;
+  width: 80%;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0px;
+  padding: 100px 50px;
+  flex-direction: column;
+  /* background-color: #7e7e7e; */
+  z-index: 100;
+}
+
+.input__carpetas-container {
+  width: 100%;
+  margin: auto;
+  justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input__carpetas-container input {
+  border-radius: 40px;
+  background-color: #d9d9d94d;
+  height: 40px;
+  padding-left: 40px;
+  color: white;
+  border: 0px;
+  margin-left: -30px;
+}
+
+.container-breadcrumbList {
+  margin: auto;
+  width: 80%;
+  padding: 15px;
+}
+
+.container-cargaDocs {
+  height: 400px;
+}
+
+.container-cargaDocs input {
+  width: 80%;
+}
+
+.modalFiles__container {
+  /* min-height: 100vh; */
+  background-color: #333;
+  /* padding: 30px; */
+  overflow: hidden;
+}
+
+.tableModalFiles {
+  border-radius: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Modal Table Styling */
+
+.p-datatable-wrapper {
+  height: 80vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.p-datatable .p-datatable-header {
+  display: flex;
+  justify-content: space-between;
+  background: #222222;
+  color: #e9e9e9;
+  border: none;
+  border-width: 1px 0 1px 0;
+  padding: 1rem 1rem;
+  font-weight: 700;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #3d3d3d;
+}
+
+.p-datatable .p-datatable-tbody {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background-color: #545454;
+}
+
+.btn-addDep span {
+  transition: 0.5s ease;
+}
+
+.btn-addDep:hover .p-button-icon-right {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .container-breadcrumbList {
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .card_item-container {
+    width: 100%;
+    padding: 100px 10px;
+    justify-content: flex-start;
+  }
+
+  .card_item-containerTable {
+    width: 100%;
+    height: auto;
+    padding: 0px 0px 100px 0px;
+    margin: 0;
+    max-height: 60vh;
+  }
+}

@@ -1,0 +1,374 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+aside {
+  /* background: #144d4b; */
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0 rgba(rgba(6, 46, 54, 255)), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  border: 0;
+}
+aside:hover {
+  font-weight: bold;
+}
+
+a {
+  color: rgb(226, 226, 226);
+}
+
+a:hover {
+  color: white;
+}
+
+.sidebar__container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #13322b;
+  color: #f3f3f3;
+  background-image: url("../../../assets/background/bg-sidebar-guinda.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.sidebar__headerUser-container {
+  position: relative;
+  margin-top: 40px;
+  margin-left: 40px;
+}
+
+.btn-close {
+  position: absolute;
+  right: 5%;
+  top: 5%;
+}
+
+.sidebar__headerUser-info {
+  display: flex;
+}
+
+.sidebar__headerUser-infoUserImg {
+  position: relative;
+  border: 2px solid rgb(248, 248, 248);
+  border-radius: 100%;
+  height: 70px;
+  width: 70px;
+  margin-right: 20px;
+  background-color: white;
+}
+
+.sidebar__headerUser-infoUserImgActive {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 14px;
+  width: 14px;
+  border-radius: 100%;
+  background-color: rgb(0, 216, 0);
+}
+
+.sidebar__headerUser-infoUserImg img {
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar__headerUser-userVerificado {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__headerUser-userVerificado img {
+  height: 40px;
+  width: 40px;
+}
+
+.texto-nav {
+  color: #eeeeee;
+}
+
+a span {
+  cursor: pointer;
+}
+
+.list_items {
+  padding-left: 50px;
+  margin-left: 10px;
+  color: rgb(8, 8, 8);
+  font-weight: bold;
+  list-style: inside;
+  cursor: pointer;
+}
+
+.rotate_arrow {
+  transform: rotate(-90deg) !important;
+  transition: 0.5s;
+}
+.list_items li,
+.list_items p {
+  padding-bottom: 5px;
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+  list-style: circle;
+  max-width: 350px;
+  border-radius: 10px;
+  color: white;
+}
+
+.list_items li {
+  display: flex;
+  transition: 0.3s;
+  padding: 10px;
+  align-items: baseline;
+}
+
+.list_items li img {
+  height: 25px;
+  width: 25px;
+  margin: auto 0;
+  margin-right: 20px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.list_items li:hover {
+  background-color: #777777;
+  transition: 0.3s;
+}
+
+.list_items li p {
+  text-transform: uppercase;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  transition: 0.5s;
+}
+
+.item:hover {
+  background-color: #777777;
+  transition: 0.5s;
+}
+
+.item span {
+  text-decoration: none;
+}
+
+.item:nth-child(2),
+.item:nth-child(3) {
+  margin: 20px 0 20px 40px;
+}
+
+.circle {
+  background-color: rgb(241, 241, 241);
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  min-height: 10px;
+  max-width: 10px;
+  max-height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.card {
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  border: 0;
+  font-weight: 600;
+}
+
+.card:hover {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.btn-home {
+  background-color: #414141;
+  position: fixed;
+  z-index: 1000;
+  height: 60px;
+  width: 70px;
+  top: 11%;
+  left: 3%;
+  border: 0;
+  transition: 0.5s;
+}
+
+.btn-home:hover {
+  background-color: #5c5c5c;
+  transition: 0.5s;
+}
+
+.btn-home img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.offcanvas {
+  background-color: black !important;
+}
+
+.offcanvas-item {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 230px;
+  height: 100%;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.offcanvas-item-body {
+  /* min-height: calc(100vh - 80px); */
+  display: flex;
+  flex: 1;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.offcanvas-body {
+  min-height: 90%;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+  align-items: normal !important;
+  overflow-x: auto;
+}
+
+.nav_items {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.nav_items li {
+  display: flex;
+}
+
+.nav_items li img {
+  height: 20px;
+  width: 20px;
+}
+
+.nav_items li p {
+  color: rgb(236, 236, 236);
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.offcanvas-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.sidebar__button-usuarios {
+  background-color: #d1d1d1;
+  color: #303030;
+  transition: 0.5s;
+}
+.sidebar__button-usuarios:hover {
+  background-color: #ffffff;
+  color: #181818;
+}
+
+.sidebar__button-salir {
+  background-color: rgb(34, 34, 34);
+  color: white;
+  border: 1px solid black;
+  transition: 0.5s;
+}
+
+.sidebar__button-salir:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  transition: 0.5s;
+}
+
+.sidebar__button-salir img {
+  height: 25px;
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .btn-home {
+    left: auto;
+    top: 1%;
+    right: 3% !important;
+  }
+}
+
+/* Estilos Tree */
+.tree-sidebar .p-tree {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  padding: 10px;
+}
+
+.tree-sidebar .p-treenode-content {
+  background-color: transparent;
+  color: #fff;
+  border-bottom: 2px solid #ffffff29;
+  /* border-radius: 0 !important; */
+  padding: 5px 10px;
+}
+
+.tree-sidebar .p-treenode-content .p-highlight {
+  background-color: #007bff;
+  color: #0f0f0f;
+  cursor: pointer;
+}
+
+.tree-sidebar .p-treenode-content:hover {
+  background-color: #6363639c;
+  color: #fff;
+}
+
+.tree-sidebar .p-treenode-content .p-treenode-label {
+  color: #ffffff;
+}
+
+.tree-sidebar .p-treenode-label {
+  color: #fff;
+}
+
+.tree-sidebar .p-treenode-icon {
+  /* color: #ffee00 !important; */
+  font-size: 20px;
+}
+
+.tree-sidebar .p-tree-filter-container input {
+  background-color: #555;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+
+.tree-sidebar .p-treenode-children {
+  border-left: 1px solid #666;
+  margin-left: 20px;
+}

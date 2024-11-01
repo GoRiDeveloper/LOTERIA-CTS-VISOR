@@ -1,0 +1,432 @@
+<div class="d-flex justify-content-between">
+  <h3 class="fs-2">Usuarios</h3>
+</div>
+
+<div class="mt-4 mb-4 d-flex justify-content-end">
+  <div class="text-title">
+    <h2 class="text-light">Usuarios</h2>
+  </div>
+</div>
+
+<div class="search-input-container">
+  <div class="icon-container">
+    <img src="./../../../../../../assets/icons/icon-search.png" alt="icon" />
+  </div>
+  <div>
+    <input
+      #searchinput
+      class="input-search"
+      (value)="(search)"
+      (keyup.enter)="searchEnter(searchinput.value)"
+    />
+  </div>
+</div>
+
+<div class="container-spinner" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p class="spinner-text">Cargando...</p>
+</div>
+
+<div class="table-container p-3" *ngIf="!isLoading">
+  <div
+    class="d-lg-flex p-3 justify-content-between align-items-center mt-1 mb-1"
+  >
+    <div class="d-flex">
+      <div class="m-1 p-2">
+        <span class="switch switch-sm d-inline">
+          <input
+            type="checkbox"
+            class="switch"
+            name="activo"
+            id="activos"
+            [checked]="activos"
+            (change)="cambiarActivos()"
+          />
+          <label for="activos" class="fs-4 text-light">Activos</label>
+        </span>
+      </div>
+    </div>
+
+    <div>
+      <button
+        class="btn btn-green text-light m-1 p-2"
+        (click)="open(contentInformationProfile)"
+      >
+        <img
+          src="./../../../../../assets/icons/add.png"
+          alt="add"
+          width="25px"
+          class="p-1"
+        />
+        AGREGAR USUARIOS
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive w-100">
+    <table class="table table-borderless w-100">
+      <thead>
+        <tr>
+          <th class="fw-normal">Nombre</th>
+          <th class="fw-normal">Correo electrónico</th>
+          <th class="fw-normal">Extensión</th>
+          <th class="fw-normal">Activar</th>
+          <th class="fw-normal">Administrar cuenta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let index = index">
+          <td>
+            <div class="d-flex">
+              <p class="m-1">
+                {{ user.first_name | uppercase }}
+                {{ user.last_name | uppercase }}
+              </p>
+            </div>
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.telefono }}</td>
+          <td>
+            <div class="form-group">
+              <span class="switch switch-sm d-inline">
+                <input
+                  type="checkbox"
+                  class="switch"
+                  id="switch-sm{{ index }}"
+                  name="activo"
+                  [checked]="user.is_active"
+                  (change)="handleDisableUser(user)"
+                />
+                <label for="switch-sm{{ index }}"></label>
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mb-0">{{ user.username }}</p>
+                <p class="mt-0">*******</p>
+              </div>
+              <button
+                class="btn btn-green text-light"
+                (click)="openUpdateUser(editInformationProfile, user)"
+              >
+                Editar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  class="d-flex p-3 justify-content-between align-items-center mt-4 container__btn-antsig"
+  *ngIf="!isLoading"
+>
+  <button
+    class="btn btn-outline-secondary text-light fs-5 container__btn-antsig-btn"
+    [disabled]="pageCurrent <= 1"
+    (click)="handleBeforePage()"
+  >
+    Anterior
+  </button>
+
+  <div class="d-flex align-items-center gap-2">
+    <label class="fs-4 text-light">Página </label>
+    <input
+      #pageCurrentInput
+      [value]="pageCurrent"
+      class="form-control input-paginator fs-4"
+      type="number"
+      min="1"
+      step="0"
+      max="{{ pagemax }}"
+      (keyup.enter)="irPagina(pageCurrentInput.value)"
+    />
+
+    <label class="text-light fs-4 text-nowrap"> de {{ pagemax }} </label>
+  </div>
+  <button
+    class="btn btn-outline-secondary text-light btn-green fs-5 container__btn-antsig-btn"
+    (click)="handleNextPage()"
+    [disabled]="pageCurrent == pagemax"
+  >
+    Siguiente
+  </button>
+</div>
+
+<ng-template #contentInformationProfile let-modal>
+  <div class="modal-body-users">
+    <div class="form__control-titleModal">
+      <h5 class="fs-1 mt-5 text-light">CREA UN USUARIO</h5>
+      <label class="text-muted">Registra la información de nuevo usuario</label>
+    </div>
+    <div class="card p-5 m-5 mt-4">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form__control-titleModal">
+          <label class="fs-3 fw-bold pb-0 mb-0 justify-content-center">
+            Información personal
+          </label>
+          <small class="text-muted d-block mb-3">
+            Específica los datos exactamente como en la identificación oficial
+          </small>
+        </div>
+        <label for="name" class="mt-4 mb-3 text-small">Nombre(s)</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="first_name"
+        />
+
+        <label for="name" class="mt-3 mb-2">Apellidos</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="last_name"
+        />
+
+        <label for="name" class="mt-3 mb-2">Password</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="password"
+        />
+
+        <label for="name" class="mt-3 mb-2">Username/Correo</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="username"
+        />
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Contacto </label>
+
+        <input
+          type="tel"
+          class="form-control mt-5 mb-2 form-field"
+          placeholder="00-000-000-000"
+          formControlName="telefono"
+        />
+
+        <!-- Sección para agregar dependencia -->
+        <label class="fw-bold pb-0 mt-5 mb-0"> Dependencia </label>
+        <div class="mt-2">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="openModalDependencies(modalAccesso, true)"
+          >
+            Administrar Dependencias
+          </button>
+        </div>
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Permisos </label>
+        <div class="col-12 p-3 border-bottom">
+          <select
+            name="dependencia"
+            id="dependencia"
+            class="form-select form-select-lg form-field border-0 flex-shrink-1 fw-bold"
+            formControlName="descargas"
+          >
+            <option [value]="false">Ver</option>
+            <option [value]="true">Ver y descargar</option>
+          </select>
+        </div>
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Rol </label>
+        <div class="col-12 p-3 border-bottom">
+          <select
+            name="dependencia"
+            id="dependencia"
+            class="form-select form-select-lg fw-bold form-field border-0 flex-shrink-1 fw-light"
+            formControlName="rol"
+          >
+            <option value="1">Admin</option>
+            <option value="2">Usuario</option>
+          </select>
+        </div>
+
+        <div class="d-flex justify-content-around">
+          <button class="btn btn-secondary text-light fs-5 mt-5 mb-3">
+            CREAR
+          </button>
+          <button
+            type="button"
+            (click)="modal.close()"
+            class="btn btn-danger text-light fs-5 mt-5 mb-3"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editInformationProfile let-modal>
+  <div class="modal-body-users p-3">
+    <h5 class="fs-3 mt-5 text-light text-center">
+      Edita la información del usuario
+    </h5>
+    <div class="card p-3 mt-4">
+      <form [formGroup]="EditUserForm" (ngSubmit)="onSubmitEditUser()">
+        <div class="modal-body-header">
+          <label class="fw-bold pb-0 mb-0 text-center">
+            Información personal
+          </label>
+          <small class="text-muted d-block mb-3">
+            Específica los datos exactamente como en la identificación oficial
+          </small>
+        </div>
+        <label for="name" class="mt-4 mb-3 text-small">Nombre(s)</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="first_name"
+        />
+
+        <label for="name" class="mt-3 mb-2">Apellidos</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="last_name"
+        />
+
+        <label for="name" class="mt-3 mb-2">Password</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          formControlName="password"
+        />
+
+        <label for="name" class="mt-3 mb-2">Username/Correo</label>
+        <input
+          type="text"
+          class="form-control form-field"
+          readonly
+          formControlName="username"
+        />
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Contacto </label>
+
+        <input
+          type="tel"
+          class="form-control mt-5 mb-2 form-field"
+          placeholder="00-000-000-000"
+          formControlName="telefono"
+        />
+
+        <!-- Sección para agregar dependencia -->
+        <label class="fw-bold pb-0 mt-5 mb-0"> Dependencia </label>
+        <div class="mt-2">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="openModalDependencies(modalAccesso)"
+            [disabled]="disableBtn"
+            tabindex="-1"
+          >
+            Administrar Dependencias
+          </button>
+        </div>
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Permisos </label>
+        <div class="col-12 p-3 border-bottom">
+          <select
+            name="dependencia"
+            id="dependencia"
+            class="form-select form-select-lg fw-bold form-field border-0 flex-shrink-1 fw-light"
+            formControlName="descargas"
+          >
+            <option [value]="false">Ver</option>
+            <option [value]="true">Ver y descargar</option>
+          </select>
+        </div>
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Expediente </label>
+        <div class="col-12 p-3 border-bottom">
+          <select
+            name="dependencia"
+            id="dependencia"
+            class="form-select form-select-lg fw-bold form-field border-0 flex-shrink-1 fw-light"
+            formControlName="expediente_ver"
+          >
+            <option [value]="false">Ocultar</option>
+            <option [value]="true">Mostrar</option>
+          </select>
+        </div>
+
+        <label class="fw-bold pb-0 mt-5 mb-0"> Rol </label>
+        <div class="col-12 p-3 border-bottom">
+          <select
+            name="dependencia"
+            id="dependencia"
+            class="form-select form-select-lg fw-bold form-field border-0 flex-shrink-1 fw-light"
+            formControlName="rol"
+          >
+            <option value="1">Admin</option>
+            <option value="2">Usuario</option>
+          </select>
+        </div>
+
+        <div class="d-flex justify-content-around">
+          <button class="btn btn-secondary text-light fs-5 mt-5 mb-3">
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="modal.close()"
+            class="btn btn-danger text-light fs-5 mt-5 mb-3"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalAccesso let-modal>
+  <div class="modal-body-users p-5">
+    <h5 class="fs-3 mt-2 mb-2 text-light">
+      Administrar Dependencias de Usuario
+    </h5>
+    <label class="">Seleccione las dependencias permitidas.</label>
+    <!-- <div class="mb-3 mt-3">
+      <input
+        class="input-search"
+        [spellcheck]="false"
+        type="text"
+        [(ngModel)]="src"
+        placeholder="Buscar dependencia..."
+        (ngModelChange)="filterDependeciesByQuery($event)"
+      />
+    </div> -->
+    <div class="row p-2 justify-content-center">
+      <div class="d-flex">
+        <div class="p-3 w-100">
+          <!-- Mostrar árbol de dependencias -->
+          <app-tree-view
+            [dependenciesUser]="selectedDepUserUpdate"
+            [isToCreateUser]="isToCreateUser"
+            (selectedDepChange)="onSelectedDepChange($event)"
+            [dataUser]="user"
+          ></app-tree-view>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-secondary text-light mb-3" (click)="modal.close()">
+        ACEPTAR
+        <!-- <img
+          src="./../../../../../assets/icons/arrow.png"
+          class="p-2"
+          alt="icon"
+          width="35px"
+        /> -->
+      </button>
+    </div>
+  </div>
+</ng-template>

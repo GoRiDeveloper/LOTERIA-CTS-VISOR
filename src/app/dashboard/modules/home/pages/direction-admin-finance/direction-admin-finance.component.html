@@ -1,0 +1,211 @@
+<div class="fondo"></div>
+<!-- <div class="fondo_color"> -->
+<div *ngIf="isLoading" class="container-spinner">
+  <div class="spinner"></div>
+  <p class="spinner-text">Cargando...</p>
+</div>
+<!-- </div> -->
+
+<div class="card_item-container" *ngIf="!isLoading">
+  <div class="container-breadcrumbList">
+    <div class="input__carpetas-container mb-3">
+      <input
+        class="input-src"
+        [spellcheck]="false"
+        type="text"
+        [(ngModel)]="src"
+        placeholder="Buscar"
+        (ngModelChange)="searchQuery($event)"
+      />
+      <div class="d-flex gap-3">
+        <ng-container *ngIf="user_rol === 1">
+          <p-button
+            label="Agregar carpeta"
+            class="p-button-secondary btn-addDep"
+            icon="bi bi-plus-lg"
+            iconPos="right"
+            (onClick)="openModalCreateDependencie(addDependencieModal, true)"
+          ></p-button>
+        </ng-container>
+
+        <p-button
+          label="Buscar Archivos"
+          icon="bi bi-file-earmark-fill"
+          iconPos="right"
+          (onClick)="openModalSearchFiles()"
+        ></p-button>
+      </div>
+    </div>
+    <app-breadcrumb [rutasData]="rutasData"></app-breadcrumb>
+  </div>
+
+  <div
+    class="card_item-containerTable"
+    style="overflow-y: scroll; max-height: 60vh"
+  >
+    <ng-container *ngIf="archivosVarios">
+      <div
+        class="card__2level-container cardArchivosVarios"
+        routerLink="/dashboard/home/documentos/{{ archivosVariosURL }}"
+      >
+        <div class="card__2level-containerPI">
+          <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+          <p class="">Archivos Varios</p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngFor="let subgerencia of filterDependeciesName">
+      <ng-container
+        *ngIf="subgerencia.has_sub == true && subgerencia.has_doc == true"
+      >
+        <div
+          class="card__2level-container"
+          routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+            subgerencia.id
+          }}"
+        >
+          <div class="card__2level-containerPI">
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="subgerencia.has_sub == false && subgerencia.has_doc == true"
+      >
+        <div
+          class="card__2level-container"
+          routerLink="/dashboard/home/documentos/{{ subgerencia.id }}"
+        >
+          <div class="card__2level-containerPI">
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="subgerencia.has_sub == true && subgerencia.has_doc == false"
+      >
+        <div
+          class="card__2level-container"
+          routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+            subgerencia.id
+          }}"
+        >
+          <div class="card__2level-containerPI">
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="subgerencia.has_sub == false && subgerencia.has_doc == false"
+      >
+        <div
+          class="card__2level-container"
+          routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+            subgerencia.id
+          }}"
+        >
+          <div class="card__2level-containerPI">
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+        </div>
+      </ng-container>
+
+      <div
+        class="d-flex col gap-3 justify-content-center"
+        *ngIf="user_rol == 1"
+      >
+        <button
+          style="margin-top: 5px; margin-bottom: 5px"
+          class="btn btn-success"
+          (click)="cargar_script(subgerencia.id)"
+        >
+          CARGA_SCRIPT
+        </button>
+
+        <button
+          style="margin-top: 5px; margin-bottom: 5px"
+          class="btn btn-danger"
+          (click)="borrar_documentos(subgerencia)"
+        >
+          Borrar documentos
+        </button>
+
+        <button
+          style="margin-top: 5px; margin-bottom: 5px"
+          class="btn btn-danger"
+          (click)="borrar_dependencia(subgerencia)"
+        >
+          Borrar dependencia
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="noDataMsg">
+      <div class="d-flex justify-content-center">
+        <p-button
+          label="Agregar contenido"
+          class="p-button-secondary btn-addDep"
+          icon="bi bi-plus-lg"
+          iconPos="right"
+          (onClick)="openModalCreateDependencie(addTableModal, false)"
+        ></p-button>
+        <!-- <h3 class="text-light text-center">
+        No hay dependencias para crear, puede crear una.
+      </h3> -->
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Abrir componente del modal para mostrar búsqueda de archivos -->
+<ng-template #SearchFileModal let-modal>
+  <search-file-modal
+    [valuesTable]="valuesTable"
+    [indiceDependencia]="indiceDependencia!"
+  ></search-file-modal>
+</ng-template>
+
+<ng-template #addDependencieModal let-modal>
+  <div class="modal-header text-light" style="background-color: #222222">
+    <h4 class="modal-title" id="modal-basic-title">Crear nueva dependencia</h4>
+    <button
+      type="button"
+      class="btn-close text-light"
+      style="top: auto; filter: invert(100%)"
+      aria-label="Close"
+      data-bs-theme="dark"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <form-add-dependencie
+    [currentRoute]="currentRoute"
+    [indiceDependencia]="indiceDependencia"
+    [dependenciaIndiceLongitud]="dependenciaIndiceLongitud"
+    (executeGetDependency)="getDependecy()"
+    [isCreateDependencia]="isCreateDependencia"
+  ></form-add-dependencie>
+</ng-template>
+
+<ng-template #addTableModal let-modal>
+  <div class="modal-header text-light" style="background-color: #222222">
+    <h4 class="modal-title" id="modal-basic-title">Crear nueva tabla</h4>
+    <button
+      type="button"
+      class="btn-close text-light"
+      style="top: auto; filter: invert(100%)"
+      aria-label="Close"
+      data-bs-theme="dark"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <form-add-table
+    [currentRoute]="currentRoute"
+    [indiceDependencia]="indiceDependencia"
+    [dependenciaIndiceLongitud]="dependenciaIndiceLongitud"
+    (executeGetDependency)="getDependecy()"
+    [isCreateDependencia]="isCreateDependencia"
+  ></form-add-table>
+</ng-template>
