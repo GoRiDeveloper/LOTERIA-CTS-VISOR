@@ -247,18 +247,17 @@ export class GerenciaTesoreriaComponent implements OnInit {
 
   descargar() {
     this._dependecyService.getDocumentArchivoDescargarByID(this.id).subscribe({
-        next: (response) => {
-            const fileName = this.pdfinfo.nombre;  // Nombre base del archivo
-            const extension = this.pdfinfo.ext // Determina la extensión según el tipo de archivo
+      next: (response) => {
+        const fileName = this.pdfinfo.nombre; // Nombre base del archivo
+        const extension = this.pdfinfo.ext; // Determina la extensión según el tipo de archivo
 
-            this.downLoadFile(response, fileName, extension);  // Llama a la función con la extensión correspondiente
-        },
-        error: (err) => {
-            console.error("Error al descargar el archivo", err);
-        }
+        this.downLoadFile(response, fileName, extension); // Llama a la función con la extensión correspondiente
+      },
+      error: (err) => {
+        console.error('Error al descargar el archivo', err);
+      },
     });
-}
-
+  }
 
   irPagina(pagina: string) {
     try {
@@ -365,23 +364,27 @@ export class GerenciaTesoreriaComponent implements OnInit {
     try {
       if (endPage > 200) {
         const firtsPagesLoaded = Math.round(endPage / 5);
+        console.log({ firtsPagesLoaded });
+
         const partialPdf = await this.loadPartialPdf(
           pk,
           startPage,
           firtsPagesLoaded
         );
-        const newPdfDoc = await this.processPdf(
-          partialPdf,
-          startPage,
-          firtsPagesLoaded
-        );
+        // const newPdfDoc = await this.processPdf(
+        //   partialPdf,
+        //   startPage,
+        //   firtsPagesLoaded
+        // );
+        // console.log({ partialPdf });
 
         this.displayPdf(partialPdf, 1, firtsPagesLoaded, endPage);
 
-        this.loadRemainingPages(pk, firtsPagesLoaded + 1, endPage, partialPdf);
+        this.loadRemainingPages(pk, 1, endPage);
       } else {
-        const completePDF = await this.loadPartialPdf(pk, startPage, endPage);
-        this.displayPdf(completePDF, 1, endPage, endPage, true);
+        const completePdf = await this.loadPartialPdf(pk, startPage, endPage);
+
+        this.displayPdf(completePdf, 1, endPage, endPage, true);
       }
     } catch (error) {
       console.error('Error occurred:', error);
@@ -396,21 +399,20 @@ export class GerenciaTesoreriaComponent implements OnInit {
   async loadRemainingPages(
     pk: number,
     startPage: number,
-    endPage: number,
-    basePdfDoc: PDFDocument
+    endPage: number
   ): Promise<void> {
     try {
-      const remainingPdf = await this.loadPartialPdf(pk, startPage, endPage);
-      const newPdfDoc = await this.processPdf(
-        remainingPdf,
-        startPage,
-        endPage,
-        basePdfDoc
-      );
+      const pdf = await this.loadPartialPdf(pk, startPage, endPage);
+      // const newPdfDoc = await this.processPdf(
+      //   remainingPdf,
+      //   startPage,
+      //   endPage,
+      //   basePdfDoc
+      // );
 
       // Mantener la página actual
       const currentPage = this.page;
-      this.displayPdf(remainingPdf, currentPage, startPage, endPage, true);
+      this.displayPdf(pdf, currentPage, startPage, endPage, true);
     } catch (error) {
       console.error('Error loading remaining pages:', error);
     }
@@ -425,12 +427,16 @@ export class GerenciaTesoreriaComponent implements OnInit {
     const response = await this._dependecyService
       .getDocumentByPages(pk, startPage, endPage)
       .toPromise();
+
     if (!response) {
       throw new Error('No se ha recibido ningún documento');
     }
+
     const blob = new Blob([response], { type: 'application/pdf' });
+
     const arrayBuffer = await blob.arrayBuffer();
-    return await PDFDocument.load(arrayBuffer);
+
+    return PDFDocument.load(arrayBuffer);
   }
 
   //función que procesa el pdf para que tengan las mismas dimensiones
@@ -550,20 +556,21 @@ export class GerenciaTesoreriaComponent implements OnInit {
 
   downLoadFile(data: ArrayBuffer, fileName: string, extension: string) {
     // Crear el Blob en formato binario
-    const blob = new Blob([data], { type: extension === 'pdf' ? 'application/pdf' : 'application/octet-stream' });
+    const blob = new Blob([data], {
+      type:
+        extension === 'pdf' ? 'application/pdf' : 'application/octet-stream',
+    });
     const url = window.URL.createObjectURL(blob);
 
     // Configurar el nombre del archivo con la extensión especificada
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = `${fileName}.${extension}`;  // Agrega la extensión correcta
+    anchor.download = `${fileName}.${extension}`; // Agrega la extensión correcta
     anchor.click();
 
     // Liberar la URL creada para liberar memoria
     window.URL.revokeObjectURL(url);
-}
-
-
+  }
 
   handleSetOrder(id: number) {
     if (this.order == 0 || Math.abs(this.order) != id) {

@@ -5,7 +5,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DirectoriosServicesService } from 'src/app/services/directorios-services.service';
 import * as CryptoJS from 'crypto-js';
 import {
@@ -58,7 +58,8 @@ export class DirectionAdminFinanceComponent implements OnInit {
     private _activateRoute: ActivatedRoute,
     private _modalService: NgbModal,
     private _toastr: ToastrService,
-    private _location: Location
+    private _location: Location,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +92,9 @@ export class DirectionAdminFinanceComponent implements OnInit {
         }
 
         const { dependencias, archivos, rutas } = response;
+
+        if (rutas[0]?.has_doc) this._location.back();
+
         this.dependenciaIndiceLongitud = dependencias.length + 1;
 
         this.currentRoute = rutas[0];
@@ -110,9 +114,9 @@ export class DirectionAdminFinanceComponent implements OnInit {
 
         this.isLoading = false;
         if (this.subDependencies.length === 0) {
-          this.noDataMsg = true
+          this.noDataMsg = true;
         } else {
-          this.noDataMsg = false
+          this.noDataMsg = false;
         }
       },
       error: (err) => {
@@ -147,7 +151,7 @@ export class DirectionAdminFinanceComponent implements OnInit {
     });
   }
 
-  openModalCreateDependencie(content: any, isCreateDep:boolean) {
+  openModalCreateDependencie(content: any, isCreateDep: boolean) {
     this.isCreateDependencia = isCreateDep;
     this._modalService.open(content, { size: 'lg', centered: true });
   }
