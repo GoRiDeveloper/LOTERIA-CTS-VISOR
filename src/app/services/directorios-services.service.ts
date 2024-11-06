@@ -327,4 +327,12 @@ export class DirectoriosServicesService {
       { headers: this._getHeaders() }
     );
   }
+
+  updateDependencie(id: string, data: { nombre: string }): Observable<any> {
+    return this._http.post<any>(
+      `${environment.BASE_URL}dependencia/modificarNombre/${id}/`,
+      data,
+      { headers: this._getHeaders() }
+    );
+  }
 }

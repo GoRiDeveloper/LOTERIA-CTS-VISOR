@@ -58,59 +58,127 @@
       <ng-container
         *ngIf="subgerencia.has_sub == true && subgerencia.has_doc == true"
       >
-        <div
-          class="card__2level-container"
-          routerLink="/dashboard/home/direccion-administracion-finanzas/{{
-            subgerencia.id
-          }}"
-        >
-          <div class="card__2level-containerPI">
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+              subgerencia.id
+            }}"
+          >
             <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
             <p class="">{{ subgerencia.nombre }}</p>
           </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
         </div>
       </ng-container>
       <ng-container
         *ngIf="subgerencia.has_sub == false && subgerencia.has_doc == true"
       >
-        <div
-          class="card__2level-container"
-          routerLink="/dashboard/home/documentos/{{ subgerencia.id }}"
-        >
-          <div class="card__2level-containerPI">
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/documentos/{{ subgerencia.id }}"
+          >
             <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
             <p class="">{{ subgerencia.nombre }}</p>
           </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
         </div>
       </ng-container>
       <ng-container
         *ngIf="subgerencia.has_sub == true && subgerencia.has_doc == false"
       >
-        <div
-          class="card__2level-container"
-          routerLink="/dashboard/home/direccion-administracion-finanzas/{{
-            subgerencia.id
-          }}"
-        >
-          <div class="card__2level-containerPI">
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+              subgerencia.id
+            }}"
+          >
             <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
             <p class="">{{ subgerencia.nombre }}</p>
           </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
         </div>
       </ng-container>
       <ng-container
         *ngIf="subgerencia.has_sub == false && subgerencia.has_doc == false"
       >
-        <div
-          class="card__2level-container"
-          routerLink="/dashboard/home/direccion-administracion-finanzas/{{
-            subgerencia.id
-          }}"
-        >
-          <div class="card__2level-containerPI">
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/direccion-administracion-finanzas/{{
+              subgerencia.id
+            }}"
+          >
             <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
             <p class="">{{ subgerencia.nombre }}</p>
           </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
         </div>
       </ng-container>
 
@@ -170,7 +238,9 @@
 
 <ng-template #addDependencieModal let-modal>
   <div class="modal-header text-light" style="background-color: #222222">
-    <h4 class="modal-title" id="modal-basic-title">Crear nueva dependencia</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ editableItem ? "Editar" : "Crear nueva" }} dependencia
+    </h4>
     <button
       type="button"
       class="btn-close text-light"
@@ -182,6 +252,7 @@
   </div>
   <form-add-dependencie
     [currentRoute]="currentRoute"
+    [editableItem]="editableItem"
     [indiceDependencia]="indiceDependencia"
     [dependenciaIndiceLongitud]="dependenciaIndiceLongitud"
     (executeGetDependency)="getDependecy()"

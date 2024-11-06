@@ -14,6 +14,7 @@ import { DirectoriosServicesService } from 'src/app/services/directorios-service
 export class AddFileModalComponent implements OnInit {
   @Output() executeGetDependency = new EventEmitter<void>();
 
+  @Input() public idType?: string;
   @Input() public headers?: HeadersInterface[] | null;
   @Input() public dependenciaIndice?: string;
   @Input() public dependenciaId?: string;
@@ -84,6 +85,7 @@ export class AddFileModalComponent implements OnInit {
     formData.append('dependenciaIndice', this.dependenciaIndice!);
     formData.append('dependenciaId', this.dependenciaId!);
     formData.append('tipoDocumento', this.currentTag!);
+    formData.append('tipo', this.idType!);
     formData.append('ruta', routeSend as string);
 
     this._dependencyService.uploadPDF(formData).subscribe({

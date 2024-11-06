@@ -53,13 +53,19 @@ export class DirectionAdminFinanceComponent implements OnInit {
   public idDependencia?: string;
   public isCreateDependencia: boolean = false;
 
+  public editableItem:
+    | boolean
+    | {
+        id: string;
+        name: string;
+      } = false;
+
   constructor(
     private _dependecyService: DirectoriosServicesService,
     private _activateRoute: ActivatedRoute,
     private _modalService: NgbModal,
     private _toastr: ToastrService,
-    private _location: Location,
-    private _router: Router
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +83,15 @@ export class DirectionAdminFinanceComponent implements OnInit {
       this.idSuperior = params.get('id') || '';
       this.getDependecy();
     });
+  }
+
+  setEditable(id: string, name: string, content: any) {
+    this.editableItem = {
+      id,
+      name,
+    };
+
+    this._modalService.open(content, { size: 'lg', centered: true });
   }
 
   getDependecy() {
@@ -153,6 +168,8 @@ export class DirectionAdminFinanceComponent implements OnInit {
 
   openModalCreateDependencie(content: any, isCreateDep: boolean) {
     this.isCreateDependencia = isCreateDep;
+    this.editableItem = false;
+
     this._modalService.open(content, { size: 'lg', centered: true });
   }
 

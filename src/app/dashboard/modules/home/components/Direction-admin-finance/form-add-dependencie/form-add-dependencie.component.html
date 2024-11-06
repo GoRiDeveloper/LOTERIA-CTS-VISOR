@@ -1,17 +1,15 @@
 <div class="modal-body text-light" style="background-color: #545454">
   <form [formGroup]="dependencieForm" (ngSubmit)="onSubmitAddDep()">
     <div class="mb-3">
-      <ng-container *ngIf="isCreateDependencia">
-        <label for="nombre" class="form-label fw-bold">
-          Nombre de la dependencia
-        </label>
-        <input
-          type="text"
-          id="nombre"
-          class="form-control bg-transparent text-light"
-          formControlName="nombre"
-        />
-      </ng-container>
+      <label for="nombre" class="form-label fw-bold">
+        Nombre de la dependencia
+      </label>
+      <input
+        type="text"
+        id="nombre"
+        class="form-control bg-transparent text-light"
+        formControlName="nombre"
+      />
 
       <div formArrayName="metaData" class="mt-3">
         <div *ngFor="let meta of metaData.controls; let i = index" class="mb-3">
@@ -40,12 +38,14 @@
       </div>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="dependencieForm.invalid"
-    >
-      Crear dependencia
-    </button>
+    <ng-container *ngIf="userRol">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="dependencieForm.invalid"
+      >
+        {{ editableItem ? "Editar" : "Crear" }} dependencia
+      </button>
+    </ng-container>
   </form>
 </div>

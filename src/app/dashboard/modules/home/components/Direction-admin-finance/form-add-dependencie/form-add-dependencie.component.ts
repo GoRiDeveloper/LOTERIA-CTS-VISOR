@@ -15,6 +15,10 @@ import { DirectoriosServicesService } from 'src/app/services/directorios-service
 export class FormAddDependencieComponent implements OnInit {
   @Output() executeGetDependency = new EventEmitter<void>();
   @Input() public currentRoute: CurrentRoute | null = null;
+  @Input() public editableItem: { id: string; name: string } | boolean = {
+    id: '',
+    name: '',
+  };
   @Input() public indiceDependencia?: string;
   @Input() public dependenciaIndiceLongitud?: string;
   @Input() public isCreateDependencia?: boolean;
@@ -29,6 +33,7 @@ export class FormAddDependencieComponent implements OnInit {
   public namesHeaders?: string[];
   public selectedHeaders?: string[];
   public idDepNueva?: string;
+  public userRol?: number;
   public dependeciaIdHeader?: number;
   public dependenciaDocumentoTipoId?: number;
   public idHeadersToAdd: (number | undefined)[] = [];
@@ -42,10 +47,29 @@ export class FormAddDependencieComponent implements OnInit {
 
   ngOnInit() {
     this.getMetadata();
+    this.setUserRol();
+
+    if (typeof this.editableItem !== 'boolean' && this.editableItem.name) {
+      this.dependencieForm.patchValue({ nombre: this.editableItem.name });
+    }
   }
 
   get metaData(): FormArray {
     return this.dependencieForm.get('metaData') as FormArray;
+  }
+
+  setUserRol() {
+    debugger;
+    let bytes = CryptoJS.AES.decrypt(
+      localStorage.getItem('data') || '',
+      localStorage.getItem('token') || ''
+    );
+
+    const userData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+    console.log({ rol: userData.rol });
+
+    this.userRol = userData.rol;
   }
 
   getMetadata() {
@@ -94,7 +118,7 @@ export class FormAddDependencieComponent implements OnInit {
 
   async onSubmitAddDep() {
     if (!this.dependencieForm.valid) return;
-    const nombre = this.dependencieForm.get('nombre')?.value
+    const nombre = this.dependencieForm.get('nombre')?.value;
 
     const createDep = {
       nombre,
@@ -102,17 +126,34 @@ export class FormAddDependencieComponent implements OnInit {
       dependenciaSuperior: this.currentRoute?.id!,
     };
 
-    this._dependecyService.addDependency(createDep).subscribe({
-      next: (response) => {
-        this._toastr.success('', 'Dependencia Creada');
-        this.idDepNueva = response.id;
-        this._modalService.dismissAll();
-        this.executeGetDependency.emit();
-      },
-      error: (err) => {
-        this._toastr.error('Error al crear dependencia', 'Error');
-        console.log(err);
-      },
-    });
+    if (typeof this.editableItem === 'boolean') {
+      this._dependecyService.addDependency(createDep).subscribe({
+        next: (response) => {
+          this._toastr.success('', 'Dependencia Creada');
+          this.idDepNueva = response.id;
+          this._modalService.dismissAll();
+          this.executeGetDependency.emit();
+        },
+        error: (err) => {
+          this._toastr.error('Error al crear dependencia', 'Error');
+          console.log(err);
+        },
+      });
+    } else {
+      this._dependecyService
+        .updateDependencie(this.editableItem.id, { nombre })
+        .subscribe({
+          next: (response) => {
+            this._toastr.success('', 'Dependencia Editada');
+            this.idDepNueva = response.id;
+            this._modalService.dismissAll();
+            this.executeGetDependency.emit();
+          },
+          error: (err) => {
+            this._toastr.error('Error al editar dependencia', 'Error');
+            console.log(err);
+          },
+        });
+    }
   }
 }

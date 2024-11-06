@@ -1,6 +1,7 @@
 <div class="modal-body">
   <p-fileUpload
     name="myfile"
+    chooseLabel="Subir archivo"
     [showUploadButton]="false"
     [showCancelButton]="false"
     (onSelect)="onFileSelect($event)"
@@ -24,7 +25,9 @@
     </div>
 
     <div class="modal-footer mt-4 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">{{isEdit}} archivo</button>
+      <button type="submit" class="btn btn-primary">
+        {{ isEdit }} archivo
+      </button>
     </div>
   </form>
 </div>
