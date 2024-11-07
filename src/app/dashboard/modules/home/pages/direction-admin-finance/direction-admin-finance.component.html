@@ -18,7 +18,7 @@
         (ngModelChange)="searchQuery($event)"
       />
       <div class="d-flex gap-3">
-        <ng-container *ngIf="user_rol === 1">
+        <ng-container *ngIf="user_rol === 3">
           <p-button
             label="Agregar carpeta"
             class="p-button-secondary btn-addDep"
@@ -213,13 +213,19 @@
     </ng-container>
     <ng-container *ngIf="noDataMsg">
       <div class="d-flex justify-content-center">
-        <p-button
-          label="Agregar contenido"
-          class="p-button-secondary btn-addDep"
-          icon="bi bi-plus-lg"
-          iconPos="right"
-          (onClick)="openModalCreateDependencie(addTableModal, false)"
-        ></p-button>
+        <ng-container *ngIf="user_rol == 3">
+          <p-button
+            label="Agregar contenido"
+            class="p-button-secondary btn-addDep"
+            icon="bi bi-plus-lg"
+            iconPos="right"
+            (onClick)="openModalCreateDependencie(addTableModal, false)"
+          ></p-button>
+        </ng-container>
+        <ng-container *ngIf="user_rol !== 3">
+          <p class="fs-4 text-light">No hay información</p>
+        </ng-container>
+
         <!-- <h3 class="text-light text-center">
         No hay dependencias para crear, puede crear una.
       </h3> -->

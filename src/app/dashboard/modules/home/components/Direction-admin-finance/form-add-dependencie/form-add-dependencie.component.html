@@ -38,14 +38,12 @@
       </div>
     </div>
 
-    <ng-container *ngIf="userRol">
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="dependencieForm.invalid"
-      >
-        {{ editableItem ? "Editar" : "Crear" }} dependencia
-      </button>
-    </ng-container>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="dependencieForm.invalid"
+    >
+      {{ editableItem ? "Editar" : "Crear" }} dependencia
+    </button>
   </form>
 </div>

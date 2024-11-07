@@ -33,7 +33,6 @@ export class FormAddDependencieComponent implements OnInit {
   public namesHeaders?: string[];
   public selectedHeaders?: string[];
   public idDepNueva?: string;
-  public userRol?: number;
   public dependeciaIdHeader?: number;
   public dependenciaDocumentoTipoId?: number;
   public idHeadersToAdd: (number | undefined)[] = [];
@@ -47,7 +46,6 @@ export class FormAddDependencieComponent implements OnInit {
 
   ngOnInit() {
     this.getMetadata();
-    this.setUserRol();
 
     if (typeof this.editableItem !== 'boolean' && this.editableItem.name) {
       this.dependencieForm.patchValue({ nombre: this.editableItem.name });
@@ -56,20 +54,6 @@ export class FormAddDependencieComponent implements OnInit {
 
   get metaData(): FormArray {
     return this.dependencieForm.get('metaData') as FormArray;
-  }
-
-  setUserRol() {
-    debugger;
-    let bytes = CryptoJS.AES.decrypt(
-      localStorage.getItem('data') || '',
-      localStorage.getItem('token') || ''
-    );
-
-    const userData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-
-    console.log({ rol: userData.rol });
-
-    this.userRol = userData.rol;
   }
 
   getMetadata() {

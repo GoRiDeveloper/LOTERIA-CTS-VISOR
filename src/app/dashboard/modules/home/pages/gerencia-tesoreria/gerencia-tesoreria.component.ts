@@ -44,7 +44,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
   public filterData: any[] = [];
   public ocr: string = '';
   public user_id?: string;
-  public user_role?: string;
+  public user_role?: number;
   public messages: Array<string> = [];
   public nameFile: string = '';
   public: string = '';
@@ -89,7 +89,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.user_id = localStorage.getItem('user_id')!;
-    this.user_role = localStorage.getItem('user_role')!;
+    this.user_role = Number(localStorage.getItem('user_role'));
     this._activateRoute.paramMap.subscribe((params) => {
       this.idDependecy = params.get('id') || '';
       this.getRutas();
@@ -364,8 +364,6 @@ export class GerenciaTesoreriaComponent implements OnInit {
     try {
       if (endPage > 200) {
         const firtsPagesLoaded = Math.round(endPage / 5);
-        console.log({ firtsPagesLoaded });
-
         const partialPdf = await this.loadPartialPdf(
           pk,
           startPage,

@@ -105,6 +105,8 @@ export class ValidateCodeComponent implements OnInit {
             this._router.navigate(['/dashboard']);
           } else if (response.rol == 2) {
             this._router.navigate(['/dashboard']);
+          } else if (response.rol == 3) {
+            this._router.navigate(['/dashboard']);
           } else {
             this._toastr.error(
               '',
