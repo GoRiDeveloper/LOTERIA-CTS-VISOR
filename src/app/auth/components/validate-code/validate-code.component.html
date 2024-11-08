@@ -58,7 +58,31 @@
               minlength="1"
               OnlyNumbers
               [(ngModel)]="code[3]"
-              (keyup)="onKey($event, null, 'code3')"
+              (keyup)="onKey($event, 'code5', 'code3')"
+            />
+            <input
+              class="form-control auth__input-otp"
+              name="code5"
+              id="code5"
+              type="text"
+              formControlName="codigo5"
+              maxlength="1"
+              minlength="1"
+              OnlyNumbers
+              [(ngModel)]="code[4]"
+              (keyup)="onKey($event, 'code6', 'code4')"
+            />
+            <input
+              class="form-control auth__input-otp"
+              name="code6"
+              id="code6"
+              type="text"
+              formControlName="codigo6"
+              maxlength="1"
+              minlength="1"
+              OnlyNumbers
+              [(ngModel)]="code[5]"
+              (keyup)="onKey($event, null, 'code5')"
             />
           </div>
         </div>

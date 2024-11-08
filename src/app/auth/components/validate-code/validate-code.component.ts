@@ -24,7 +24,7 @@ export class ValidateCodeComponent implements OnInit {
   public isLoading: boolean = false;
   public isShowPassword: boolean = false;
 
-  public code: string[] = ['', '', '', ''];
+  public code: string[] = ['', '', '', '', '', ''];
 
   @Input() prevInputId?: string;
   @Input() nextInputId?: string;
@@ -34,6 +34,8 @@ export class ValidateCodeComponent implements OnInit {
     codigo2: ['', Validators.required],
     codigo3: ['', Validators.required],
     codigo4: ['', Validators.required],
+    codigo5: ['', Validators.required],
+    codigo6: ['', Validators.required],
   });
 
   constructor(
@@ -82,53 +84,67 @@ export class ValidateCodeComponent implements OnInit {
     }
     this.isLoading = true;
 
-    this._authService.postCodeAutentification(this.code.join('')).subscribe({
-      next: (response) => {
-        let token = `token ${response.token}`;
-        const tokenTime = new Date().toISOString();
-        localStorage.setItem('token', token);
-        localStorage.setItem(
-          'data',
-          crypto.AES.encrypt(JSON.stringify(response), `${token}`).toString()
-        );
-        localStorage.setItem('tokenTime', tokenTime);
-        localStorage.setItem('user_role', response.rol.toString());
+    let bytes = crypto.AES.decrypt(localStorage.getItem('uid') || '', 'verify');
+    const loginId = JSON.parse(bytes.toString(crypto.enc.Utf8));
 
-        this.isLoading = false;
-
-        setTimeout(() => {
-          this.loadingService.setIsLoadingState(true);
-        }, 1000);
-
-        setTimeout(() => {
-          if (response.rol == 1) {
-            this._router.navigate(['/dashboard']);
-          } else if (response.rol == 2) {
-            this._router.navigate(['/dashboard']);
-          } else if (response.rol == 3) {
-            this._router.navigate(['/dashboard']);
-          } else {
-            this._toastr.error(
-              '',
-              `Error al iniciar sesión, intentalo de nuevo.`
-            );
-          }
-          this.loadingService.setIsLoadingState(false);
-
-          this._toastr.success(
-            '',
-            `Bienvenido ${response.first_name} ${response.last_name}`,
-            {
-              progressBar: true,
-              progressAnimation: 'decreasing',
-            }
+    this._authService
+      .postCodeAutentification(loginId, this.code.join(''))
+      .subscribe({
+        next: (response) => {
+          let token = `token ${response.token}`;
+          const tokenTime = new Date().toISOString();
+          localStorage.setItem('token', token);
+          localStorage.setItem(
+            'data',
+            crypto.AES.encrypt(JSON.stringify(response), `${token}`).toString()
           );
-        }, 5000);
-      },
-      error: (error) => {
-        console.log(error);
-        this.isLoading = false;
-      },
-    });
+          localStorage.setItem('tokenTime', tokenTime);
+          localStorage.setItem('user_role', response.rol.toString());
+
+          this.isLoading = false;
+
+          setTimeout(() => {
+            this.loadingService.setIsLoadingState(true);
+          }, 1000);
+
+          setTimeout(() => {
+            if (response.rol == 1) {
+              this._router.navigate(['/dashboard']);
+            } else if (response.rol == 2) {
+              this._router.navigate(['/dashboard']);
+            } else if (response.rol == 3) {
+              this._router.navigate(['/dashboard']);
+            } else {
+              this._toastr.error(
+                '',
+                `Error al iniciar sesión, intentalo de nuevo.`
+              );
+            }
+            this.loadingService.setIsLoadingState(false);
+
+            this._toastr.success(
+              '',
+              `Bienvenido ${response.first_name} ${response.last_name}`,
+              {
+                progressBar: true,
+                progressAnimation: 'decreasing',
+              }
+            );
+          }, 5000);
+        },
+        error: (error) => {
+          console.log(error);
+          if (
+            error.error.message ===
+            'Sesión de autenticación expirada o no válida.'
+          ) {
+            this._toastr.error(
+              'Ha caducado el código QR, vuelve a ingresar tus datos para escanearlo de nuevo.'
+            );
+            this._router.navigate(['/auth/login']);
+          }
+          this.isLoading = false;
+        },
+      });
   }
 }

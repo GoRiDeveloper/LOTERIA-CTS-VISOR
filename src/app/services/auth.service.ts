@@ -25,22 +25,37 @@ export class AuthService {
     });
   }
 
-  postLogin(userCredentials: Auth): Observable<any> {
-    const headers = new HttpHeaders({ 'content-Type': 'application/json' });
-    return this._http.post<any>(
+  postLogin(userCredentials: Auth): Observable<Blob> {
+    // const headers = new HttpHeaders();
+
+    return this._http.post<Blob>(
       `${environment.BASE_URL}auth/`,
       userCredentials,
-      { headers }
+      {
+        responseType: 'blob' as 'json',
+      }
     );
   }
 
-  postCodeAutentification(codeVerification: string): Observable<UserProfile> {
+  loginId(username: string, password: string): Observable<any> {
+    return this._http.post<any>(`${environment.BASE_URL}login/`, {
+      username,
+      password,
+    });
+  }
+
+  postCodeAutentification(
+    temp_uid: string,
+    codeVerification: string
+  ): Observable<UserProfile> {
     let data = {
-      token: codeVerification,
+      temp_uid,
+      codigo_tfa: codeVerification,
     };
     const headers = new HttpHeaders({ 'content-Type': 'application/json' });
+
     return this._http
-      .post<UserProfile>(`${environment.BASE_URL}validate/`, data, { headers })
+      .post<UserProfile>(`${environment.BASE_URL}codigo/`, data, { headers })
       .pipe(tap((response) => {}));
   }
 

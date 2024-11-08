@@ -7,7 +7,7 @@
       Introduce tu correo electrónico y contraseña, se te enviará un código para
       ingresar.
     </p>
-    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin(qrModal)">
       <div class="auth__input-container w-100">
         <div
           class="auth__form-group m-0 pl-2 pr-2"
@@ -92,3 +92,39 @@
     </form>
   </div>
 </div>
+
+<ng-template #qrModal let-modal>
+  <div class="modal-header text-light" style="background-color: #222222">
+    <h4 class="modal-title" id="modal-basic-title">Código QR</h4>
+    <button
+      type="button"
+      class="btn-close text-light"
+      style="top: auto; filter: invert(100%)"
+      aria-label="Close"
+      data-bs-theme="dark"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div
+    class="modal-body text-light d-flex flex-column"
+    style="background-color: #545454"
+  >
+    <img
+      *ngIf="imgSrc"
+      [src]="imgSrc"
+      class="rounded mx-auto d-block img-fluid"
+      alt="Código QR"
+    />
+    <button
+      pButton
+      pRipple
+      label="He escaneado mi código"
+      icon="bi bi-pencil"
+      iconPos="right"
+      class="btn mt-3 auth__button btn-block w-100 text-uppercase"
+      (click)="sendVerifyCode()"
+    >
+      He escaneado mi código
+    </button>
+  </div>
+</ng-template>

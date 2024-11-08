@@ -335,4 +335,14 @@ export class DirectoriosServicesService {
       { headers: this._getHeaders() }
     );
   }
+
+  hashDependency(dependenciaId: string): Observable<any> {
+    return this._http.post<any>(
+      `${environment.BASE_URL}ocrDependencia`,
+      {
+        dependencia_id: dependenciaId,
+      },
+      { headers: this._getHeaders() }
+    );
+  }
 }

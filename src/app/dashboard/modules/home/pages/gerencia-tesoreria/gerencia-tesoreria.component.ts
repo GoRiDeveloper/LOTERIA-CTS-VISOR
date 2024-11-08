@@ -668,4 +668,13 @@ export class GerenciaTesoreriaComponent implements OnInit {
       this._zoom = parseFloat(this._zoom.toFixed(2));
     }
   }
+
+  hash() {
+    this._dependecyService.hashDependency(this.dependenciaId!).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => console.error(error),
+    });
+  }
 }
