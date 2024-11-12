@@ -24,9 +24,14 @@
       <div class="titleTable">
         <h1>{{ titleTable }}</h1>
       </div>
-      <div class="">
-        <button (click)="hash()"></button>
-      </div>
+      <ng-container *ngIf="user_role == 3">
+        <div class="d-flex justify-content-center align-items-center">
+          <button class="btn btn-active btn-excel my-3" (click)="hash()">
+            Lector de OCR
+          </button>
+        </div>
+      </ng-container>
+
       <div class="d-lg-flex gap-3 search-input-container container-inputs">
         <div class="search-input-container">
           <div
@@ -223,7 +228,7 @@
           <thead>
             <tr>
               <!-- Encabezado para editar -->
-              <ng-container *ngIf="editablesExist">
+              <ng-container *ngIf="editablesExist && user_role === 3">
                 <th>
                   <div class="select-container text-center">OPCIONES</div>
                 </th>
