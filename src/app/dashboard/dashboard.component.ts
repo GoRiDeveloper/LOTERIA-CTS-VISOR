@@ -10,5 +10,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this._authService.checkTokenExpiration();
+    document.body.style.overflowY = 'auto';
   }
 }
