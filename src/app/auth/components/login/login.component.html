@@ -7,79 +7,98 @@
       Introduce tu correo electrónico y contraseña, se te enviará un código para
       ingresar.
     </p>
-    <form [formGroup]="loginForm" (ngSubmit)="handleLogin(qrModal)">
-      <div class="auth__input-container w-100">
-        <div
-          class="auth__form-group m-0 pl-2 pr-2"
-          [class.auth__input-error-container]="inputIsValid('email')"
-        >
-          <input
-            class="form-control w-100 p-1"
-            name="email"
-            id="email"
-            type="email"
-            formControlName="email"
-          />
-          <label for="">Usuario</label>
+    <form [formGroup]="loginForm">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="auth__input-container w-100">
+          <div
+            class="auth__form-group m-0 pl-2 pr-2"
+            [class.auth__input-error-container]="inputIsValid('email')"
+          >
+            <input
+              class="form-control w-100 p-1"
+              name="email"
+              id="email"
+              type="email"
+              formControlName="email"
+            />
+            <label for="">Usuario</label>
+          </div>
         </div>
-      </div>
-      <span
-        for="email"
-        class="text-small text-danger"
-        placeholder="Correo electrónico"
-        *ngIf="inputIsValid('email') && !loginForm.get('email')?.errors?.['pattern']"
-        >Campo requerido</span
-      >
-      <span
-        *ngIf="loginForm.get('email')?.errors?.['pattern']"
-        class="text-small text-danger"
-      >
-        El correo electrónico es inválido.
-      </span>
+        <span
+          for="email"
+          class="text-small text-danger"
+          placeholder="Correo electrónico"
+          *ngIf="inputIsValid('email') && !loginForm.get('email')?.errors?.['pattern']"
+          >Campo requerido</span
+        >
+        <span
+          *ngIf="loginForm.get('email')?.errors?.['pattern']"
+          class="text-small text-danger"
+        >
+          El correo electrónico es inválido.
+        </span>
 
-      <div class="auth__input-container w-100">
-        <div class="row auth__form-containerPass">
-          <div class="">
+        <div class="auth__input-container w-100">
+          <div class="row auth__form-containerPass">
+            <div class="">
+              <div
+                class="auth__form-group m-0 pl-2 pr-2"
+                [class.auth__input-error-container]="inputIsValid('password')"
+              >
+                <input
+                  class="form-control w-100"
+                  name="password"
+                  id="password"
+                  placeholder="Contraseña"
+                  [type]="isShowPassword ? 'text' : 'password'"
+                  formControlName="password"
+                />
+              </div>
+            </div>
             <div
-              class="auth__form-group m-0 pl-2 pr-2"
-              [class.auth__input-error-container]="inputIsValid('password')"
+              class="col-2 col-md-2 align-self-center auth__form-passwordEye"
             >
-              <input
-                class="form-control w-100"
-                name="password"
-                id="password"
-                placeholder="Contraseña"
-                [type]="isShowPassword ? 'text' : 'password'"
-                formControlName="password"
+              <img
+                src="./../../../../../assets/icons/{{
+                  !isShowPassword ? 'eye-white' : 'eye-close-white'
+                }}.png"
+                alt="eye icon"
+                class="img-fluid"
+                (click)="isShowPassword = !isShowPassword"
               />
             </div>
           </div>
-          <div class="col-2 col-md-2 align-self-center auth__form-passwordEye">
-            <img
-              src="./../../../../../assets/icons/{{
-                !isShowPassword ? 'eye-white' : 'eye-close-white'
-              }}.png"
-              alt="eye icon"
-              class="img-fluid"
-              (click)="isShowPassword = !isShowPassword"
-            />
-          </div>
         </div>
-      </div>
-      <span
-        for="password"
-        class="text-small text-danger p-2"
-        *ngIf="inputIsValid('password')"
-      >
-        Campo requerido
-      </span>
-
-      <div class="auth__form-group mt-5">
-        <button
-          type="submit"
-          class="btn mt-3 auth__button btn-block w-100 text-uppercase"
+        <span
+          for="password"
+          class="text-small text-danger p-2"
+          *ngIf="inputIsValid('password')"
         >
-          ENVIAR CÓDIGO
+          Campo requerido
+        </span>
+      </div>
+
+      <div class="auth__form-group mt-5 d-flex w-100 justify-content-between">
+        <button
+          type="button"
+          class="btn mt-3 auth__button btn-block text-uppercase"
+          (click)="handleQRLogin(qrModal)"
+        >
+          ENVIAR CÓDIGO QR
+          <div
+            class="spinner-border spinner-border-sm"
+            role="status"
+            *ngIf="isLoading"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+        <button
+          type="button"
+          class="btn mt-3 auth__button btn-block text-uppercase"
+          (click)="handleLogin()"
+        >
+          ENVIAR CÓDIGO POR EMAIL
           <div
             class="spinner-border spinner-border-sm"
             role="status"

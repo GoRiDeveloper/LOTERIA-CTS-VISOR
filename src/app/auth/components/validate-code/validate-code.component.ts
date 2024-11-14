@@ -84,8 +84,14 @@ export class ValidateCodeComponent implements OnInit {
     }
     this.isLoading = true;
 
-    let bytes = crypto.AES.decrypt(localStorage.getItem('uid') || '', 'verify');
-    const loginId = JSON.parse(bytes.toString(crypto.enc.Utf8));
+    let loginId: string = '';
+
+    const uid = localStorage.getItem('uid');
+
+    if (uid) {
+      let bytes = crypto.AES.decrypt(uid || '', 'verify');
+      loginId = JSON.parse(bytes.toString(crypto.enc.Utf8));
+    }
 
     this._authService
       .postCodeAutentification(loginId, this.code.join(''))

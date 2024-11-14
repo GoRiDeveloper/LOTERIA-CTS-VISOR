@@ -47,7 +47,7 @@ export class LoginComponent {
     this.loginForm.controls[campo].errors &&
     this.loginForm.controls[campo].touched;
 
-  handleLogin(content: any) {
+  checkUserData() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       this.isLoading = false;
@@ -64,27 +64,37 @@ export class LoginComponent {
     this.isLoading = true;
     this.userLogin.username = this.loginForm.get('email')?.value.toLowerCase();
     this.userLogin.password = this.loginForm.get('password')?.value;
+  }
 
+  handleLogin() {
+    this.checkUserData();
     this._authService.postLogin(this.userLogin).subscribe({
+      next: (response: any) => {
+        alert(response.token);
+        this._toastr.success(
+          '',
+          `Se ha enviado el código de verificacion a tu correo.`,
+          {
+            progressBar: true,
+            progressAnimation: 'decreasing',
+          }
+        );
+        this.isLoading = false;
+        this._router.navigate(['/auth/codigo-verificacion']);
+      },
+    });
+  }
+
+  handleQRLogin(content: any) {
+    this.checkUserData();
+    this._authService.getQR(this.userLogin).subscribe({
       next: (response: Blob) => {
+        debugger;
         const url = this._sanitizer.bypassSecurityTrustUrl(
           URL.createObjectURL(response)
         );
         this.imgSrc = url;
-
         this._modalService.open(content, { size: 'lg', centered: true });
-        // console.log(this.userLogin);
-        // alert(response.code);
-        // this._toastr.success(
-        //   '',
-        //   `Se ha enviado el código de verificacion a tu correo.`,
-        //   {
-        //     progressBar: true,
-        //     progressAnimation: 'decreasing',
-        //   }
-        // );
-        // this.isLoading = false;
-        // this._router.navigate(['/auth/codigo-verificacion']);
       },
       error: (error) => (this.isLoading = false),
     });

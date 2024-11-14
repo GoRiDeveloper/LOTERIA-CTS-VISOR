@@ -25,11 +25,19 @@ export class AuthService {
     });
   }
 
-  postLogin(userCredentials: Auth): Observable<Blob> {
-    // const headers = new HttpHeaders();
+  postLogin(userCredentials: Auth): Observable<any> {
+    const headers = new HttpHeaders();
 
-    return this._http.post<Blob>(
+    return this._http.post<any>(
       `${environment.BASE_URL}auth/`,
+      userCredentials,
+      { headers }
+    );
+  }
+
+  getQR(userCredentials: Auth): Observable<Blob> {
+    return this._http.post<Blob>(
+      `${environment.BASE_URL}obtenerQR/`,
       userCredentials,
       {
         responseType: 'blob' as 'json',
@@ -49,13 +57,14 @@ export class AuthService {
     codeVerification: string
   ): Observable<UserProfile> {
     let data = {
-      temp_uid,
-      codigo_tfa: codeVerification,
+      temporal_uid: temp_uid ? temp_uid : '',
+      token: !temp_uid ? codeVerification : '',
+      codigo_tfa: temp_uid ? codeVerification : '',
     };
     const headers = new HttpHeaders({ 'content-Type': 'application/json' });
 
     return this._http
-      .post<UserProfile>(`${environment.BASE_URL}codigo/`, data, { headers })
+      .post<UserProfile>(`${environment.BASE_URL}validate/`, data, { headers })
       .pipe(tap((response) => {}));
   }
 
