@@ -270,10 +270,7 @@
                 <!-- Editar archivo -->
 
                 <ng-container
-                  *ngIf="
-                    data.editable === 'True' && user_role === 3;
-                    else noEditable
-                  "
+                  *ngIf="data.editable === 'True' && user_role === 3"
                 >
                   <td class="text-center text-table">
                     <div
@@ -310,17 +307,6 @@
                   </td>
                 </ng-container>
 
-                <!-- Rellenar campo en caso de existir campo para editar -->
-                <ng-template #noEditable>
-                  <td
-                    [ngStyle]="{
-                      display:
-                        user_role == 1 && data.editable && editablesExist
-                          ? 'table-cell'
-                          : 'none'
-                    }"
-                  ></td>
-                </ng-template>
                 <!-- Rellenar campo en caso de existir campo para editar -->
 
                 <!-- Editar archivo -->

@@ -181,18 +181,26 @@ export class GerenciaTesoreriaComponent implements OnInit {
 
         filterDate(this.documents.data);
 
-        this.filterData = this.documents.headers.filter(
-          (item: { nombre: string }) =>
-            item.nombre !== 'AREA' &&
-            item.nombre !== 'ÁREA' &&
-            item.nombre !== 'AREA ADSCRITA' &&
-            item.nombre !== 'UNIDAD ADMINISTRATIVA' &&
-            item.nombre !== 'NUMERO DE IMÁGENES' &&
-            item.nombre !== 'Número de Imágenes' &&
-            item.nombre !== 'Numero de Imágenes' &&
-            item.nombre !== 'NUMERO DE IMAGENES' &&
-            item.nombre !== 'None'
-        );
+        // const map = new Map();
+
+        // for (let header of this.documents.headers) {
+        //   map.set(header.nombre, header.nombre);
+        // }
+        // console.log({ map: map.values() });
+
+        this.filterData = this.documents.headers as any[];
+        // this.filterData = this.documents.headers.filter(
+        //   (item: { nombre: string }) =>
+        //     item.nombre !== 'AREA' &&
+        //     item.nombre !== 'ÁREA' &&
+        //     item.nombre !== 'AREA ADSCRITA' &&
+        //     item.nombre !== 'UNIDAD ADMINISTRATIVA' &&
+        //     item.nombre !== 'NUMERO DE IMÁGENES' &&
+        //     item.nombre !== 'Número de Imágenes' &&
+        //     item.nombre !== 'Numero de Imágenes' &&
+        //     item.nombre !== 'NUMERO DE IMAGENES' &&
+        //     item.nombre !== 'None'
+        // );
         this.headers = this.filterData;
         if (this.headers && this.headers.length == 0) {
           this.headers = this.documents.headers;
