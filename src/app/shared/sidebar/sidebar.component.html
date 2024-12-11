@@ -60,6 +60,23 @@
             <div class="card pt-5">
               <button
                 class="btn fs-8 mt-3 fw-bold sidebar__button-usuarios"
+                routerLink="{{
+                  currentURL?.includes('files')
+                    ? '/dashboard/home/menu'
+                    : '/dashboard/home/view-files-upload'
+                }}"
+                *ngIf="userData.rol == 1"
+                (click)="offcanvas.dismiss('Cross click')"
+                (click)="handleCurrentRoute()"
+              >
+                {{
+                  currentURL?.includes("file")
+                    ? "Dashboard"
+                    : "Ver archivos cargados"
+                }}
+              </button>
+              <button
+                class="btn fs-8 mt-3 fw-bold sidebar__button-usuarios"
                 routerLink="/user"
                 *ngIf="userData.rol == 1"
                 (click)="offcanvas.dismiss('Cross click')"

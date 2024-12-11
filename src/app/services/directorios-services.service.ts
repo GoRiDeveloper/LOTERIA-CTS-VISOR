@@ -206,6 +206,13 @@ export class DirectoriosServicesService {
     );
   }
 
+  getDepedenciesInitialStructure(): Observable<any> {
+    return this._http.get<DependencyStructureResponse>(
+      `${environment.BASE_URL}dependencia/total_documentos/`,
+      { headers: this._getHeaders() }
+    );
+  }
+
   getDependecySearch(search: string): Observable<any> {
     return this._http.get<any>(
       `${environment.BASE_URL}dependencia/buscar?nombre=${search}`,

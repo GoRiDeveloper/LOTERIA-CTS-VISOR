@@ -17,6 +17,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DropdownModule } from 'primeng/dropdown';
+import { ViewFilesUploadComponent } from '../dashboard/modules/home/pages/view-files-upload/view-files-upload.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,24 @@ import { DropdownModule } from 'primeng/dropdown';
     NavbarTopAdminComponent,
     SidebarPdfComponent,
     BreadcrumbComponent,
+    ViewFilesUploadComponent,
   ],
-  imports: [CommonModule, RouterModule, NgbModule, TreeModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgbModule,
+    TreeModule,
+    ButtonModule,
+    ListboxModule,
+    ChartModule,
+    ProgressSpinnerModule,
+    TableModule,
+    InputTextModule,
+    FileUploadModule,
+    DropdownModule,
+  ],
   exports: [
-     NavbarComponent,
+    NavbarComponent,
     SidebarComponent,
     NavbarTopAdminComponent,
     SidebarAdminComponent,

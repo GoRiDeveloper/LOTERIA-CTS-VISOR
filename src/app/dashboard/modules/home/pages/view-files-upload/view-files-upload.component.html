@@ -1,0 +1,69 @@
+<div class="fondo"></div>
+
+<div *ngIf="isLoadingTree" class="container-spinner">
+  <div class="spinner"></div>
+  <p class="spinner-text">Cargando...</p>
+</div>
+
+<div class="viewUpload" *ngIf="!isLoadingTree">
+  <div *ngIf="!isLoadingTree" class="p-4 border rounded-4 viewUpload__charts">
+    <div class="d-flex">
+      <h4>Total de archivos: {{ totalSumFiles }}</h4>
+    </div>
+    <ng-container *ngFor="let dependencia of initialDependencies">
+      <div
+        class="d-flex btn btn-outline-light flex-column mb-2"
+        (click)="nodeSelect(dependencia)"
+      >
+        {{ dependencia.label }} {{ dependencia.totalFiles }}
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    class="p-4 border rounded-4 viewUpload__charts"
+    style="min-height: 473px;"
+  >
+    <ng-container *ngIf="!isLoadingChart">
+      <div class="d-flex flex-column justify-content-center text-light">
+        <h3 class="text-center" *ngIf="isLoadingTree">
+          Cargando dependencias...
+        </h3>
+        <h3 class="text-center" *ngIf="!selectedDep && !isLoadingTree">
+          Selecciona una dependencia...
+        </h3>
+      </div>
+    </ng-container>
+
+    <div class="d-flex justify-content-center mt-3" *ngIf="isLoadingChart">
+      <div class="spinner-border" role="status"></div>
+    </div>
+
+    <ng-container *ngIf="!isLoadingChart && selectedDep">
+      <p-chart
+        type="bar"
+        [data]="chartData"
+        [options]="chartOptions"
+        [responsive]="true"
+      ></p-chart>
+    </ng-container>
+  </div>
+
+  <div class="d-flex gap-5">
+    <p-button label="Expander todo" (onClick)="expandAll()"></p-button>
+    <p-button label="Contraer todo" (onClick)="collapseAll()"></p-button>
+  </div>
+  <div class="viewUpload__list overflow-auto">
+    <p-tree
+      [value]="dependenciesList"
+      [filter]="true"
+      filterPlaceholder="Buscar..."
+      [loading]="isLoadingTree"
+      selectionMode="single"
+      [(selection)]="selectedDep"
+      (onNodeSelect)="nodeSelect()"
+      class="tree-view-user"
+    >
+    </p-tree>
+  </div>
+</div>
