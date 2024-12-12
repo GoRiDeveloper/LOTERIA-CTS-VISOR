@@ -105,7 +105,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
       next: (response) => {
         this.typeDocument = response;
         this.idType = this.typeDocument[0]?.id;
-        this.currentTag = this.idType.toString();
+        this.currentTag = this.idType?.toString();
 
         this.getDocumentsByType();
       },
