@@ -123,9 +123,7 @@ export class DirectionAdminFinanceComponent implements OnInit {
         this.filterDependeciesName = dependencias || [];
         this.rutasData = rutas?.reverse() || [];
 
-        if (archivos.length > 0 || (Number(archivos) && archivos > 0)) {
-          this.archivosVarios = true;
-        }
+        if (rutas[rutas.length - 1]?.has_doc) this.archivosVarios = true;
 
         this.isLoading = false;
         if (this.subDependencies.length === 0) {
