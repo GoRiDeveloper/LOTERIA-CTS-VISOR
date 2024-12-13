@@ -99,7 +99,7 @@ td {
   gap: 15px;
   position: absolute;
   right: 5%;
-  top: 5%;
+  bottom: 5%;
   align-items: center;
   z-index: 10000;
 }
