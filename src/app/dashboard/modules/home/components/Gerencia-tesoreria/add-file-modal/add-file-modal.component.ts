@@ -151,8 +151,12 @@ export class AddFileModalComponent implements OnInit {
         const idCampos = resp.map((item) => item.id);
         let descripcion: string[] = [];
         this.headers?.forEach((header) => {
-          const value = this.dynamicForm.get(header.nombre)?.value;
-          descripcion.push(value === '' ? 'N/A' : value);
+          let value;
+
+          if (header.nombre === 'No. DE PEDIDO') value = 'No. DE PEDIDO';
+          else value = this.dynamicForm.get(header.nombre)?.value;
+
+          descripcion.push(value === '' || value === null ? 'N/A' : value);
         });
         const data = {
           idCampos,
