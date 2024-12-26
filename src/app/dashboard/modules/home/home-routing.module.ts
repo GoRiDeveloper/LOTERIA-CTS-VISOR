@@ -17,7 +17,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'direccion-administracion-finanzas/:id',
+        path: 'carpetas/:id',
         component: DirectionAdminFinanceComponent,
       },
       {

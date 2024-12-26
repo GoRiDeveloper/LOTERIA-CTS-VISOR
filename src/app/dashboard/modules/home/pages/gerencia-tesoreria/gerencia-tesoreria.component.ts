@@ -296,6 +296,8 @@ export class GerenciaTesoreriaComponent implements OnInit {
     size: string = 'xl',
     editFile: boolean = false
   ) {
+    console.log({ data });
+
     this.documentSelected = data;
     this.modalService.open(content, {
       size,

@@ -43,7 +43,7 @@ export class AddFileModalComponent implements OnInit {
   createForm() {
     const group: any = {};
     this.headers?.forEach((header) => {
-      group[header.nombre] = new FormControl('');
+      group[header.nombre.replace(/\./g, '')] = new FormControl('');
     });
     if (this.documentSelected === undefined) {
       this.dynamicForm = this.fb.group(group);
@@ -51,13 +51,23 @@ export class AddFileModalComponent implements OnInit {
     } else {
       this.isEdit = 'Actualizar';
       this.dynamicForm = this.fb.group({});
+
+      // const selected = Object.keys(this.documentSelected).reduce((newSelected, key) => {
+      //   const newKey = key.replace();
+      //   newKey = this.documentSelected[key];
+      //   return newSelected;
+      // }, {});
+      console.log();
+
       this.headers!.forEach((header) => {
         // Precarga los valores al inicializar el formulario
         this.dynamicForm.addControl(
-          header.nombre,
+          header.nombre.replace(/\./g, ''),
           this.fb.control(this.documentSelected[header.nombre] || 'N/A')
         );
       });
+
+      console.log(this.dynamicForm.value);
     }
   }
 
@@ -150,14 +160,18 @@ export class AddFileModalComponent implements OnInit {
       next: (resp) => {
         const idCampos = resp.map((item) => item.id);
         let descripcion: string[] = [];
-        this.headers?.forEach((header) => {
-          let value;
 
-          if (header.nombre === 'No. DE PEDIDO') value = 'No. DE PEDIDO';
-          else value = this.dynamicForm.get(header.nombre)?.value;
+        this.headers?.forEach((header) => {
+          console.log({ header });
+
+          const value = this.dynamicForm.get(
+            header.nombre.replace(/\./g, '')
+          )?.value;
+          console.log({ value });
 
           descripcion.push(value === '' || value === null ? 'N/A' : value);
         });
+
         const data = {
           idCampos,
           descripcion,

@@ -82,6 +82,9 @@ export class LoginComponent {
         this.isLoading = false;
         this._router.navigate(['/auth/codigo-verificacion']);
       },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
@@ -89,7 +92,6 @@ export class LoginComponent {
     this.checkUserData();
     this._authService.getQR(this.userLogin).subscribe({
       next: (response: Blob) => {
-        debugger;
         const url = this._sanitizer.bypassSecurityTrustUrl(
           URL.createObjectURL(response)
         );

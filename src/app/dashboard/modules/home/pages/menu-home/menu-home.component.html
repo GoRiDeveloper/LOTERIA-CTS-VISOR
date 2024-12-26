@@ -6,12 +6,7 @@
 
 <div class="card_menu-container" *ngIf="!isLoading">
   <ng-container *ngFor="let card of subDependencies">
-    <div
-      class="card_menu"
-      routerLink="/dashboard/home/direccion-administracion-finanzas/{{
-        card.id
-      }}"
-    >
+    <div class="card_menu" routerLink="/dashboard/home/carpetas/{{ card.id }}">
       <div class="card_menu-img" [ngSwitch]="card.nombre.toLowerCase()">
         <img
           src="../../../../../../assets/home/admin_finance.jpg"

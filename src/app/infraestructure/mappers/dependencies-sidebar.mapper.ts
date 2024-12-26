@@ -14,11 +14,13 @@ export class DependenciesStructureToSidebar {
       icon: dependency.children ? 'bi bi-folder-fill' : 'bi bi-file-fill',
       children: dependency.children
         ? dependency.children.map((child) =>
-          this.depStructureToSidebarEntity(child)
-        )
+            this.depStructureToSidebarEntity(child)
+          )
         : undefined,
       type: 'url',
-      url: dependency.children ? '/dashboard/home/direccion-administracion-finanzas/' : '/dashboard/home/documentos/'
+      url: dependency.children
+        ? '/dashboard/home/carpetas/'
+        : '/dashboard/home/documentos/',
     };
   }
 }
