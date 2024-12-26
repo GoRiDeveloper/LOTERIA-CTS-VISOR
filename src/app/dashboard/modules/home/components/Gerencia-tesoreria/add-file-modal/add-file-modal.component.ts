@@ -40,6 +40,10 @@ export class AddFileModalComponent implements OnInit {
     }
   }
 
+  getHeader(header: string) {
+    return header.replace(/\./g, '');
+  }
+
   createForm() {
     const group: any = {};
     this.headers?.forEach((header) => {
@@ -52,13 +56,6 @@ export class AddFileModalComponent implements OnInit {
       this.isEdit = 'Actualizar';
       this.dynamicForm = this.fb.group({});
 
-      // const selected = Object.keys(this.documentSelected).reduce((newSelected, key) => {
-      //   const newKey = key.replace();
-      //   newKey = this.documentSelected[key];
-      //   return newSelected;
-      // }, {});
-      console.log();
-
       this.headers!.forEach((header) => {
         // Precarga los valores al inicializar el formulario
         this.dynamicForm.addControl(
@@ -66,8 +63,6 @@ export class AddFileModalComponent implements OnInit {
           this.fb.control(this.documentSelected[header.nombre] || 'N/A')
         );
       });
-
-      console.log(this.dynamicForm.value);
     }
   }
 
