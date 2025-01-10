@@ -109,7 +109,8 @@ export class DirectionAdminFinanceComponent implements OnInit {
         const { dependencias, archivos, rutas } = response;
 
         // solución
-        if (rutas[0]?.has_doc) this._location.back();
+        if (rutas[0]?.has_doc && dependencias.length === 0)
+          this._location.back();
 
         this.dependenciaIndiceLongitud = dependencias.length + 1;
 
