@@ -91,7 +91,7 @@
           </select>
         </div>
 
-        <div class="d-flex" *ngIf="user_role === 1">
+        <div class="d-flex" *ngIf="user_role === 1 || user_role === 4">
           <div class="m-1 p-2">
             <span class="switch switch-sm d-inline">
               <input
@@ -166,9 +166,27 @@
           class="button_slider"
           [class.btn-active]="typeDoc.id == idType"
           *ngFor="let typeDoc of typeDocument"
-          (click)="handleChangeType(typeDoc)"
+          (click)="handleChangeType(typeDoc, $event)"
         >
           {{ typeDoc.nombre }}
+          <div class="caja-herramientas">
+            <ul>
+              <li
+                (click)="
+                  handleSheet(sheet, typeDoc.id, typeDoc.nombre, 'add', $event)
+                "
+              >
+                Agregar hoja
+              </li>
+              <li
+                (click)="
+                  handleSheet(sheet, typeDoc.id, typeDoc.nombre, 'edit', $event)
+                "
+              >
+                Editar hoja
+              </li>
+            </ul>
+          </div>
         </button>
       </div>
 
@@ -224,7 +242,7 @@
       </div>
 
       <div class="table-responsive mt-4">
-        <table class="table table-borderless table-hover">
+        <table class="table table-borderless table-hover" style="width: 100%">
           <thead>
             <tr>
               <!-- Encabezado para editar -->
@@ -270,7 +288,7 @@
                 <!-- Editar archivo -->
 
                 <ng-container
-                  *ngIf="data.editable === 'True' && user_role === 3"
+                  *ngIf="data.editable && user_role === 3; else elseIfTemplate"
                 >
                   <td class="text-center text-table">
                     <div
@@ -306,6 +324,16 @@
                     </div>
                   </td>
                 </ng-container>
+
+                <ng-template #elseIfTemplate>
+                  <ng-container *ngIf="data.editable">
+                    <td class="text-center text-table">
+                      <div style="display: flex; justify-content: center">
+                        S/A
+                      </div>
+                    </td>
+                  </ng-container>
+                </ng-template>
 
                 <!-- Rellenar campo en caso de existir campo para editar -->
 
@@ -543,5 +571,26 @@
         </div>
       </ng-template>
     </div>
+  </ng-template>
+
+  <ng-template #sheet let-modal>
+    <div class="modal-header text-light" style="background-color: #222222">
+      <h4 class="modal-title" id="modal-basic-title">{{ sheetTitle }} hoja</h4>
+      <button
+        type="button"
+        class="btn-close text-light"
+        style="top: auto; filter: invert(100%)"
+        aria-label="Close"
+        data-bs-theme="dark"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <form-add-sheet
+      [id]="sheetId"
+      [name]="sheetName"
+      [type]="manageTypeSheet"
+      [currentRoute]="dependency"
+      (responseSheet)="sheetResponse($event)"
+    ></form-add-sheet>
   </ng-template>
 </div>

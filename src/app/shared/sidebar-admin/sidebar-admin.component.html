@@ -29,10 +29,9 @@
           </p>
           <div class="d-flex align-items-center">
             <img src="../../../assets/icons/verficado.png" alt="" />
-            <p class="pb-0 mb-0 fs-8 text-light" *ngIf="userData.rol == 1">
-              Administrador
+            <p class="pb-0 mb-0 fs-8 text-light">
+              {{ userType }}
             </p>
-            <p class="pb-0 mb-0 fs-8 text-light" *ngIf="userData.rol == 2">Usuario</p>
           </div>
         </div>
       </div>
@@ -68,8 +67,8 @@
       <div>
         <ul id="menu-content" class="menu-content m-2">
           <li>
-              <div class="card">
-                <!-- <div>
+            <div class="card">
+              <!-- <div>
                   <p class="pb-0 mb-0">
                     {{ userData.first_name | uppercase }}
                     {{ userData.last_name | uppercase }}
@@ -78,21 +77,21 @@
                     userData.email
                   }}</small>
                 </div> -->
-                <button
-                  class="btn fs-8 mt-3 fw-bold sidebarUsers__dashboard-button"
-                  routerLink="/dashboard"
-                  (click)="offcanvas.close()"
-                >
-                  Dashboard
-                </button>
-                <button
-                  class="btn fs-8 mt-3 fw-bold sidebarUsers__salir-button"
-                  (click)="open(salir)"
-                >
-                  Cerrar sesión
-                  <img src="../../../assets/icons/logOutWhite.png" alt="" />
-                </button>
-              </div>
+              <button
+                class="btn fs-8 mt-3 fw-bold sidebarUsers__dashboard-button"
+                routerLink="/dashboard"
+                (click)="offcanvas.close()"
+              >
+                Dashboard
+              </button>
+              <button
+                class="btn fs-8 mt-3 fw-bold sidebarUsers__salir-button"
+                (click)="open(salir)"
+              >
+                Cerrar sesión
+                <img src="../../../assets/icons/logOutWhite.png" alt="" />
+              </button>
+            </div>
           </li>
         </ul>
       </div>

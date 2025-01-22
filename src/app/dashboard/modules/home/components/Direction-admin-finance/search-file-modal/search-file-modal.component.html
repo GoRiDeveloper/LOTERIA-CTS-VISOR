@@ -58,7 +58,7 @@
               aria-expanded="true"
             ></button>
             <ul class="dropdown-menu">
-              <li>
+              <li *ngIf="verifyExt(dependency.nombre_archivo)">
                 <div class="dropdown-item" (click)="openModalPdf(dependency)">
                   <i class="bi bi-file-earmark-pdf-fill"></i>
                   Ver PDF

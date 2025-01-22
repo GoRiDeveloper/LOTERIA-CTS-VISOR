@@ -10,6 +10,35 @@
   background-position: center;
   z-index: 1;
 }
+
+.caja-herramientas {
+  display: none; /* Inicialmente oculta */
+  position: fixed;
+  z-index: 2;
+  background-color: rgb(149, 116, 75);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.caja-herramientas ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.caja-herramientas li {
+  padding: 5px 0;
+  font-size: 14px;
+  border-radius: 10px;
+  transition: background-color 0.1s ease-in;
+}
+
+.caja-herramientas li:hover {
+  background-color: #cc8b11;
+}
+
 .pdfViewer {
   height: 100vh;
 }

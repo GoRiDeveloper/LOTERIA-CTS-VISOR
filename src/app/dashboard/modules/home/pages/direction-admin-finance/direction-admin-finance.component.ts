@@ -52,6 +52,8 @@ export class DirectionAdminFinanceComponent implements OnInit {
   public noDataMsg?: boolean;
   public idDependencia?: string;
   public isCreateDependencia: boolean = false;
+  public hasSheet: boolean = false;
+  firstSheet: any = null;
 
   public editableItem:
     | boolean
@@ -94,6 +96,12 @@ export class DirectionAdminFinanceComponent implements OnInit {
     this._modalService.open(content, { size: 'lg', centered: true });
   }
 
+  sheetResponse(response: any) {
+    this.firstSheet = response;
+    if (response) this.hasSheet = response;
+    this._modalService.dismissAll();
+  }
+
   getDependecy() {
     this.isLoading = true;
     this.archivosVarios = false;
@@ -109,12 +117,13 @@ export class DirectionAdminFinanceComponent implements OnInit {
         const { dependencias, archivos, rutas } = response;
 
         // solución
-        if (rutas[0]?.has_doc && dependencias.length === 0)
+        if (rutas[0]?.has_header && dependencias.length === 0)
           this._location.back();
 
         this.dependenciaIndiceLongitud = dependencias.length + 1;
 
         this.currentRoute = rutas[0];
+        this.hasSheet = rutas[0].has_sheet;
 
         // Toma la dependencia indice de la ruta anterior y ejecuta la función
         // para obtener los ids hijos de la ruta anterior
@@ -166,11 +175,24 @@ export class DirectionAdminFinanceComponent implements OnInit {
     });
   }
 
+  openModalCreateSheet(content: any) {
+    this._modalService.open(content, { size: 'lg', centered: true });
+  }
+
   openModalCreateDependencie(content: any, isCreateDep: boolean) {
     this.isCreateDependencia = isCreateDep;
     this.editableItem = false;
 
     this._modalService.open(content, { size: 'lg', centered: true });
+  }
+
+  openModalCreateContent(content: any, isCreateDep: boolean) {
+    if (this.firstSheet || this.hasSheet) {
+      this.isCreateDependencia = isCreateDep;
+      this.editableItem = false;
+
+      this._modalService.open(content, { size: 'lg', centered: true });
+    }
   }
 
   cargar_script(id: any) {

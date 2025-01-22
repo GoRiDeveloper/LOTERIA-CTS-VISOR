@@ -1,0 +1,14 @@
+<div class="modal-body text-light" style="background-color: #545454">
+  <form [formGroup]="sheetForm" (ngSubmit)="onSubmitAddSheet()">
+    <div class="mb-3">
+      <label for="nombre" class="form-label fw-bold"> Nombre de la hoja </label>
+      <input
+        type="text"
+        id="nombre"
+        class="form-control bg-transparent text-light"
+        formControlName="nombre"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar</button>
+  </form>
+</div>

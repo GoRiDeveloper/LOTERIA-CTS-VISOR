@@ -127,23 +127,9 @@ export class AddFileModalComponent implements OnInit {
     this._dependencyService.addFieldsFile(data).subscribe({
       next: (resp) => {
         this._toastr.success('', 'Campos agregados con éxito');
-        this.insertNewFile();
       },
       error: (error) => {
         this._toastr.error('Error al agregar campos', 'Error');
-        console.log(error);
-      },
-    });
-  }
-
-  insertNewFile() {
-    this._dependencyService.insertNewFile(this.idNewFile!).subscribe({
-      next: (resp) => {
-        this._toastr.success('Archivo agregado a la tabla', 'Éxito');
-        this.executeGetDependency.emit();
-      },
-      error: (error) => {
-        this._toastr.error('Error al agregar archivo a tabla', 'Error');
         console.log(error);
       },
     });

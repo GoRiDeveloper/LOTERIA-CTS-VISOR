@@ -13,7 +13,6 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
-import { forkJoin } from 'rxjs';
 import { ItemNavbarSelect } from 'src/app/services/itemNavbarSelect.service';
 @Component({
   selector: 'app-sidebar-admin',
@@ -23,6 +22,7 @@ import { ItemNavbarSelect } from 'src/app/services/itemNavbarSelect.service';
 export class SidebarAdminComponent implements OnInit {
   public dependencies: any;
   userData: any;
+  userType: string = '';
 
   public userInfo: any;
   closeResult = '';
@@ -66,8 +66,6 @@ export class SidebarAdminComponent implements OnInit {
     this.itemNavbarSelected.setSelectedItemIndex(index);
   }
   //
-
-
 
   getDepencenciaList() {
     this._directoriosService.getDependecy().subscribe({
@@ -136,6 +134,11 @@ export class SidebarAdminComponent implements OnInit {
   getUserInfo() {
     this._userService.getUserInfo().subscribe({
       next: (response) => {
+        if (response.rol === 1) this.userType = 'Administrador';
+        else if (response.rol === 3) this.userType = 'Capturista';
+        else if (response.rol === 4) this.userType = 'Encargado';
+        else this.userType = 'Usuario';
+
         localStorage.setItem('expediente_ver', response.expediente_ver);
         localStorage.setItem('user_id', response.user_id);
         // localStorage.setItem('tramo',response.tramo)

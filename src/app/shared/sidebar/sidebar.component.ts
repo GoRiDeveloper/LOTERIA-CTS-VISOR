@@ -27,6 +27,7 @@ export class SidebarComponent implements OnInit {
   public dependencies: any;
   public treeDependencies: TreeNode[] = [];
   userData: any;
+  userType: string = '';
   public userInfo: any;
   closeResult = '';
   public idSuperior: string = '';
@@ -134,6 +135,11 @@ export class SidebarComponent implements OnInit {
   getUserInfo() {
     this._userService.getUserInfo().subscribe({
       next: (response) => {
+        if (response.rol === 1) this.userType = 'Administrador';
+        else if (response.rol === 3) this.userType = 'Capturista';
+        else if (response.rol === 4) this.userType = 'Encargado';
+        else this.userType = 'Usuario';
+
         localStorage.setItem('expediente_ver', response.expediente_ver);
         localStorage.setItem('user_id', response.user_id);
       },

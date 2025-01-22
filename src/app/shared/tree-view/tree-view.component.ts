@@ -42,7 +42,6 @@ export class TreeViewComponent implements OnInit {
     private _cacheService: CacheService
   ) {}
 
-
   ngOnInit(): void {
     this.getDepStructure();
   }
@@ -85,9 +84,7 @@ export class TreeViewComponent implements OnInit {
   onSelectionChange() {
     this.selectedDepChange.emit(this.selectedDep);
   }
-  getDependencyStructure() {
-    console.log(this.selectedDep);
-  }
+
   expandAll() {
     this.files.forEach((node) => {
       this.expandRecursive(node, true);

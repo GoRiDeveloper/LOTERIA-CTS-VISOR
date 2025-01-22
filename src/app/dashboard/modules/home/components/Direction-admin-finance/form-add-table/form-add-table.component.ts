@@ -16,6 +16,7 @@ import { DirectoriosServicesService } from 'src/app/services/directorios-service
 export class FormAddTableComponent implements OnInit {
   @Output() executeGetDependency = new EventEmitter<void>();
   @Input() public currentRoute: CurrentRoute | null = null;
+  @Input() public sheetId: string | boolean = false;
   @Input() public indiceDependencia?: string;
   @Input() public dependenciaIndiceLongitud?: string;
   @Input() public isCreateDependencia?: boolean;
@@ -103,22 +104,7 @@ export class FormAddTableComponent implements OnInit {
   }
 
   onSubmitAddTable() {
-    const data = {
-      dependenciaIndice: this.indiceDependencia!,
-      dependenciaId: this.currentRoute?.id!,
-    };
-    this._dependecyService.addFileGhost(data).subscribe({
-      next: (response) => {
-        const { id_documento, id_relacion_hoja } = response;
-
-        this.dependenciaDocumentoTipoId = id_relacion_hoja;
-        this.idDocumentCreated = id_documento;
-        this.agregarCatalogoTipo();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.agregarCatalogoTipo();
   }
 
   //Crea encabezados en caso de no existir en la base de datos
@@ -134,14 +120,19 @@ export class FormAddTableComponent implements OnInit {
 
     const data = {
       catalogoHeaderId: this.idHeadersToAdd,
-      dependenciaDocumentoTipoId: this.dependenciaDocumentoTipoId,
+      tipo_id: this.sheetId,
+      dependencia_id: this.currentRoute?.id,
     };
 
     this._dependecyService.addTagType(data).subscribe({
       next: (response) => {
         this._toastr.success('Encabezados agregados exitosamente', 'Éxito');
 
-        this.agregarDepTemporal();
+        this._toastr.success(`Tabla agregada exitosamente`, 'Éxito');
+        this._modalService.dismissAll();
+        this._router.navigate([
+          `/dashboard/home/documentos/${this.currentRoute?.id}`,
+        ]);
       },
       error: (err) => {
         this._toastr.error('Error al agregar encabezados', 'Error');
@@ -150,23 +141,21 @@ export class FormAddTableComponent implements OnInit {
     });
   }
 
-  agregarDepTemporal() {
-    const idDoc = this.idDocumentCreated?.toString()!;
-    const headersId = this.idHeadersToAdd;
-    const currentUrl = this.currentRoute?.id;
+  // agregarDepTemporal() {
+  //   const idDoc = this.idDocumentCreated?.toString()!;
+  //   const headersId = this.idHeadersToAdd;
+  //   const currentUrl = this.currentRoute?.id;
 
-    this._dependecyService.addTemporalDep(idDoc, headersId).subscribe({
-      next: (resp) => {
-        this._toastr.success(`Tabla agregada exitosamente`, 'Éxito');
-        this._modalService.dismissAll();
-        this._router.navigate([`/dashboard/home/documentos/${currentUrl}`]);
-      },
-      error: (err) => {
-        this._toastr.error('Error al agregar la tabla', 'Error');
-        console.log(err);
-      },
-    });
-  }
+  //   this._dependecyService.addTemporalDep(idDoc, headersId).subscribe({
+  //     next: (resp) => {
+
+  //     },
+  //     error: (err) => {
+  //       this._toastr.error('Error al agregar la tabla', 'Error');
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 
   createHeader() {
     const newHeader = this.dependencieFormHeader.get('header')?.value;

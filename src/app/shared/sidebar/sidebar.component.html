@@ -24,7 +24,12 @@
           <div class="d-flex align-items-center">
             <img src="../../../assets/icons/verficado.png" alt="" />
             <p class="pb-0 mb-0 fs-8">
-              {{ userData.rol === 1 ? "Administrador" : "Usuario" }}
+              {{
+                (userData.rol === 1 && "Administrador") ||
+                  (userData.rol === 3 && "Capturista") ||
+                  (userData.rol === 4 && "Encargado") ||
+                  "Usuario"
+              }}
             </p>
           </div>
         </div>
@@ -78,7 +83,7 @@
               <button
                 class="btn fs-8 mt-3 fw-bold sidebar__button-usuarios"
                 routerLink="/user"
-                *ngIf="userData.rol == 1"
+                *ngIf="userData.rol == 1 || userData.rol == 4"
                 (click)="offcanvas.dismiss('Cross click')"
               >
                 Ver usuarios

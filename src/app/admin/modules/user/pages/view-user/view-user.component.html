@@ -245,9 +245,10 @@
             formControlName="rol"
             style="background-color: #fff0 !important"
           >
-            <option value="1">Admin</option>
+            <option value="1" *ngIf="userRol == 1">Admin</option>
             <option value="2">Usuario</option>
             <option value="3">Capturista</option>
+            <option value="3" *ngIf="userRol == 1">Encargado</option>
           </select>
         </div>
 
@@ -371,9 +372,10 @@
             formControlName="rol"
             style="background-color: #fff0 !important"
           >
-            <option value="1">Admin</option>
+            <option value="1" *ngIf="userRol == 1">Admin</option>
             <option value="2">Usuario</option>
             <option value="3">Capturista</option>
+            <option value="4" *ngIf="userRol == 1">Encargado</option>
           </select>
         </div>
 

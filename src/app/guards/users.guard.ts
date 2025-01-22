@@ -40,7 +40,7 @@ export class UsersGuard implements CanActivate, CanLoad {
       this.router.parseUrl('./auth');
       return false;
     }
-    if (user.rol != 1) {
+    if (user.rol != 1 && user.rol !== 4) {
       this.router.parseUrl('./auth');
       return false;
     }
@@ -70,7 +70,7 @@ export class UsersGuard implements CanActivate, CanLoad {
       this.router.parseUrl('./auth');
       return false;
     }
-    if (user.rol != 1) {
+    if (user.rol != 1 && user.rol !== 4) {
       this.router.parseUrl('./auth');
       return false;
     }

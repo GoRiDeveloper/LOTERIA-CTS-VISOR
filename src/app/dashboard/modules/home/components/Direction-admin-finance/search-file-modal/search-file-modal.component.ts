@@ -52,6 +52,10 @@ export class SearchFileModalComponent implements OnInit {
     this.userId = this.userData.user_id;
   }
 
+  verifyExt(ext: string) {
+    return ext.split('.')[1] === 'pdf';
+  }
+
   searchFile(): void | boolean {
     // Retorna la función si al menos tiene 3 caracteres
     if (

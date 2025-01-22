@@ -56,7 +56,11 @@
     </ng-container>
     <ng-container *ngFor="let subgerencia of filterDependeciesName">
       <ng-container
-        *ngIf="subgerencia.has_sub == true && subgerencia.has_doc == true"
+        *ngIf="
+          subgerencia.has_sub == true &&
+          subgerencia.has_doc == true &&
+          subgerencia.has_header == false
+        "
       >
         <div class="card__2level-container">
           <div
@@ -86,7 +90,11 @@
         </div>
       </ng-container>
       <ng-container
-        *ngIf="subgerencia.has_sub == false && subgerencia.has_doc == true"
+        *ngIf="
+          subgerencia.has_sub == false &&
+          subgerencia.has_doc == false &&
+          subgerencia.has_header == true
+        "
       >
         <div class="card__2level-container">
           <div
@@ -116,7 +124,113 @@
         </div>
       </ng-container>
       <ng-container
-        *ngIf="subgerencia.has_sub == true && subgerencia.has_doc == false"
+        *ngIf="
+          subgerencia.has_sub == true &&
+          subgerencia.has_doc == false &&
+          subgerencia.has_header == true
+        "
+      >
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/documentos/{{ subgerencia.id }}"
+          >
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          subgerencia.has_sub == false &&
+          subgerencia.has_doc == true &&
+          subgerencia.has_header == true
+        "
+      >
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/documentos/{{ subgerencia.id }}"
+          >
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          subgerencia.has_sub == true &&
+          subgerencia.has_doc == true &&
+          subgerencia.has_header == true
+        "
+      >
+        <div class="card__2level-container">
+          <div
+            class="card__2level-containerPI"
+            routerLink="/dashboard/home/documentos/{{ subgerencia.id }}"
+          >
+            <img src="../../../../../../assets/icons/icon-carpeta.png" alt="" />
+            <p class="">{{ subgerencia.nombre }}</p>
+          </div>
+          <ng-container *ngIf="subgerencia.editable == true && user_rol == 3">
+            <button
+              pButton
+              pRipple
+              label="Editar"
+              icon="bi bi-pencil"
+              iconPos="right"
+              class=""
+              (click)="
+                setEditable(
+                  subgerencia.id,
+                  subgerencia.nombre,
+                  addDependencieModal
+                )
+              "
+            ></button>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          subgerencia.has_sub == true &&
+          subgerencia.has_doc == false &&
+          subgerencia.has_header == false
+        "
       >
         <div class="card__2level-container">
           <div
@@ -146,7 +260,11 @@
         </div>
       </ng-container>
       <ng-container
-        *ngIf="subgerencia.has_sub == false && subgerencia.has_doc == false"
+        *ngIf="
+          subgerencia.has_sub == false &&
+          subgerencia.has_doc == false &&
+          subgerencia.has_header == false
+        "
       >
         <div class="card__2level-container">
           <div
@@ -209,11 +327,20 @@
       <div class="d-flex justify-content-center">
         <ng-container *ngIf="user_rol == 3">
           <p-button
+            *ngIf="!hasSheet && !firstSheet"
+            label="Agregar hoja"
+            class="p-button-secondary btn-addDep"
+            icon="bi bi-plus-lg"
+            iconPos="right"
+            (onClick)="openModalCreateSheet(addSheet)"
+          ></p-button>
+          <p-button
+            *ngIf="firstSheet || hasSheet"
             label="Agregar contenido"
             class="p-button-secondary btn-addDep"
             icon="bi bi-plus-lg"
             iconPos="right"
-            (onClick)="openModalCreateDependencie(addTableModal, false)"
+            (onClick)="openModalCreateContent(addTableModal, false)"
           ></p-button>
         </ng-container>
         <ng-container *ngIf="user_rol !== 3">
@@ -260,6 +387,24 @@
   ></form-add-dependencie>
 </ng-template>
 
+<ng-template #addSheet let-modal>
+  <div class="modal-header text-light" style="background-color: #222222">
+    <h4 class="modal-title" id="modal-basic-title">Crear hoja</h4>
+    <button
+      type="button"
+      class="btn-close text-light"
+      style="top: auto; filter: invert(100%)"
+      aria-label="Close"
+      data-bs-theme="dark"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <form-add-sheet
+    [currentRoute]="currentRoute"
+    (responseSheet)="sheetResponse($event)"
+  ></form-add-sheet>
+</ng-template>
+
 <ng-template #addTableModal let-modal>
   <div class="modal-header text-light" style="background-color: #222222">
     <h4 class="modal-title" id="modal-basic-title">Crear nueva tabla</h4>
@@ -273,6 +418,7 @@
     ></button>
   </div>
   <form-add-table
+    [sheetId]="hasSheet"
     [currentRoute]="currentRoute"
     [indiceDependencia]="indiceDependencia"
     [dependenciaIndiceLongitud]="dependenciaIndiceLongitud"

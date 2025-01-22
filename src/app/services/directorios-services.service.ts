@@ -50,6 +50,18 @@ export class DirectoriosServicesService {
     );
   }
 
+  addSheet(data: any): Observable<any> {
+    return this._http.post<any>(`${environment.BASE_URL}agregarHoja/`, data, {
+      headers: this._getHeaders(),
+    });
+  }
+
+  editSheet(id: string, data: any): Observable<any> {
+    return this._http.put(`${environment.BASE_URL}agregarHoja/${id}`, data, {
+      headers: this._getHeaders(),
+    });
+  }
+
   getMetadata() {
     return this._http.get<any>(`${environment.BASE_URL}obtenerEncabezados/`, {
       headers: this._getHeaders(),
@@ -154,15 +166,6 @@ export class DirectoriosServicesService {
         headers: new HttpHeaders({
           Authorization: localStorage.getItem('token') ?? '',
         }),
-      }
-    );
-  }
-
-  insertNewFile(idDocument: number): Observable<any> {
-    return this._http.get<any>(
-      `${environment.BASE_URL}obtenerPath/${idDocument}`,
-      {
-        headers: this._getHeaders(),
       }
     );
   }

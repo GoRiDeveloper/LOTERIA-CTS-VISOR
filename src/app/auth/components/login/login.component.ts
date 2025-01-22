@@ -70,7 +70,8 @@ export class LoginComponent {
     this.checkUserData();
     this._authService.postLogin(this.userLogin).subscribe({
       next: (response: any) => {
-        alert(response.token);
+        if (response.token) alert(response.token);
+
         this._toastr.success(
           '',
           `Se ha enviado el código de verificacion a tu correo.`,

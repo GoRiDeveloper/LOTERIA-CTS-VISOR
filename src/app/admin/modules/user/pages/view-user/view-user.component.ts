@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbDropdownConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +13,7 @@ import {
   DependencyStructureUserResponse,
 } from 'src/app/interfaces/dependencyStructure.interface';
 import { UserDataInterface } from 'src/app/interfaces/Users.interface';
-
+import * as CryptoJS from 'crypto-js';
 
 import { DirectoriosServicesService } from 'src/app/services/directorios-services.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -49,6 +44,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
   public selectedDepUserCreate?: dependencyStructure[];
   public selectedDepTree?: dependencyStructure[];
   public disableBtn: boolean = true;
+  public userRol: number = NaN;
 
   public userIdCreated?: string;
 
@@ -91,7 +87,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     private _toastService: ToastrService,
     private _store: StoreService,
     private _handleErrorUser: HandleErrorUser,
-    private _dependencyService: DirectoriosServicesService,
+    private _dependencyService: DirectoriosServicesService
   ) {
     config.placement = 'right';
   }
@@ -101,6 +97,14 @@ export class ViewUserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllUsers();
+    let bytes = CryptoJS.AES.decrypt(
+      localStorage.getItem('data') || '',
+      localStorage.getItem('token') || ''
+    );
+
+    const userData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+    this.userRol = userData.rol;
   }
 
   open(content: any) {
@@ -296,13 +300,11 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     const idSet = new Set<string>();
 
     const idSup = this.selectedDepTree
-      .map((dependency: dependencyStructure) =>
-        dependency.dependencia_superior
-      )
+      .map((dependency: dependencyStructure) => dependency.dependencia_superior)
       .filter((item) => item !== null) as string[];
 
     this.selectedDepTree.forEach((dependencia) => {
-      const arrNumb = (dependencia.key);
+      const arrNumb = dependencia.key;
       idSup.push(arrNumb!);
       idSet.add(arrNumb!);
       // collectParentKeys(dependencia, idSet);

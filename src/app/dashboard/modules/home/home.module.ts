@@ -15,6 +15,7 @@ import { ViewFilePdfComponent } from './components/Direction-admin-finance/view-
 import { AddFileModalComponent } from './components/Gerencia-tesoreria/add-file-modal/add-file-modal.component';
 import { FormAddDependencieComponent } from './components/Direction-admin-finance/form-add-dependencie/form-add-dependencie.component';
 import { FormAddTableComponent } from './components/Direction-admin-finance/form-add-table/form-add-table.component';
+import { FormAddSheetComponent } from './components/Direction-admin-finance/form-add-sheet/form-add-sheet.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormAddTableComponent } from './components/Direction-admin-finance/form
     ViewFilePdfComponent,
     AddFileModalComponent,
     FormAddDependencieComponent,
-    FormAddTableComponent
+    FormAddTableComponent,
+    FormAddSheetComponent,
   ],
   imports: [
     CommonModule,

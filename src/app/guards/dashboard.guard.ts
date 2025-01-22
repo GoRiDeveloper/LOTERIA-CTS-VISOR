@@ -41,7 +41,7 @@ export class DashboardGuard implements CanActivate, CanLoad {
       return false;
     }
 
-    if (user.rol != 1 && user.rol != 2 && user.rol != 3) {
+    if (user.rol != 1 && user.rol != 2 && user.rol != 3 && user.rol != 4) {
       this.router.navigateByUrl('./auth');
       return false;
     }
@@ -72,7 +72,7 @@ export class DashboardGuard implements CanActivate, CanLoad {
       return false;
     }
 
-    if (user.rol != 1 && user.rol != 2 && user.rol != 3) {
+    if (user.rol != 1 && user.rol != 2 && user.rol != 3 && user.rol != 4) {
       this.router.navigateByUrl('./auth');
       return false;
     }

@@ -60,6 +60,21 @@ export class GerenciaTesoreriaComponent implements OnInit {
   public currentTag?: string;
   public editablesExist: boolean = false;
   public isCreate: string = 'Crear';
+  public changeType: boolean = false;
+  public sheetId: any;
+  public sheetName = '';
+  public sheetTitle: string = '';
+  public manageTypeSheet?: 'add' | 'edit';
+  public dependency = {
+    id: '',
+    has_sub: false,
+    has_doc: false,
+    nombre: '',
+    nombre2: '',
+    dependencia_indice: '',
+    fonatur: -1,
+    dependencia_superior: -1,
+  };
 
   public lastPageViewed?: number;
   public filesViewed: string[] = [];
@@ -92,12 +107,21 @@ export class GerenciaTesoreriaComponent implements OnInit {
     this.user_role = Number(localStorage.getItem('user_role'));
     this._activateRoute.paramMap.subscribe((params) => {
       this.idDependecy = params.get('id') || '';
+      this.dependency.id = params.get('id') || '';
       this.getRutas();
       this.getTypeDocument();
     });
 
     if (this._storeLocalStorage.get('idsViewed') !== null)
       this.filesViewed = this._storeLocalStorage.get('idsViewed');
+  }
+
+  sheetResponse(response: any) {
+    if (response) {
+      this.modalService.dismissAll();
+      this.getRutas();
+      this.getTypeDocument();
+    }
   }
 
   getTypeDocument() {
@@ -229,13 +253,38 @@ export class GerenciaTesoreriaComponent implements OnInit {
     });
   }
 
-  handleChangeType(tipo: any) {
-    this.idType = tipo.id;
-    this.nombreType = tipo.nombre;
-    this.pageCurrent = 1;
-    this.documents = undefined;
-    this.headers = [];
-    this.getDocumentsByType();
+  handleSheet(
+    content: any,
+    sheetId: any,
+    sheetName: string,
+    type: 'add' | 'edit',
+    event: any
+  ) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.changeType = false;
+    this.sheetId = sheetId;
+    this.sheetName = sheetName;
+    this.manageTypeSheet = type;
+    this.sheetTitle = type === 'add' ? 'Agregar' : 'Editar';
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+
+  handleChangeType(tipo: any, event: any) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (this.changeType) {
+      this.idType = tipo.id;
+      this.nombreType = tipo.nombre;
+      this.pageCurrent = 1;
+      this.documents = undefined;
+      this.headers = [];
+      this.getDocumentsByType();
+    }
+
+    this.changeType = true;
   }
 
   handleBeforePage() {
@@ -384,14 +433,12 @@ export class GerenciaTesoreriaComponent implements OnInit {
         //   startPage,
         //   firtsPagesLoaded
         // );
-        // console.log({ partialPdf });
 
         this.displayPdf(partialPdf, 1, firtsPagesLoaded, endPage);
 
         this.loadRemainingPages(pk, 1, endPage);
       } else {
         const completePdf = await this.loadPartialPdf(pk, startPage, endPage);
-
         this.displayPdf(completePdf, 1, endPage, endPage, true);
       }
     } catch (error) {
