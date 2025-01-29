@@ -66,11 +66,11 @@ export class SidebarComponent implements OnInit {
   getDepencenciaList() {
     if (!this.userId) return;
     try {
-      this._dependecyService.getJerarquiaUser(this.userId).subscribe({
+      this._dependecyService.getDepedendencyStructure().subscribe({
         next: (response: any) => {
-          const { dependencias } = response;
+          // const { dependencias } = response;
 
-          const responseTree = dependencias.map(
+          const responseTree = response.map(
             (item: DependencyStructureResponse) => {
               return DependenciesStructureToSidebar.depStructureToSidebarEntity(
                 item
