@@ -23,11 +23,14 @@ import { lastValueFrom } from 'rxjs';
 })
 export class SearchFileModalComponent implements OnInit {
   @ViewChild('ViewPdf') ViewFilePdfComponent!: TemplateRef<any>;
+  @ViewChild('ViewDocument') ViewDocComponent!: TemplateRef<any>;
   @Input() valuesTable!: Result[];
   @Input() indiceDependencia!: string;
 
   public userData?: any;
   public userId?: number;
+  public isPdf: boolean = false;
+  public nameFile = '';
 
   public queryFile?: string;
   public searchFileFromModal: boolean = false;
@@ -36,6 +39,10 @@ export class SearchFileModalComponent implements OnInit {
   public notValues: boolean = false;
   public selectedFile?: Result | null;
   public documentData?: any;
+
+  public fileId = '';
+  public ext = '';
+  public downloadName = '';
 
   constructor(
     private _dependecyService: DirectoriosServicesService,
@@ -52,8 +59,58 @@ export class SearchFileModalComponent implements OnInit {
     this.userId = this.userData.user_id;
   }
 
+  verifyDocument(dependency: any) {
+    const isPdf = dependency?.nombre_archivo?.split('.')[1] === 'pdf';
+
+    if (isPdf) this.openModalPdf(dependency);
+    else this.openModalDocument(dependency);
+  }
+
+  openModalDocument(document: any) {
+    this.nameFile = document?.nombre_archivo;
+    this.fileId = document?.documento_id;
+    this.ext = document?.nombre_archivo?.split('.')[1];
+    this.downloadName = document?.nombre_archivo?.split('.')[0];
+
+    this._modalService.open(this.ViewDocComponent, {
+      fullscreen: true,
+      scrollable: true,
+      centered: true,
+    });
+  }
+
+  descargar() {
+    if (this.fileId)
+      this._dependecyService
+        .getDocumentArchivoDescargarByID(this.fileId)
+        .subscribe({
+          next: (response) => {
+            const blob = new Blob([response], {
+              type:
+                this.ext === 'pdf'
+                  ? 'application/pdf'
+                  : 'application/octet-stream',
+            });
+            const url = window.URL.createObjectURL(blob);
+
+            // Configurar el nombre del archivo con la extensión especificada
+            const anchor = document.createElement('a');
+            anchor.href = url;
+            anchor.download = `${this.downloadName}.${this.ext}`; // Agrega la extensión correcta
+            anchor.click();
+
+            // Liberar la URL creada para liberar memoria
+            window.URL.revokeObjectURL(url); // Llama a la función con la extensión correspondiente
+          },
+          error: (err) => {
+            console.error('Error al descargar el archivo', err);
+          },
+        });
+  }
+
   verifyExt(ext: string) {
-    return ext.split('.')[1] === 'pdf';
+    const isPdf = ext.split('.')[1] === 'pdf';
+    return isPdf ? 'PDF' : 'Documento';
   }
 
   searchFile(): void | boolean {
@@ -106,6 +163,10 @@ export class SearchFileModalComponent implements OnInit {
 
   openModalPdf(dependency: any) {
     this.selectedFile = dependency;
+    this.fileId = dependency?.documento_id;
+    this.ext = dependency?.nombre_archivo?.split('.')[1];
+    this.downloadName = dependency?.nombre_archivo?.spli('.')[0];
+
     this.documentData = { ...this.selectedFile };
 
     const modalRef: NgbModalRef = this._modalService.open(

@@ -50,6 +50,13 @@ export class DirectoriosServicesService {
     );
   }
 
+  countFiles(id: string): Observable<any> {
+    return this._http.get(
+      `${environment.BASE_URL}dependencia/count_files?superior=${id}`,
+      { headers: this._getHeaders() }
+    );
+  }
+
   addSheet(data: any): Observable<any> {
     return this._http.post<any>(`${environment.BASE_URL}agregarHoja/`, data, {
       headers: this._getHeaders(),

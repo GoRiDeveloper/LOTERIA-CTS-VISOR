@@ -91,7 +91,6 @@ export class ViewFilesUploadComponent implements OnInit {
             dependencyStructureMapper.dependencyStructureToEntity(dependency)
         );
 
-        console.log(this.initialDependencies);
         const totalFiles = this.initialDependencies.reduce(
           (total: number, dep: dependencyStructure) => {
             total += dep.totalFiles!;
@@ -133,7 +132,7 @@ export class ViewFilesUploadComponent implements OnInit {
   setDataChart(indiceDep: string) {
     const id = indiceDep;
 
-    this._dependencyService.getDependecyByID(id).subscribe({
+    this._dependencyService.countFiles(id).subscribe({
       next: (response: DependencyByIDResponse) => {
         const { dependencias } = response;
 

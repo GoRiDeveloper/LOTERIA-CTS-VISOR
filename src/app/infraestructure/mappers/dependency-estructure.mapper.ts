@@ -18,6 +18,7 @@ export class dependencyStructureMapper {
           )
         : undefined,
       dependencia_superior: dependency.dependencia_superior,
+      totalFiles: dependency?.TotalDocumentos,
     };
   }
 }

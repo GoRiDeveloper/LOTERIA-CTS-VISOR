@@ -78,7 +78,7 @@ export class SearchFileModalComponent implements OnInit {
       const data = {
         dependencia_ids: idsArray,
         description: this.queryFile,
-        usuario_id: this.userId
+        usuario_id: this.userId,
       };
 
       // Obtener los detalles de los documentos

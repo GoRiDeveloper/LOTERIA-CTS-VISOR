@@ -419,6 +419,7 @@
           <app-tree-view
             [dependenciesUser]="selectedDepUserUpdate"
             [isToCreateUser]="isToCreateUser"
+            (dependenciesObtained)="onDependenciesObtained($event)"
             (selectedDepChange)="onSelectedDepChange($event)"
             [dataUser]="user"
           ></app-tree-view>

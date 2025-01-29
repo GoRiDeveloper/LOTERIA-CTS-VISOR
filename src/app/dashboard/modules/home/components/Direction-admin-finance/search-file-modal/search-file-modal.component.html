@@ -58,10 +58,10 @@
               aria-expanded="true"
             ></button>
             <ul class="dropdown-menu">
-              <li *ngIf="verifyExt(dependency.nombre_archivo)">
-                <div class="dropdown-item" (click)="openModalPdf(dependency)">
+              <li>
+                <div class="dropdown-item" (click)="verifyDocument(dependency)">
                   <i class="bi bi-file-earmark-pdf-fill"></i>
-                  Ver PDF
+                  Ver {{ verifyExt(dependency.nombre_archivo) }}
                 </div>
               </li>
               <li>
@@ -75,7 +75,7 @@
                 >
                   <i class="bi bi-link-45deg"></i>
 
-                  Ir a ruta</a
+                  Ir a la ruta</a
                 >
               </li>
             </ul>
@@ -103,4 +103,29 @@
     [documentData]="documentData"
     [closeModal]="modal.close.bind(modal)"
   ></app-view-file-pdf>
+</ng-template>
+
+<ng-template #ViewDocument let-modal>
+  <div
+    style="
+      display: flex;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <h3>{{ nameFile }}</h3>
+    <button
+      type="button"
+      class="btn-close mt-3"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+    <button (click)="descargar()" class="btn btn-primary fs-5">
+      Descargar
+      <img src="/assets/icons/download-success.png" alt="" srcset="" />
+    </button>
+  </div>
 </ng-template>

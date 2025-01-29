@@ -128,7 +128,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
     this._dependecyService.getTypeDocumentByID(this.idDependecy).subscribe({
       next: (response) => {
         this.typeDocument = response;
-        this.idType = this.typeDocument[0]?.id;
+        this.idType = this.idType ? this.idType : this.typeDocument[0]?.id;
         this.currentTag = this.idType?.toString();
 
         this.getDocumentsByType();

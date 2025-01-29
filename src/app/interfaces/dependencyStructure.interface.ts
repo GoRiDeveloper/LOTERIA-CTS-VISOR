@@ -5,6 +5,7 @@ export interface DependencyStructureResponse {
   dependencia_indice: string;
   dependencia_superior?: string | null;
   children?: DependencyStructureResponse[];
+  TotalDocumentos?: number;
 }
 
 export interface dependencyStructure {

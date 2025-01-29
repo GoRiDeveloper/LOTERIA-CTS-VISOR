@@ -169,7 +169,7 @@
           (click)="handleChangeType(typeDoc, $event)"
         >
           {{ typeDoc.nombre }}
-          <div class="caja-herramientas">
+          <div class="caja-herramientas" *ngIf="user_role === 3">
             <ul>
               <li
                 (click)="

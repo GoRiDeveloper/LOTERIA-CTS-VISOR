@@ -45,6 +45,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
   public selectedDepTree?: dependencyStructure[];
   public disableBtn: boolean = true;
   public userRol: number = NaN;
+  public dependencies?: DependencyStructureResponse[];
 
   public userIdCreated?: string;
 
@@ -216,7 +217,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
 
     this.user = this.userForm.value;
     this.user.email = this.user.username;
-
+    debugger;
     try {
       // Creación de usuario sin dependencias
       const response = await lastValueFrom(
@@ -307,7 +308,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
       const arrNumb = dependencia.key;
       idSup.push(arrNumb!);
       idSet.add(arrNumb!);
-      // collectParentKeys(dependencia, idSet);
+      collectParentKeys(dependencia, idSet);
     });
 
     const dependenciesId = [...idSet];
@@ -374,5 +375,9 @@ export class ViewUserComponent implements OnInit, OnDestroy {
 
   onSelectedDepChange(selectedFiles: TreeNode[]): void {
     this.selectedDepTree = selectedFiles;
+  }
+
+  onDependenciesObtained(dependencies: DependencyStructureResponse[]) {
+    this.dependencies = dependencies;
   }
 }

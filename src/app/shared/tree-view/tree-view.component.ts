@@ -28,6 +28,8 @@ export class TreeViewComponent implements OnInit {
   @Input() dependenciesUser?: dependencyStructure[];
   @Input() isToCreateUser?: boolean;
   @Input() dataUser?: UserDataInterface;
+  @Output() dependenciesObtained: EventEmitter<DependencyStructureResponse[]> =
+    new EventEmitter<DependencyStructureResponse[]>();
   @Output() selectedDepChange: EventEmitter<TreeNode<any>[]> = new EventEmitter<
     TreeNode[]
   >();
@@ -65,6 +67,7 @@ export class TreeViewComponent implements OnInit {
     // Si el árbol de dependencias no está en el cache, se carga desde la API
     this._dependencyService.getDepedendencyStructure().subscribe({
       next: (resp) => {
+        this.dependenciesObtained.emit(resp);
         this.files = resp.map((dependency: DependencyStructureResponse) =>
           dependencyStructureMapper.dependencyStructureToEntity(dependency)
         );
