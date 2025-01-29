@@ -217,7 +217,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
 
     this.user = this.userForm.value;
     this.user.email = this.user.username;
-    debugger;
+
     try {
       // Creación de usuario sin dependencias
       const response = await lastValueFrom(
