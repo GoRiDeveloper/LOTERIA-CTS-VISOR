@@ -271,8 +271,6 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     // this.EditUserForm.get('dependencias')?.setValue([]);
     this.user = { ...this.user, ...this.EditUserForm.value };
     delete this.user.id_externo;
-    delete this.user.username;
-    delete this.user.email;
     delete this.user.id;
     delete this.user.dependencias;
 
