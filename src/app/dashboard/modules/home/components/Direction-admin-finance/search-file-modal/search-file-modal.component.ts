@@ -165,7 +165,7 @@ export class SearchFileModalComponent implements OnInit {
     this.selectedFile = dependency;
     this.fileId = dependency?.documento_id;
     this.ext = dependency?.nombre_archivo?.split('.')[1];
-    this.downloadName = dependency?.nombre_archivo?.spli('.')[0];
+    this.downloadName = dependency?.nombre_archivo?.split('.')[0];
 
     this.documentData = { ...this.selectedFile };
 
