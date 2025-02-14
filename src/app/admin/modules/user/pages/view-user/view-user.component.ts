@@ -28,6 +28,7 @@ import { collectParentKeys } from 'src/app/utils/collectParentKeys';
 })
 export class ViewUserComponent implements OnInit, OnDestroy {
   selectedDependenciesTree?: TreeNode[];
+  currentRol = "";
 
   public isLoading: boolean = true;
   public users: UserDataInterface[] = [];
@@ -58,7 +59,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     password: ['', Validators.required],
     dependencias: [],
     telefono: ['', Validators.required],
-    rol: ['1', Validators.required],
+    rol: ['', Validators.required],
     descargas: [false, Validators.required],
   });
 
@@ -70,7 +71,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     email: ['', Validators.email],
     // dependencias: [''],
     telefono: [''],
-    rol: ['1', Validators.required],
+    rol: ['', Validators.required],
     descargas: [false, Validators.required],
     expediente_ver: [''],
   });
@@ -121,13 +122,19 @@ export class ViewUserComponent implements OnInit, OnDestroy {
   }
 
   openUpdateUser(content: any, user: UserDataInterface) {
-    const { id } = user;
+    const { id, rol } = user;
     if (id) this.userId = id;
     this.user = user;
     this.EditUserForm.reset(this.user);
 
     // Cargar dependencias que ya tiene seleccionado el usuario
     if (!id) return;
+
+    if (rol === 1) this.currentRol = 'Administrador';
+    else if (rol === 3) this.currentRol = 'Capturista';
+    else if (rol === 4) this.currentRol = 'Encargado';
+    else this.currentRol = 'Usuario';
+
     this.getJerarquiaUser(id);
 
     this.modalService.open(content, {

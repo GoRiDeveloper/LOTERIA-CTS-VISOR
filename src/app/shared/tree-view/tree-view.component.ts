@@ -55,15 +55,6 @@ export class TreeViewComponent implements OnInit {
       this.selectedDep = this.dependenciesUser;
     }
 
-    // Obtener árbol de dependencias del cache si está disponible
-    const cachedTree = this._cacheService.get('treeDependencies');
-    if (cachedTree) {
-      this.files = cachedTree;
-
-      this.selectNodesProgrammatically();
-      this.loadingDep = false;
-      return;
-    }
     // Si el árbol de dependencias no está en el cache, se carga desde la API
     this._dependencyService.getDepedendencyStructure().subscribe({
       next: (resp) => {
@@ -74,7 +65,6 @@ export class TreeViewComponent implements OnInit {
         this.loadingDep = false;
 
         // Almacera en cache árbol de dependencias
-        this._cacheService.set('treeDependencies', this.files);
         this.selectNodesProgrammatically();
       },
       error: (err) => {

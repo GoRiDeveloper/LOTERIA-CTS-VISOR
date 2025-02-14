@@ -363,20 +363,27 @@
         </div> -->
 
         <label class="fw-bold pb-0 mt-5 mb-0"> Rol </label>
-        <div class="col-12 p-3 border-bottom">
-          <select
-            name="dependencia"
-            id="dependencia"
-            class="form-select form-select-lg fw-bold form-field border-0 flex-shrink-1 fw-light"
-            formControlName="rol"
-            style="background-color: #fff0 !important"
-          >
-            <option value="1" *ngIf="userRol == 1">Admin</option>
-            <option value="2">Usuario</option>
-            <option value="3">Capturista</option>
-            <option value="4" *ngIf="userRol == 1">Encargado</option>
-          </select>
+        <div class="d-flex gap-5">
+          <p class="fw-bold mt-2" style="color: white;">Rol Actual: <span style="font-style: italic; text-decoration: underline;">{{currentRol}}</span></p>
         </div>
+        <label for="modRol" class="fw-bold mt-2" style="color: white;">
+          Editar Rol 
+          <input type="checkbox" class="rol-check" id="modRol">
+          <div class="col-12 p-3 border-bottom select-rol">
+            <select
+              name="dependencia"
+              id="dependencia"
+              class="form-select form-select-lg fw-bold form-field border-0 flex-shrink-1 fw-light"
+              formControlName="rol"
+              style="background-color: #fff0 !important"
+            >
+              <option value="1" *ngIf="userRol == 1">Admin</option>
+              <option value="2">Usuario</option>
+              <option value="3">Capturista</option>
+              <option value="4" *ngIf="userRol == 1">Encargado</option>
+            </select>
+          </div>
+        </label>
 
         <div class="d-flex justify-content-around">
           <button class="btn btn-secondary text-light fs-5 mt-5 mb-3">

@@ -71,6 +71,8 @@ export class DirectionAdminFinanceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    document.body.style.overflow = "auto";
+    
     let bytes = CryptoJS.AES.decrypt(
       localStorage.getItem('data') || '',
       localStorage.getItem('token') || ''

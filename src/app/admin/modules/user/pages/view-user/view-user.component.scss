@@ -3,6 +3,12 @@
   padding: 20px;
 }
 
+.select-rol {
+  display: none;
+}
+.rol-check:checked ~ .select-rol {
+  display: block;
+}
 
 .menu__open-container {
   background-color: rgba(0, 0, 0, 0.493);

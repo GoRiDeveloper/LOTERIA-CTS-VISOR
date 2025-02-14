@@ -13,6 +13,18 @@
 
 <div class="container__modal" *ngIf="!isLoadingPdf">
   <div class="container__modal-div" style="width: 100%">
+    <div *ngIf="download" class="row" class="modal__pdf-left">
+      <div class="container__btn-download">
+        <button
+        
+          (click)="descargar()"
+          class="btn btn-primary fs-5"
+        >
+          Descargar
+          <img src="/assets/icons/download-success.png" alt="" srcset="" />
+        </button>
+      </div>
+    </div>
     <ngx-extended-pdf-viewer
       *ngIf="pdfinfo.ext == 'pdf'"
       [src]="pdfSrc"

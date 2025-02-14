@@ -100,7 +100,9 @@
 
 <ng-template #ViewPdf let-modal>
   <app-view-file-pdf
+    [fileId]="fileId"
     [documentData]="documentData"
+    [download]="userData?.descargas"
     [closeModal]="modal.close.bind(modal)"
   ></app-view-file-pdf>
 </ng-template>
@@ -123,7 +125,7 @@
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"
     ></button>
-    <button (click)="descargar()" class="btn btn-primary fs-5">
+    <button *ngIf="userData?.descargas" (click)="descargar()" class="btn btn-primary fs-5">
       Descargar
       <img src="/assets/icons/download-success.png" alt="" srcset="" />
     </button>

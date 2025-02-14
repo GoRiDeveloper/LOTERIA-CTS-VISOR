@@ -1,3 +1,7 @@
+.container_slider {
+  overflow: visible;
+}
+
 .fondo {
   position: fixed;
   width: 100%;
@@ -13,7 +17,7 @@
 
 .caja-herramientas {
   display: none; /* Inicialmente oculta */
-  position: fixed;
+  position: absolute;
   z-index: 2;
   background-color: rgb(149, 116, 75);
   border: 1px solid #ddd;

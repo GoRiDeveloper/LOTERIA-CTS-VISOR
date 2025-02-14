@@ -11,6 +11,8 @@ import { DirectoriosServicesService } from 'src/app/services/directorios-service
   styleUrls: ['./view-file-pdf.component.css'],
 })
 export class ViewFilePdfComponent implements OnInit {
+  @Input() fileId?: any;
+  @Input() download: boolean = false;
   @Input() documentData?: Result;
   @Input() closeModal?: () => void;
 
@@ -33,6 +35,31 @@ export class ViewFilePdfComponent implements OnInit {
 
   ngOnInit() {
     this.getDocumentData();
+  }
+
+  descargar() {
+    if(this.download)
+    this._dependencyService
+        .getDocumentArchivoDescargarByID(this.fileId)
+        .subscribe({
+          next: (response) => {
+            const blob = new Blob([response], {
+              type:
+                  'application/pdf'
+            });
+            const url = window.URL.createObjectURL(blob);
+            // Configurar el nombre del archivo con la extensión especificada
+            const anchor = document.createElement('a');
+            anchor.href = url;
+            anchor.download = `${this.fileId}.pdf`; // Agrega la extensión correcta
+            anchor.click();
+            // Liberar la URL creada para liberar memoria
+            window.URL.revokeObjectURL(url); // Llama a la función con la extensión correspondiente
+          },
+          error: (err) => {
+            console.error('Error al descargar el archivo', err);
+          },
+        });
   }
 
   getDocumentData() {

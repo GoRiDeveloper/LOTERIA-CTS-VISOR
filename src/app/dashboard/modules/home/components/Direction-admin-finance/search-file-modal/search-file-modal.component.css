@@ -7,3 +7,25 @@
 .p-datatable .p-datatable-thead > tr > th {
     font-size: 15px;
 }
+.modal__pdf-left {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    gap: 2rem;
+    flex-direction: row;
+    align-items: center;
+    order: 2;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: white;
+    padding: 10px 0;
+    opacity: 0.1;
+    justify-content: space-evenly;
+    transition: 0.5s;
+    z-index: 1;
+    /* display: none; */
+  }
+  .modal__pdf-left:hover {
+    opacity: 1;
+  }
