@@ -12,10 +12,10 @@ import { DirectoriosServicesService } from 'src/app/services/directorios-service
 })
 export class ViewFilePdfComponent implements OnInit {
   @Input() fileId?: any;
-  @Input() download: boolean = false;
   @Input() documentData?: Result;
-  @Input() closeModal?: () => void;
+  @Input() closeModal!: () => void;
 
+  public download: boolean = false;
   public isLoadingPdf: boolean = true;
   public namePDF?: string;
   public pdfSrc: any = '';
@@ -38,14 +38,14 @@ export class ViewFilePdfComponent implements OnInit {
   }
 
   descargar() {
-    if(this.download)
-    this._dependencyService
+    console.log(this.download);
+    if (this.download)
+      this._dependencyService
         .getDocumentArchivoDescargarByID(this.fileId)
         .subscribe({
           next: (response) => {
             const blob = new Blob([response], {
-              type:
-                  'application/pdf'
+              type: 'application/pdf',
             });
             const url = window.URL.createObjectURL(blob);
             // Configurar el nombre del archivo con la extensión especificada
@@ -73,6 +73,7 @@ export class ViewFilePdfComponent implements OnInit {
         this.pdfinfo.nombre = response.nombre;
         this.pdfinfo.paginas = response.paginas;
         this.pdfinfo.id = this.documentData?.documento_id!;
+        this.download = response.descargas;
 
         this.loadPdf(this.pdfinfo.id, 1, this.pdfinfo.paginas);
       },

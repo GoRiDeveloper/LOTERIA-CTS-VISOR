@@ -5,3 +5,30 @@
   height: 100vh;
   width: 100%;
 }
+
+.container__closeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  align-items: center;
+  z-index: 10000;
+}
+
+.container__btn-download {
+  display: flex;
+  transform: translateX(-50%);
+  left: 50%;
+  gap: 15px;
+  position: fixed;
+  right: 5%;
+  bottom: 1%;
+  align-items: center;
+  z-index: 100;
+}
+
+.btn-close {
+  border: 2px solid black;
+}

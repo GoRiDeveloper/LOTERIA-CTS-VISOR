@@ -485,7 +485,7 @@
 
   <ng-template #previsualizerDocument let-modal>
     <div class="modal-body">
-      <ng-container *ngIf="!isNotPdf">
+      <ng-container *ngIf="isNotPdf">
         <div class="row" class="modal__pdf-left">
           <div class="d-flex justify-content-center">
             <h4>{{ nameFile }}</h4>
@@ -506,8 +506,8 @@
       <!-- <app-sidebar-pdf></app-sidebar-pdf> -->
 
       <ng-container *ngIf="!isNotPdf; else notPdf">
-        <div class="modal__pdf-right">
-          <div class="container__closeInfo">
+        <div class="modal__pdf-left">
+          <div class="container__closeInfo col-2">
             <button
               type="button"
               class="btn-close"
@@ -516,28 +516,39 @@
             ></button>
           </div>
 
-          <ngx-extended-pdf-viewer
-            *ngIf="pdfinfo.ext == 'pdf'"
-            [src]="pdfSrc"
-            height="100vh"
-            [(page)]="page"
-            [showBorders]="true"
-            [showPresentationModeButton]="true"
-            [showFindButton]="true"
-            [showPrintButton]="false"
-            [showOpenFileButton]="false"
-            [showHandToolButton]="true"
-            [showDownloadButton]="false"
-            [showSinglePageModeButton]="true"
-            [replaceBrowserPrint]="false"
-            [textLayer]="true"
-            (pdfLoaded)="onPdfLoaded($event)"
-            (pageRendered)="onPageRendered($event)"
-            [showInfiniteScrollButton]="true"
-            [handTool]="false"
-          >
-          </ngx-extended-pdf-viewer>
+          <div class="container__btn-download col-10">
+            <button
+              *ngIf="documents?.descargas"
+              (click)="descargar()"
+              class="btn btn-sm btn-primary fs-5"
+            >
+              Descargar
+              <img src="/assets/icons/download-success.png" alt="" srcset="" />
+            </button>
+          </div>
         </div>
+
+        <ngx-extended-pdf-viewer
+          *ngIf="pdfinfo.ext == 'pdf'"
+          [src]="pdfSrc"
+          height="100vh"
+          [(page)]="page"
+          [showBorders]="true"
+          [showPresentationModeButton]="true"
+          [showFindButton]="true"
+          [showPrintButton]="false"
+          [showOpenFileButton]="false"
+          [showHandToolButton]="true"
+          [showDownloadButton]="false"
+          [showSinglePageModeButton]="true"
+          [replaceBrowserPrint]="false"
+          [textLayer]="true"
+          (pdfLoaded)="onPdfLoaded($event)"
+          (pageRendered)="onPageRendered($event)"
+          [showInfiniteScrollButton]="true"
+          [handTool]="false"
+        >
+        </ngx-extended-pdf-viewer>
       </ng-container>
 
       <ng-template #notPdf>

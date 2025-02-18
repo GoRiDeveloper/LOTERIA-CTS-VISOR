@@ -122,18 +122,20 @@ export class ViewUserComponent implements OnInit, OnDestroy {
   }
 
   openUpdateUser(content: any, user: UserDataInterface) {
-    const { id, rol } = user;
+    const { id } = user;
     if (id) this.userId = id;
-    this.user = user;
-    this.EditUserForm.reset(this.user);
 
     // Cargar dependencias que ya tiene seleccionado el usuario
     if (!id) return;
 
-    if (rol === 1) this.currentRol = 'Administrador';
-    else if (rol === 3) this.currentRol = 'Capturista';
-    else if (rol === 4) this.currentRol = 'Encargado';
-    else this.currentRol = 'Usuario';
+    this.user = user;
+
+    this.EditUserForm.reset(this.user);
+
+    console.log(
+      'Rol en el formulario después de reset:',
+      this.EditUserForm.value
+    );
 
     this.getJerarquiaUser(id);
 

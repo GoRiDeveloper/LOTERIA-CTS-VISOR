@@ -15,6 +15,18 @@
   z-index: 1;
 }
 
+.container__btn-download {
+  display: flex;
+  transform: translateX(-50%);
+  left: 50%;
+  gap: 15px;
+  position: fixed;
+  right: 5%;
+  bottom: 1%;
+  align-items: center;
+  z-index: 100;
+}
+
 .caja-herramientas {
   display: none; /* Inicialmente oculta */
   position: absolute;
@@ -130,7 +142,7 @@ td {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  position: absolute;
+  position: fixed;
   right: 5%;
   bottom: 5%;
   align-items: center;
@@ -293,22 +305,21 @@ td {
 
 .modal__pdf-left {
   display: flex;
+  flex-direction: column;
   position: fixed;
   bottom: 0;
   right: 0;
   gap: 2rem;
-  flex-direction: row;
   align-items: center;
   order: 2;
   width: 100%;
-  margin-bottom: 10px;
-  background-color: white;
+  margin-bottom: 2px;
+  background-color: transparent;
   padding: 10px 0;
   opacity: 0.1;
-  justify-content: space-evenly;
+  justify-content: space-between;
   transition: 0.5s;
   z-index: 1;
-  /* display: none; */
 }
 
 .modal__pdf-left:hover {
@@ -336,10 +347,6 @@ td {
 
   .container-inputs {
     flex-direction: column;
-  }
-
-  .modal__pdf-left {
-    display: none;
   }
 
   .pdfViewer {

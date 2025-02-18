@@ -199,6 +199,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
     this._dependecyService.getTypeDocumentByIDType(filtros).subscribe({
       next: (response) => {
         const { documentos_editables } = response;
+        console.log({ response });
         this.documents = response;
 
         if (documentos_editables > 0) this.editablesExist = true;
@@ -345,8 +346,6 @@ export class GerenciaTesoreriaComponent implements OnInit {
     size: string = 'xl',
     editFile: boolean = false
   ) {
-    console.log({ data });
-
     this.documentSelected = data;
     this.modalService.open(content, {
       size,
@@ -372,6 +371,8 @@ export class GerenciaTesoreriaComponent implements OnInit {
       next: (response) => {
         this.isLoadingPdf = true;
         this.page = 1;
+
+        console.log({ response }, this.documents);
 
         this.pdfinfo.ext = response.ext;
         this.pdfinfo.nombre = response.nombre;
@@ -421,7 +422,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
   ): Promise<void> {
     this.isLoadingPdf = true;
     try {
-      if (endPage > 200) {
+      if (endPage > 80) {
         const firtsPagesLoaded = Math.round(endPage / 5);
         const partialPdf = await this.loadPartialPdf(
           pk,
@@ -682,7 +683,7 @@ export class GerenciaTesoreriaComponent implements OnInit {
         .subscribe(
           (apiResponse) => {
             const dataJson = apiResponse.body.data;
-            console.log('apiResponse', apiResponse);
+            // console.log('apiResponse', apiResponse);
             const worksheet: XLSX.WorkSheet =
               XLSX.utils.json_to_sheet(dataJson);
             const workbook: XLSX.WorkBook = {

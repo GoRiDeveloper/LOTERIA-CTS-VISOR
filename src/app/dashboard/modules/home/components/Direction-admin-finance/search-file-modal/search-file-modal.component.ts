@@ -60,7 +60,9 @@ export class SearchFileModalComponent implements OnInit {
   }
 
   verifyDocument(dependency: any) {
-    const isPdf = dependency?.nombre_archivo?.split('.')[1] === 'pdf';
+    const valuesDocumentName = dependency?.nombre_archivo?.split('.');
+
+    const isPdf = valuesDocumentName[valuesDocumentName.length - 1] === 'pdf';
 
     if (isPdf) this.openModalPdf(dependency);
     else this.openModalDocument(dependency);
@@ -109,7 +111,8 @@ export class SearchFileModalComponent implements OnInit {
   }
 
   verifyExt(ext: string) {
-    const isPdf = ext.split('.')[1] === 'pdf';
+    const valuesDocumentName = ext.split('.');
+    const isPdf = valuesDocumentName[valuesDocumentName.length - 1] === 'pdf';
     return isPdf ? 'PDF' : 'Documento';
   }
 
@@ -128,7 +131,6 @@ export class SearchFileModalComponent implements OnInit {
   async getIdsChildren(dependencia_indice: string) {
     try {
       // Obtener los IDs de las dependencias hijas
-
       const response = await this._dependecyService
         .getIdsChildren(dependencia_indice)
         .toPromise();
@@ -164,7 +166,8 @@ export class SearchFileModalComponent implements OnInit {
   openModalPdf(dependency: any) {
     this.selectedFile = dependency;
     this.fileId = dependency?.documento_id;
-    this.ext = dependency?.nombre_archivo?.split('.')[1];
+    const arrayForExt = dependency?.nombre_archivo?.split('.');
+    this.ext = arrayForExt[arrayForExt.length - 1];
     this.downloadName = dependency?.nombre_archivo?.split('.')[0];
 
     this.documentData = { ...this.selectedFile };
