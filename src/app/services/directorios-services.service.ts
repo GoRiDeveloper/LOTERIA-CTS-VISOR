@@ -230,9 +230,9 @@ export class DirectoriosServicesService {
     );
   }
 
-  getDepedendencyStructure(): Observable<any> {
+  getDepedendencyStructure(nivel: string | null = null): Observable<any> {
     return this._http.get<DependencyStructureResponse>(
-      `${environment.BASE_URL}jerarquia`,
+      `${environment.BASE_URL}jerarquia${nivel ? '?nivel=' + nivel : ''}`,
       { headers: this._getHeaders() }
     );
   }

@@ -58,7 +58,7 @@ export class ViewFilesUploadComponent implements OnInit {
     }
 
     // Si el árbol de dependencias no está en el cache, se carga desde la API
-    this._dependencyService.getDepedendencyStructure().subscribe({
+    this._dependencyService.getDepedendencyStructure('all').subscribe({
       next: (resp) => {
         this.dependenciesList = resp.map(
           (dependency: DependencyStructureResponse) =>

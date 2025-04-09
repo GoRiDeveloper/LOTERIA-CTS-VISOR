@@ -28,7 +28,7 @@ import { collectParentKeys } from 'src/app/utils/collectParentKeys';
 })
 export class ViewUserComponent implements OnInit, OnDestroy {
   selectedDependenciesTree?: TreeNode[];
-  currentRol = "";
+  currentRol = '';
 
   public isLoading: boolean = true;
   public users: UserDataInterface[] = [];
@@ -69,7 +69,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     last_name: [''],
     password: [''],
     email: ['', Validators.email],
-    // dependencias: [''],
+    dependencias: [''],
     telefono: [''],
     rol: ['', Validators.required],
     descargas: [false, Validators.required],
@@ -381,10 +381,12 @@ export class ViewUserComponent implements OnInit, OnDestroy {
   }
 
   onSelectedDepChange(selectedFiles: TreeNode[]): void {
+    console.log('ete', selectedFiles);
     this.selectedDepTree = selectedFiles;
   }
 
   onDependenciesObtained(dependencies: DependencyStructureResponse[]) {
+    console.log('---', dependencies);
     this.dependencies = dependencies;
   }
 }

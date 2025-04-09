@@ -53,7 +53,7 @@ export class SidebarAdminComponent implements OnInit {
     // this._activateRoute.paramMap.subscribe((params) => {
     //   this.idSuperior = params.get('id') || '';
     // });
-    this.getDepencenciaList();
+    //this.getDepencenciaList();
     this.getUserInfo();
 
     this.itemNavbarSelected.selectedItemIndex$.subscribe((index) => {
