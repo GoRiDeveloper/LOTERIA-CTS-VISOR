@@ -13,20 +13,10 @@
 
 <div class="container__modal" *ngIf="!isLoadingPdf">
   <div class="container__modal-div" style="width: 100%">
-    <div class="row" class="modal__pdf-left">
-
-      <div class="container__closeInfo col-2">
-            <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              (click)="closeModal()"
-            >
-          </button>
-      </div>
-
-      <div *ngIf="download" class="container__btn-download col-10">
+    <div *ngIf="download" class="row" class="modal__pdf-left">
+      <div class="container__btn-download">
         <button
+
           (click)="descargar()"
           class="btn btn-primary fs-5"
         >
@@ -35,7 +25,6 @@
         </button>
       </div>
     </div>
-
     <ngx-extended-pdf-viewer
       *ngIf="pdfinfo.ext == 'pdf'"
       [src]="pdfSrc"

@@ -59,10 +59,10 @@
             ></button>
             <ul class="dropdown-menu">
               <li>
-                <div class="dropdown-item" (click)="verifyDocument(dependency)">
+                <a class="dropdown-item" (click)="openModalPdf(dependency)">
                   <i class="bi bi-file-earmark-pdf-fill"></i>
                   Ver {{ verifyExt(dependency.nombre_archivo) }}
-                </div>
+                </a>
               </li>
               <li>
                 <a
@@ -71,10 +71,10 @@
                     '/dashboard/home/documentos/',
                     dependency.dependencia_id
                   ]"
-                  [download]="true"
                   (click)="closeModal()"
                 >
                   <i class="bi bi-link-45deg"></i>
+
                   Ir a la ruta</a
                 >
               </li>
@@ -102,6 +102,7 @@
   <app-view-file-pdf
     [fileId]="fileId"
     [documentData]="documentData"
+    [download]="userData?.descargas"
     [closeModal]="modal.close.bind(modal)"
   ></app-view-file-pdf>
 </ng-template>
@@ -122,7 +123,7 @@
       type="button"
       class="btn-close mt-3"
       aria-label="Close"
-      (click)="closeModal()"
+      (click)="modal.dismiss('Cross click')"
     ></button>
     <button *ngIf="userData?.descargas" (click)="descargar()" class="btn btn-primary fs-5">
       Descargar
