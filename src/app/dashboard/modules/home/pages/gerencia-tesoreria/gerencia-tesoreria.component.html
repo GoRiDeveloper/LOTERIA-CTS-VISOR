@@ -79,7 +79,7 @@
           </div>
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex w-auto">
           <select
             class="m-2 form-select select-filters align-items-center"
             [(ngModel)]="headerSearch"
@@ -131,39 +131,14 @@
               </button>
             </ng-container>
           </div>
-          <!-- <select
-            name="select"
-            id="select"
-            class="m-2 form-select select-filters align-items-center"
-            (change)="getDocumentsByType()"
-          >
-            <option [value]="0">TODOS</option>
-            <option [value]="1">DESCARGA</option>
-            <option [value]="2">VISTO</option>
-          </select> -->
-          <!-- <div class="d-flex btn-excel-container">
-            <button class="btn btn-active btn-excel" (click)="downloadExcel()">
-              Descargar Excel
-              <div
-                class="spinner-border spinner-border-sm"
-                role="status"
-                *ngIf="isLoading"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </button>
-          </div> -->
-          <!-- <select name="select" id="select" class=" m-2  form-select select-filters align-items-center"  (change)="getDocumentsByType()">
-                              <option [value]="0">TODOS</option>
-                              <option [value]="1">DESCARGA</option>
-                              <option [value]="2">VISTO</option>
-                            </select> -->
         </div>
       </div>
 
-      <div class="container_slider mt-3 mb-2">
+      <div
+        class="px-3 container_slider mt-3 mb-2 mt-3 mb-2 overflow-auto d-flex flex-row"
+      >
         <button
-          class="button_slider"
+          class="button_slider p-2 text-center"
           [class.btn-active]="typeDoc.id == idType"
           *ngFor="let typeDoc of typeDocument"
           (click)="handleChangeType(typeDoc, $event)"
@@ -264,8 +239,8 @@
                         order == header.id
                           ? 'icon-up-select.png'
                           : order == header.id * -1
-                          ? 'icon-down-select.png'
-                          : 'icon-select.png'
+                            ? 'icon-down-select.png'
+                            : 'icon-select.png'
                       }}  "
                       alt=""
                     />
