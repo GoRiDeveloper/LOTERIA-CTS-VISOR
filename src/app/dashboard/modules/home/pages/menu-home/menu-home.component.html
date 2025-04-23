@@ -7,7 +7,7 @@
 <div class="card_menu-container" *ngIf="!isLoading">
   <ng-container *ngFor="let card of subDependencies">
     <div class="card_menu" routerLink="/dashboard/home/carpetas/{{ card.id }}">
-      <div class="card_menu-img" [ngSwitch]="card.nombre.toUpperCase()">
+      <div class="card_menu-img" [ngSwitch]="card.nombre">
         <img
           src="../../../../../../assets/Loteria/loteria-nacional.jpeg"
           *ngSwitchCase="'DIRECCION GENERAL'"
@@ -27,6 +27,13 @@
           src="../../../../../../assets/home/mercadotecnia.jpg"
           *ngSwitchCase="
             'SUBDIRECCION GENERAL DE NUEVOS NEGOCIOS MERCADOTECNIA Y PUBLICIDAD'
+          "
+          alt="icon"
+        />
+        <img
+          src="../../../../../../assets/home/admin-finance.png"
+          *ngSwitchCase="
+            'SUBDIRECCION GENERAL DE VENTAS Y OPERACIONES'
           "
           alt="icon"
         />

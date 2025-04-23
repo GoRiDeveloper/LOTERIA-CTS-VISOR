@@ -241,10 +241,10 @@
             formControlName="rol"
             style="background-color: #fff0 !important"
           >
-            <option value="1" *ngIf="userRol == 1">Admin</option>
-            <option value="2">Usuario</option>
-            <option value="3">Capturista</option>
-            <option value="4" *ngIf="userRol == 1">Encargado</option>
+            <option [value]="1" *ngIf="userRol == 1">Admin</option>
+            <option [value]="2">Usuario</option>
+            <option [value]="3">Capturista</option>
+            <option [value]="4" *ngIf="userRol == 1">Encargado</option>
           </select>
         </div>
 
@@ -317,7 +317,7 @@
           formControlName="telefono"
         />
 
-        <!-- Sección para agregar dependencia -->
+        <!-- Sección para actualizar dependencia -->
         <label class="fw-bold pb-0 mt-5 mb-0"> Dependencia </label>
         <div class="mt-2">
           <button

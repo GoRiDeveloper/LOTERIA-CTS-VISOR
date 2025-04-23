@@ -28,7 +28,7 @@ import { collectParentKeys } from 'src/app/utils/collectParentKeys';
 })
 export class ViewUserComponent implements OnInit, OnDestroy {
   selectedDependenciesTree?: TreeNode[];
-  currentRol = "";
+  currentRol = '';
 
   public isLoading: boolean = true;
   public users: UserDataInterface[] = [];
@@ -69,7 +69,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     last_name: [''],
     password: [''],
     email: ['', Validators.email],
-    // dependencias: [''],
+    dependencias: [''],
     telefono: [''],
     rol: ['', Validators.required],
     descargas: [false, Validators.required],
@@ -261,7 +261,7 @@ export class ViewUserComponent implements OnInit, OnDestroy {
     });
   }
 
-  openModalDependencies(content: any, createUser?: boolean) {
+  openModalDependencies(content: any, createUser: boolean = false) {
     if (createUser) this.isToCreateUser = createUser;
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',

@@ -26,7 +26,7 @@ import { DirectoriosServicesService } from 'src/app/services/directorios-service
 })
 export class TreeViewComponent implements OnInit {
   @Input() dependenciesUser?: dependencyStructure[];
-  @Input() isToCreateUser?: boolean;
+  @Input() isToCreateUser?: boolean = false;
   @Input() dataUser?: UserDataInterface;
   @Output() dependenciesObtained: EventEmitter<DependencyStructureResponse[]> =
     new EventEmitter<DependencyStructureResponse[]>();
@@ -55,16 +55,25 @@ export class TreeViewComponent implements OnInit {
       this.selectedDep = this.dependenciesUser;
     }
 
+    // Obtener árbol de dependencias del cache si está disponible
+    const cachedTree = this._cacheService.get('treeDependencies');
+    if (cachedTree) {
+      this.files = cachedTree;
+
+      this.selectNodesProgrammatically();
+      this.loadingDep = false;
+      return;
+    }
     // Si el árbol de dependencias no está en el cache, se carga desde la API
     this._dependencyService.getDepedendencyStructure().subscribe({
       next: (resp) => {
-        this.dependenciesObtained.emit(resp);
         this.files = resp.map((dependency: DependencyStructureResponse) =>
           dependencyStructureMapper.dependencyStructureToEntity(dependency)
         );
         this.loadingDep = false;
 
         // Almacera en cache árbol de dependencias
+        this._cacheService.set('treeDependencies', this.files);
         this.selectNodesProgrammatically();
       },
       error: (err) => {
