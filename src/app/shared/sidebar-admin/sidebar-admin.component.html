@@ -1,10 +1,4 @@
 <ng-template #content let-offcanvas>
-  <!-- <div class="offcanvas-item">
-    <div class="logo" routerLink="/dashboard/home/menu">
-      <img src="../../../assets/SEP/Logos/logo_sep.png" alt="" />
-    </div>
-  </div> -->
-
   <div class="sidebar__container">
     <div class="sidebar__headerUser-container">
       <button
@@ -21,10 +15,8 @@
           <div class="sidebar__headerUser-infoUserImgActive"></div>
         </div>
         <div class="sidebar__headerUser-userVerificado">
-          <p class="pb-0 mb-0 fw-bolder">
-            {{ userData.last_name | uppercase }}
-          </p>
-          <p class="pb-0 mb-0 fw-bolder">
+          <p class="pb-0 mb-0 fw-bold text-white">
+            {{ userData.last_name | uppercase }} <br>
             {{ userData.first_name | uppercase }}
           </p>
           <div class="d-flex align-items-center">

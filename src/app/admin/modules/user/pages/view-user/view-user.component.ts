@@ -132,11 +132,6 @@ export class ViewUserComponent implements OnInit, OnDestroy {
 
     this.EditUserForm.reset(this.user);
 
-    console.log(
-      'Rol en el formulario después de reset:',
-      this.EditUserForm.value
-    );
-
     this.getJerarquiaUser(id);
 
     this.modalService.open(content, {

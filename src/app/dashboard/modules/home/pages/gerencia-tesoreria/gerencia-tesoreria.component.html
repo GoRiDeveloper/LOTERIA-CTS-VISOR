@@ -24,15 +24,32 @@
       <div class="titleTable">
         <h1>{{ titleTable }}</h1>
       </div>
-      <ng-container *ngIf="user_role == 3">
-        <div class="d-flex justify-content-center align-items-center">
+      <ng-container *ngIf="user_role === 3">
+        <div class="d-flex justify-content-center align-items-center gap-3">
           <button class="btn btn-active btn-excel my-3" (click)="hash()">
             Lector de OCR
+            <i class="bi bi-clipboard2-check" style="font-size: 1.5rem;"></i>
+          </button>
+          <button class="btn btn-active btn-excel" (click)="openModal(addFile)">
+            Cargar Archivo
+            <div
+              *ngIf="isLoading; else loading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <ng-template #loading>
+              <i
+                class="bi bi-file-earmark-arrow-up-fill"
+                style="font-size: 1.5rem"
+              ></i>
+            </ng-template>
           </button>
         </div>
       </ng-container>
 
-      <div class="d-lg-flex gap-3 search-input-container container-inputs">
+      <div class="d-flex justify-content-center align-items-center  search-input-container container-inputs">
         <div class="search-input-container">
           <div
             class="icon-container"
@@ -106,62 +123,28 @@
             </span>
           </div>
         </div>
-
-        <div class="col-6 col-lg-2 col-xxl-1">
-          <div class="d-flex btn-excel-container">
-            <ng-container *ngIf="user_role == 3">
-              <button
-                class="btn btn-active btn-excel"
-                (click)="openModal(addFile)"
-              >
-                Cargar Archivo
-                <div
-                  *ngIf="isLoading; else loading"
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                >
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <ng-template #loading>
-                  <i
-                    class="bi bi-file-earmark-arrow-up-fill"
-                    style="font-size: 1.5rem"
-                  ></i>
-                </ng-template>
-              </button>
-            </ng-container>
-          </div>
-        </div>
       </div>
 
       <div
-        class="px-3 container_slider mt-3 mb-2 mt-3 mb-2 overflow-auto d-flex flex-row"
+        class="px-3 container_slider overflow-auto mt-3 mb-2 mt-3 mb-2 d-flex flex-row"
       >
         <button
-          class="button_slider p-2 text-center"
+          class="button_slider text-center"
           [class.btn-active]="typeDoc.id == idType"
           *ngFor="let typeDoc of typeDocument"
           (click)="handleChangeType(typeDoc, $event)"
         >
           {{ typeDoc.nombre }}
-          <div class="caja-herramientas" *ngIf="user_role === 3">
-            <ul>
-              <li
-                (click)="
-                  handleSheet(sheet, typeDoc.id, typeDoc.nombre, 'add', $event)
-                "
-              >
-                Agregar hoja
-              </li>
-              <li
-                (click)="
-                  handleSheet(sheet, typeDoc.id, typeDoc.nombre, 'edit', $event)
-                "
-              >
-                Editar hoja
-              </li>
-            </ul>
-          </div>
+          <a class="btn btn-sm fw-bold" *ngIf="user_role === 3"
+            (click)="handleSheet(sheet, typeDoc.id, typeDoc.nombre, 'edit', $event)">
+            <i class="bi bi-pencil-fill"></i></a>
+        </button>
+        <button
+          class="button_slider text-center"
+          (click)="handleSheet(sheet, idType, typeDocument[0].nombre, 'add', $event)"
+          *ngIf="user_role === 3"
+        >
+          Agregar Hoja <i class="bi bi-plus-circle-fill"></i>
         </button>
       </div>
 
@@ -239,8 +222,8 @@
                         order == header.id
                           ? 'icon-up-select.png'
                           : order == header.id * -1
-                            ? 'icon-down-select.png'
-                            : 'icon-select.png'
+                          ? 'icon-down-select.png'
+                          : 'icon-select.png'
                       }}  "
                       alt=""
                     />

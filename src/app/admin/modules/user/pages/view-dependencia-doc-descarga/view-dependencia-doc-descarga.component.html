@@ -1,9 +1,5 @@
-<div class="d-flex justify-content-between">
-  <h3 class="fs-2">Usuarios</h3>
-</div>
-
-<div class="d-lg-flex align-items-center gap-3 container-search-select">
-  <div class="search-input-container mt-2 mb-2">
+<div class="mt-5 align-items-center d-flex justify-content-between gap-1">
+  <div class="ms-5 d-flex align-items-center justify-content-center mt-2 mb-2">
     <div class="icon-container">
       <img src="./../../../../../../assets/icons/icon-search.png" alt="icon" />
     </div>
@@ -35,7 +31,7 @@
       </select>
     </div>
   </div>
-  <div class="mt-4 mb-4 d-flex justify-content-end stamp-user">
+  <div class="stamp-user">
     <div class="text-title">
       <h2 class="text-light">Usuarios</h2>
     </div>
@@ -78,7 +74,7 @@
 </div>
 
 <div
-  class="d-flex align-items-center mt-4 container-btn-nextPrev"
+  class="container d-flex justify-content-center gap-5 align-items-center mt-4 container-btn-nextPrev"
   *ngIf="!isLoading"
 >
   <button
@@ -90,7 +86,7 @@
   </button>
 
   <div class="d-flex align-items-center gap-4">
-    <label class="fs-4 text-light">Página </label>
+    <label class="fs-4 text-light">Página</label>&nbsp;
     <input
       #pageCurrentInput
       [value]="pageCurrent"
